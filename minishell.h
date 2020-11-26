@@ -13,6 +13,6 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-void    main(int argc, char **agv);
+int    main(int argc, char **agv);
 
 #endif
