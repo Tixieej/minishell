@@ -13,6 +13,8 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+#include <sys/wait.h>
+
 int main(int argc, char **agv);
 
 #endif

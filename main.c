@@ -12,14 +12,23 @@
 
 #include "minishell.h"
 #include <stdio.h> //
+#include <unistd.h>
 
 int		main(int argc, char **argv)
 {
-	if (argc > 1)
+	pid_t ret_value;
+
+	ret_value = fork();
+	if (ret_value < 0)
+		printf("creating childprocess had failed\n"); //
+	if (ret_value == 0 && argc > 1)
 	{
-		printf("%s\n", argv[1]);
+		printf("%s\n", argv[1]); //
 	}
 	else
-		printf("please give one argument\n");
+	{
+		wait(NULL);
+		printf("parent process\n"); //
+	}
 	return (0);
 }
