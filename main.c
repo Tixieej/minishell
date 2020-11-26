@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2020/11/26 10:35:26 by rixt          ########   odam.nl         */
+/*   Updated: 2020/11/26 12:44:01 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,18 @@ int		main(int argc, char **argv)
 {
 	pid_t ret_value;
 
+	if (argc != 2)
+	{	
+		printf("please give exactly one argument\n");
+		return (1);
+	}
 	ret_value = fork();
+	
 	if (ret_value < 0)
 		printf("creating childprocess had failed\n"); //
-	if (ret_value == 0 && argc > 1)
+	else if (ret_value == 0)
 	{
+		printf("Child Process\n");
 		printf("%s\n", argv[1]); //
 	}
 	else
