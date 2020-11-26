@@ -12,7 +12,9 @@
 
 #include "minishell.h"
 
+#include <stdio.h> //
 void	main(int argc, char **argv)
 {
+	printf("hallo"); //
 	return (0);
 }
