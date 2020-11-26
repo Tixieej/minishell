@@ -27,11 +27,12 @@ int		main(int argc, char **argv)
 		return (1);
 	}
 	ret_value = fork();
-	
+
 	if (ret_value < 0)
 		printf("creating childprocess had failed\n"); //
 	else if (ret_value == 0)
 	{
+		ret_value = fork();
 		printf("Child Process\n");
 		printf("%s\n", argv[1]); //
 	}
