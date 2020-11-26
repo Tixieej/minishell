@@ -19,22 +19,31 @@
 
 int		main(int argc, char **argv)
 {
+	pid_t	ret_value;
 	char	*line;
 	int		result;
 
+	ret_value = 0;
 	result = 1;
 	line = NULL;
-	(void)argv;
-	if (argc != 1)
-	{
-		printf("no arguments needed"); //
-		return (0);
+	if (argc != 2)
+	{	
+		printf("please give exactly one argument\n"); //
+		return (1);
 	}
-	while (result == 1)
+	ret_value = fork();
+	if (ret_value < 0)
+		printf("creating childprocess had failed\n"); //
+	else if (ret_value == 0)
 	{
-		result = get_next_line(0, &line);
-		printf("%s\n", line);
-		free(line);
+		ret_value = fork();
+		printf("Child Process\n");
+		printf("%s\n", argv[1]); //
+	}
+	else
+	{
+		wait(NULL);
+		printf("parent process\n"); //
 	}
 	return (0);
 }
