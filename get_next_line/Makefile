@@ -5,33 +5,21 @@
 #                                                      +:+                     #
 #    By: rde-vrie <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
-#    Created: 2020/02/13 10:40:20 by rde-vrie      #+#    #+#                  #
-#    Updated: 2020/11/26 13:22:23 by rixt          ########   odam.nl          #
+#    Created: 2019/12/03 16:24:48 by rde-vrie      #+#    #+#                  #
+#    Updated: 2020/02/17 09:28:45 by rde-vrie      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
-SRC = main.c get_next_line.c get_next_line_utils.c
-OBJ = $(SRC:.c=.o)
-CFLAGS = -Wall -Werror -Wextra
-CC = gcc
-INC = minishell.h get_next_line.h
+NAME = gnl_test
+SRC = get_next_line.c get_next_line_utils.c main.c 
+BONUS = get_next_line_bonus.c get_next_line_utils_bonus.c main_bonus.c
+FLAGS = -Wall -Werror -Wextra
+SIZE = 128
 
-all: $(NAME)
-
-$(NAME): $(OBJ)
-	$(CC) -o $(NAME) $(OBJ)
-
-test: $(NAME)
+all:
+	gcc $(FLAGS) -D BUFFER_SIZE=$(SIZE) $(SRC) -o $(NAME)
 	./$(NAME)
 
-%.o: %.c $(INC)
-	gcc $(CFLAGS) -c $< -o $@
-
-clean:
-	$(RM) $(OBJ)
-
-fclean:	clean
-	$(RM) $(NAME)
-
-re: fclean all
+bonus:
+	gcc $(FLAGS) -D BUFFER_SIZE=$(SIZE) $(BONUS) -o $(NAME)
+	./$(NAME)
