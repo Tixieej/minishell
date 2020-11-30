@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2020/11/30 13:43:50 by livlamin      ########   odam.nl         */
+/*   Updated: 2020/11/30 14:51:36 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ int		main(int argc, char **argv)
 		//tokenizer aanroepen
 		//andere dingen aanroepen
 		printf("%s\n", line); //
+		while (result == 1)
+		{
+			result = get_next_line(0, &line);
+			free(line);
+			line = NULL;
+		}
 		free(line);
 		line = NULL;
 	}
