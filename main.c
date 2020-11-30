@@ -6,16 +6,12 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2020/11/30 13:41:14 by livlamin      ########   odam.nl         */
+/*   Updated: 2020/11/30 13:43:50 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h> //
-#include <unistd.h>
 #include "get_next_line.h"
-#include <fcntl.h>
-#include <stdlib.h>
 
 void	prompt()
 {
