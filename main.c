@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2020/11/26 15:55:26 by rixt          ########   odam.nl         */
+/*   Updated: 2020/11/30 13:41:14 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 void	prompt()
 {
-	write(1, "\033[38;5;105mhallo: \e[0m", 23);
+	write(1, "\033[38;5;105mminishell: \e[0m", 27);
 }
 
 int		main(int argc, char **argv)
@@ -35,7 +35,7 @@ int		main(int argc, char **argv)
 		printf("no arguments needed"); //
 		return (0);
 	}
-	while (1)
+	while (result == 1)
 	{
 		//iets met signals? waarom hier?
 		prompt();
@@ -44,6 +44,7 @@ int		main(int argc, char **argv)
 		//andere dingen aanroepen
 		printf("%s\n", line); //
 		free(line);
+		line = NULL;
 	}
 	return (0);
 }
