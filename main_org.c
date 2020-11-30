@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2020/11/30 16:42:44 by livlamin      ########   odam.nl         */
+/*   Updated: 2020/11/30 15:07:14 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ int		main(int argc, char **argv)
 {
 	char	*line;
 	int		result;
-	char	*path;
 
-	path = NULL;
 	result = 1;
 	line = NULL;
 	(void)argv;
@@ -38,14 +36,12 @@ int		main(int argc, char **argv)
 		//iets met signals? waarom hier?
 		prompt();
 		result = get_next_line(0, &line);
-		char *getcwd(char *buf, size_t size)
 		//tokenizer aanroepen
 		//andere dingen aanroepen
 		
 		while (result == 1)  // voorbeelde cat > test.txt
 		{
 			result = get_next_line(0, &line);
-			// zet input om in linked lists die data opslaan
 			free(line);
 			line = NULL;
 		}
