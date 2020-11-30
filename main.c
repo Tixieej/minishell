@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2020/11/30 16:42:44 by livlamin      ########   odam.nl         */
+/*   Updated: 2020/11/30 17:52:31 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		main(int argc, char **argv)
 		//iets met signals? waarom hier?
 		prompt();
 		result = get_next_line(0, &line);
-		char *getcwd(char *buf, size_t size)
+		path = getcwd(char *buf, size_t size)
 		//tokenizer aanroepen
 		//andere dingen aanroepen
 		
