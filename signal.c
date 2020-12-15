@@ -10,55 +10,29 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <stdio.h> //
-#include <unistd.h>
-#include "get_next_line.h"
-#include <fcntl.h>
-#include <stdlib.h>
-#include <signal.h>
-int		send_signal (int pid)
-{
-        int ret;
+#include<stdio.h>
+#include<signal.h>
+#include<unistd.h>
+#include<stdlib.h>
 
-        ret = kill(pid,SIGHUP);
-        printf("ret : %d",ret);
-		return(ret);
+// Control c = SIGINT (2), bash blijft runnen maar process binnen bash stopt.
+// Control d = waarde uitzoeken!, processen stoppen(control c aanroepen?) en bash stopt.  
+
+void sig_handler(int signo)
+{
+  if (signo == SIGINT)
+    exit(0);
+}
+
+int main(void)
+{
+  if (signal(SIGINT, sig_handler) == SIG_ERR)
+    printf("\ncan't catch SIGINT\n");
+  while(1) 
+    sleep(1);
+  return 0;
 }
 
 
-int		main(int argc, char **argv)
-{
-	pid_t	ret_value;
-	char	*line;
-	int		result;
 
-	ret_value = 7;
-	result = 1;
-	line = NULL;
-	if (argc != 2)
-	{	
-		printf("please give exactly one argument\n"); //
-		return (1);
-	}
-	ret_value = fork();
 
-	if (ret_value < 0)
-		printf("creating childprocess had failed\n"); //
-	else if (ret_value == 0)
-	{
-
-		ret_value = fork();
-		printf("ret_value2 %d\n", ret_value);
-		printf("Child Process\n");
-		printf("%s\n", argv[1]); //
-		if (send_signal(ret_value) == 0)
-			printf("childprocess is killed\n");
-	}
-	else
-	{
-		wait(NULL);
-		printf("parent process\n"); //
-	}
-	return (0);
-}
