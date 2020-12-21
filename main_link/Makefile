@@ -11,7 +11,11 @@
 # **************************************************************************** #
 
 NAME = minishell
-SRC = main.c get_next_line.c get_next_line_utils.c
+SRC = main.c \
+		get_next_line.c \
+		get_next_line_utils.c \
+		ft_list_push_back.c \
+		ft_create_elem.c
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 CC = gcc

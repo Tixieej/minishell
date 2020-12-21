@@ -16,6 +16,7 @@
 #include "get_next_line.h"
 #include <fcntl.h>
 #include <stdlib.h>
+#include "ft_list.h"
 
 void	prompt()
 {
@@ -23,19 +24,6 @@ void	prompt()
 }
 
 int		main(int argc, char **argv)
-{
-	char	*line;
-	int		result;
-
-	result = 1;
-	line = NULL;
-	(void)argv;
-	if (argc != 1)
-	{
-		printf("no arguments needed"); //
-		return (0);
-	}
-	int		main(int argc, char **argv)
 {
 	t_list *list;
 	char	*line;
@@ -55,29 +43,14 @@ int		main(int argc, char **argv)
 		//iets met signals? waarom hier?
 		prompt();
 		result = get_next_line(0, &line);
-		// list = ft_create_elem(line);
 		ft_list_push_back(&list, line);
-		// printf("%s\n",list->data);
-		// printf("%p\n",list->next);
-		// list = list->next;
-
-		// path = getcwd(char *buf, size_t size)
-		//tokenizer aanroepen
-		//andere dingen aanroepen
-		
-		// while (result == 1)  // voorbeelde cat > test.txt
-		// {
-		// 	result = get_next_line(0, &line);
-		// 	// zet input om in linked lists die data opslaan
-		// 	ft_list_push_back(&list, line);
-		// 	// printf("%s\n",list->data);
-		// 	// printf("%p\n",list->next);
-		// 	list = list->next;
-		// 	free(line);
-		// 	line = NULL;
-		// }
-		free(line);
-		line = NULL;
+		while (result == 1)  // voorbeelde cat > test.txt
+		{
+			result = get_next_line(0, &line);
+			ft_list_push_back(&list, line);
+		}
+		// free(line);
+		// line = NULL;
 	}
 	free(line);
 	line = NULL;
@@ -87,17 +60,5 @@ int		main(int argc, char **argv)
 		printf("%p\n", (char*)list->next);
 		list = list->next;
 	}
-	return (0);
-}
-	// while (1)
-	// {
-	// 	//iets met signals? waarom hier?
-	// 	prompt();
-	// 	result = get_next_line(0, &line);
-	// 	//tokenizer aanroepen
-	// 	//andere dingen aanroepen
-	// 	printf("%s\n", line); //
-	// 	free(line);
-	// }
 	return (0);
 }
