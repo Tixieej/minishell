@@ -21,7 +21,6 @@ int		send_signal (int pid)
 {
         int ret;
 
-        // ret = kill(pid,SIGHUP);
 		ret = kill(pid,SIGKILL);
 		printf("sigkill : %d\n", SIGKILL);
         printf("ret : %d\n",ret);
