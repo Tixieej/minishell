@@ -5,45 +5,30 @@
 /*                                                     +:+                    */
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2020/11/26 13:24:06 by rixt          ########   odam.nl         */
+/*   Created: 2019/08/20 12:37:52 by livlamin      #+#    #+#                 */
+/*   Updated: 2019/08/21 21:19:17 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <stdio.h> //
-#include <unistd.h>
-#include "get_next_line.h"
-#include <fcntl.h>
+#include "ft_list.h"
+#include <stdio.h>
 #include <stdlib.h>
 
-int		main(int argc, char **argv)
+//t_list		*ft_create_elem(void *data);
+//t_list		ft_list_push_back(t_list **begin_list, void *data);
+int     main(void)
 {
-	pid_t	ret_value;
-	char	*line;
-	int		result;
+	t_list *list;
 
-	ret_value = 0;
-	result = 1;
-	line = NULL;
-	if (argc != 2)
-	{	
-		printf("please give exactly one argument\n"); //
-		return (1);
-	}
-	ret_value = fork();
-	if (ret_value < 0)
-		printf("creating childprocess had failed\n"); //
-	else if (ret_value == 0)
+	list = ft_create_elem("HUISi");
+	ft_list_push_back(&list, "HAAI");
+	ft_list_push_back(&list, "HOOI");
+	ft_list_push_back(&list, "HAL");
+	
+	while (list)
 	{
-		ret_value = fork();
-		printf("Child Process\n");
-		printf("%s\n", argv[1]); //
-	}
-	else
-	{
-		wait(NULL);
-		printf("parent process\n"); //
+		printf("%s\n", (char*)list->data);
+		list = list->next;
 	}
 	return (0);
 }

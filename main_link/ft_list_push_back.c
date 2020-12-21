@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
+/*   ft_list_push_back.c                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2020/10/23 16:03:08 by livlamin      ########   odam.nl         */
+/*   Created: 2019/08/20 13:49:54 by livlamin      #+#    #+#                 */
+/*   Updated: 2019/08/21 18:39:29 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include <stdlib.h>
+#include "ft_list.h"
 
-#include <sys/wait.h>
-
-int main(int argc, char **argv);
-
-#endif
+void		ft_list_push_back(t_list **begin_list, void *data)
+{
+	t_list *temp;
+	
+	temp = *begin_list;
+	
+	if (*begin_list)
+	{
+		while(temp->next != NULL)
+		{
+			temp = temp->next;
+		}
+		temp->next = ft_create_elem(data);
+	}
+	else
+		*begin_list = ft_create_elem(data);
+}

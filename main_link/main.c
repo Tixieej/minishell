@@ -35,15 +35,69 @@ int		main(int argc, char **argv)
 		printf("no arguments needed"); //
 		return (0);
 	}
-	while (1)
+	int		main(int argc, char **argv)
+{
+	t_list *list;
+	char	*line;
+	int		result;
+	
+	list = NULL;
+	result = 1;
+	line = NULL;
+	(void)argv;
+	if (argc != 1)
+	{
+		printf("no arguments needed"); //
+		return (0);
+	}
+	while (result == 1)
 	{
 		//iets met signals? waarom hier?
 		prompt();
 		result = get_next_line(0, &line);
+		// list = ft_create_elem(line);
+		ft_list_push_back(&list, line);
+		// printf("%s\n",list->data);
+		// printf("%p\n",list->next);
+		// list = list->next;
+
+		// path = getcwd(char *buf, size_t size)
 		//tokenizer aanroepen
 		//andere dingen aanroepen
-		printf("%s\n", line); //
+		
+		// while (result == 1)  // voorbeelde cat > test.txt
+		// {
+		// 	result = get_next_line(0, &line);
+		// 	// zet input om in linked lists die data opslaan
+		// 	ft_list_push_back(&list, line);
+		// 	// printf("%s\n",list->data);
+		// 	// printf("%p\n",list->next);
+		// 	list = list->next;
+		// 	free(line);
+		// 	line = NULL;
+		// }
 		free(line);
+		line = NULL;
 	}
+	free(line);
+	line = NULL;
+	while (list)
+	{
+		printf("%s\n", (char*)list->data);
+		printf("%p\n", (char*)list->next);
+		list = list->next;
+	}
+	return (0);
+}
+	// while (1)
+	// {
+	// 	//iets met signals? waarom hier?
+	// 	prompt();
+	// 	result = get_next_line(0, &line);
+	// 	//tokenizer aanroepen
+	// 	//andere dingen aanroepen
+	// 	printf("%s\n", line); //
+	// 	free(line);
+	// }
 	return (0);
 }
