@@ -5,45 +5,45 @@
 /*                                                     +:+                    */
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2020/12/21 10:00:51 by rixt          ########   odam.nl         */
+/*   Created: 2019/08/20 12:37:52 by livlamin      #+#    #+#                 */
+/*   Updated: 2020/12/21 11:25:31 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <stdio.h> //
-#include <unistd.h>
-#include "get_next_line.h"
-#include <fcntl.h>
+#include "ft_list.h"
+#include <stdio.h>
 #include <stdlib.h>
+#include "../get_next_line.h"
+#include <fcntl.h>
 
-void	prompt()
-{
-	write(1, "\033[38;5;105mhallo: \e[0m", 23);
-}
+t_list		*ft_create_elem(void *data);
+void		ft_list_push_back(t_list **begin_list, void *data);
 
-int		main(int argc, char **argv)
+int     main(void)
 {
 	char	*line;
 	int		result;
+	t_list *list;
+	int i = 0;
 
 	result = 1;
-	line = NULL;
-	(void)argv;
-	if (argc != 1)
+	//line = NULL;
+	//(void)argv;
+	
+	while (result == 1)
 	{
-		printf("no arguments needed"); //
-		return (0);
-	}
-	while (1)
-	{
-		//iets met signals? waarom hier?
-		prompt();
 		result = get_next_line(0, &line);
-		//tokenizer aanroepen
-		//andere dingen aanroepen
-		printf("%s\n", line); //
-		free(line);
+		//ft_create_elem(line);
+		ft_list_push_back(&list, line);
+		//free(line);
+	}
+
+	while (list)
+	{
+		printf("element %i in list: [%s]\n", i, (char*)list->data);
+		printf("adres naar volgende element: %p\n", list->next);
+		list = list->next;
+		i++;
 	}
 	return (0);
 }
