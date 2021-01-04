@@ -18,6 +18,11 @@
 #include <stdlib.h>
 #include "ft_list.h"
 
+
+// Names of environment variables are case-sensitive and must not contain the character ‘=’. 
+//System-defined environment variables are invariably uppercase. 
+// The values of environment variables can be anything that can be represented as a string.
+//A value must not contain an embedded null character, since this is assumed to terminate the string. 
 void	prompt()
 {
 	write(1, "\033[38;5;105mhallo: \e[0m", 23);
