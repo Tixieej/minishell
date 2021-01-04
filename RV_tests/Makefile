@@ -6,16 +6,16 @@
 #    By: rixt <marvin@codam.nl>                       +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/21 14:25:14 by rixt          #+#    #+#                  #
-#    Updated: 2020/12/21 15:08:03 by rixt          ########   odam.nl          #
+#    Updated: 2021/01/04 10:25:42 by rixt          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minitests
-SRC = main.c ../../get_next_line.c ../../get_next_line_utils.c ft_split.c ft_list_push_back.c ft_create_elem.c
+SRC = main.c get_next_line.c get_next_line_utils.c ft_split.c ft_list_push_back.c ft_create_elem.c
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 CC = gcc
-INC = ../../minishell.h ../../get_next_line.h ft_list.h
+INC = minishell.h get_next_line.h ft_list.h
 EXEC = exec
 
 all: $(NAME)
