@@ -23,7 +23,7 @@ void	prompt()
 	write(1, "\033[38;5;105mhallo: \e[0m", 23);
 }
 
-int		main(int argc, char **argv)
+int		main(int argc, char **argv, char *envp[])
 {
 	t_list *list;
 	char	*line;
