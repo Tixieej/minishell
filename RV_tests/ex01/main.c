@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/20 12:37:52 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/04 12:47:27 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/04 13:36:25 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,40 @@ int			ft_strncmp(char *s1, char *s2, t_size_t n)
 }
 
 
-void	ft_copy(char **command)
+void	ft_copy(char **command, char **envp)
 {
 	printf("kijk nu of het nieuwe bestand er staat\n");
 	(void)(command);
 	//zie voor deze test exec_cp.c
-	char *const envp[0];
-	char *args[] = {"ft_split.c", "vla", NULL};
+	char *args[] = {"/bin/cp", "testfile", "vla", NULL};
 
-	execve("/bin/cp", args, envp);
-	//execve("/bin/cp", args);
+
+	char	**tmp = envp;
+	while (*tmp)
+	{
+		printf("%s\n", *tmp);
+		tmp++;
+	}
+
+	execve(args[0], args, envp);
 }
 
-int     main(int argc, char **argv)
+//void	ft_echo(char **command)
+//{
+//	char app[] = "/bin/echo";
+//	char * const argv[] = { app, "success", NULL };
+//	if (execv(app, argv) < 0)
+//	{
+//		perror("execv error");
+//	}
+//	else if (processId < 0)
+//		perror("fork error");
+//	else
+//		return EXIT_SUCCESS;
+//	return EXIT_FAILURE;
+//}
+
+int     main(int argc, char **argv, char **envp)
 {
 	pid_t	pid;
 	char	*line;
@@ -90,7 +111,7 @@ int     main(int argc, char **argv)
 			printf("yay copy is aangeroepen, wat nu?\n");
 			pid = fork();
 			if (pid == 0)
-				ft_copy(command);
+				ft_copy(command, envp);
 			else
 			{
 				wait(NULL);
