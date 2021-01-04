@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/20 12:37:52 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/04 10:25:57 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/04 11:01:06 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ t_list		*ft_create_elem(void *data);
 void		ft_list_push_back(t_list **begin_list, void *data);
 typedef int	t_size_t;
 char		**ft_split(char const *s, char c);
+
+void	prompt()
+{
+	write(1, "\033[38;5;105mhallo: \e[0m", 23);
+}
 
 int			ft_strncmp(char *s1, char *s2, t_size_t n)
 {
@@ -47,9 +52,13 @@ void	ft_copy(char **command)
 	printf("kijk nu of het nieuwe bestand er staat\n");
 	(void)(command);
 	//zie voor deze test exec_cp.c
+	char *const envp[0];
+	char *args[] = {"ft_split.c", "vla", NULL};
+
+	execve("/bin/cp", args, envp);
 }
 
-int     main(void)
+int     main(int argc, char **argv)
 {
 	pid_t	pid;
 	char	*line;
@@ -60,10 +69,15 @@ int     main(void)
 
 	result = 1;
 	//line = NULL;
-	//(void)argv;
-	
+	(void)argv;
+	if (argc != 1)
+	{
+		printf("no arguments needed"); //
+		return (0);
+	}
 	while (result == 1)
 	{
+		prompt();
 		result = get_next_line(0, &line);
 		command = ft_split(line, ' ');//nu is het een array, dat wil je niet
 		//herschrijf ft_split zodat linked list...
