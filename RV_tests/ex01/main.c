@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/20 12:37:52 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/04 14:46:17 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/04 15:15:58 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ int     main(int argc, char **argv, char **envp)
 		result = get_next_line(0, &line);
 		
 
-/*		Hier komt code die de ingelezen line van gnl split op spaties en van elk 'woord' een element in een linked list maakt
+/*		Hier komt code die de ingelezen line van gnl split op spaties en van elk 'woord' een element in een linked list maakt */
 		command = ft_split(line, ' ');//nu is het een array, dat wil je niet
 		//herschrijf ft_split zodat linked list...
 		ft_list_push_back(&list, line);//elementen zijn woorden in line, niet line zelf
 		//free(line);		
-*/
+/* 		Einde van het stuk dat nog moet */
 
 		if (ft_strncmp(line, "cp ", 2) == 0)
 		{
