@@ -11,12 +11,13 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "libft/libft.h"
 #include <stdio.h> //
 #include <unistd.h>
 #include "get_next_line.h"
 #include <fcntl.h>
 #include <stdlib.h>
-#include "ft_list.h"
+// #include "ft_list.h"
 #include <string.h>
 
 // Names of environment variables are case-sensitive and must not contain the character ‘=’. 
@@ -39,13 +40,19 @@ void	divide_input(t_list *list, char *line)
 	temp = NULL;
 	while (line[start + len] != '\0')
 	{
-		if (line[start + len] == '"')
+		if (line[start + len] == 34)
 		{
-			if (line[start + len] == '"')
+			len++;
+			// printf("LINE: %c\n", line[start + len]);
+			if (line[start + len] == 34)
 			{
 				temp = ft_substr((char const *)line, start, len);
+				printf("%s", temp);
 				// char	*ft_substr(char const *s, unsigned int start, size_t len)
 				ft_list_push_back(&list, temp);
+				start = len++;
+				// free(temp);
+				// temp = NULL;
 				break;
 			}
 			if (line[start + len] == '\0')
@@ -53,10 +60,8 @@ void	divide_input(t_list *list, char *line)
 				printf("error"); //korter break combineren
 				break;
 			}
-			len++;
 		}
 		len++;
-		// if (line[start + len] == ' ')
 	}
 
 }
@@ -72,14 +77,13 @@ void	read_input(t_list *list)
 	{
 		prompt();
 		result = get_next_line(0, &line);
-		printf("LINE: %s\n", line);
 		divide_input(list, line);
-		ft_list_push_back(&list, line);
+		// ft_list_push_back(&list, line);
 		free(line);
 		line = NULL;
 	}
-	if (strncmp((const char *)list->data , "cat", 3) == 0)
-		printf("cat type 1\n");
+	// if (ft_strncmp((const char *)list->data , "cat", 3) == 0)
+	// 	printf("cat type 1\n");
 	// while (list)
 	// {
 	// 	printf("%s\n", (char*)list->data);
@@ -104,16 +108,20 @@ void	read_input(t_list *list)
 // 	}
 // }
 
-void compare_input(t_list *list)
+void compare_input(t_list *list, char **env)
 {
 	while (list)
 	{
-		if (strncmp((const char *)list->data , "cat", 3) == 0)
+		if (ft_strncmp((const char *)list->data , "cat", 3) == 0)
+			printf("cat type\n");
+		if (ft_strncmp((const char *)list->data , "cp", 2) == 0)
+			printf("cat type\n");
+		if (ft_strncmp((const char *)list->data , "echo", 4) == 0)
 			printf("cat type\n");
 	}
 }
 
-int		main(int argc, char **argv)
+int		main(int argc, char **argv, char **env)
 {
 	t_list *list;
 	
@@ -124,9 +132,10 @@ int		main(int argc, char **argv)
 		printf("no arguments needed"); //
 		return (0);
 	}
-	printf("%d\n", ft_strlen("hallo"));
 	read_input(list);
-	// compare_input(list); //check welke type het is
+	if (ft_strncmp("cat" , "cat", 3) == 0)
+			printf("cat type\n");
+	// compare_input(list, env); //check welke type het is
 	//start chilproces?
 	return (0);
 }

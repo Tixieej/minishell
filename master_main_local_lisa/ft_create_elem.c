@@ -9,8 +9,8 @@
 /*   Updated: 2019/08/21 21:46:14 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdlib.h>
-#include "ft_list.h"
+
+#include "minishell.h"
 
 t_list		*ft_create_elem(void *data)
 {

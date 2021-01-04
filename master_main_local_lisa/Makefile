@@ -11,7 +11,7 @@
 # **************************************************************************** #
 
 NAME = minishell
-LIBFT = libft/libft.a
+LIBFT = libft.a
 SRC = main.c \
 		get_next_line.c \
 		get_next_line_utils.c \
@@ -21,28 +21,58 @@ OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 CC = gcc
 INC = minishell.h get_next_line.h
-
 all: $(NAME)
-
-$(NAME): $(LIBFT) $(OBJ) minishell.h
-	$(CC) -Llibft -o $(NAME) $(OBJ)
-
+$(NAME): $(LIBFT) $(OBJ)
+	$(CC) -L. -lft -o $(NAME) $(OBJ)
 $(LIBFT):
-	$(MAKE) -C $(dir $(LIBFT)) all
-
+	cd libft && make
+	mv libft/$(LIBFT) .
 test: $(NAME)
 	./$(NAME)
-
 %.o: %.c $(INC)
 	$(shell mkdir -p $(dir $@))
 	gcc $(CFLAGS) -c $< -o $@
-
 clean:
 	$(RM) $(OBJ)
-	$(MAKE) -C $(dir $(LIBFT)) clean
-
+	cd libft && make clean
 fclean:	clean
 	$(RM) $(NAME)
-	$(MAKE) -C $(dir $(LIBFT)) fclean
-
+	rm -rf $(LIBFT)
 re: fclean all
+
+# NAME = minishell
+# LIBFT = libft/libft.a
+# SRC = main.c \
+# 		get_next_line.c \
+# 		get_next_line_utils.c \
+# 		ft_list_push_back.c \
+# 		ft_create_elem.c
+# OBJ = $(SRC:.c=.o)
+# CFLAGS = -Wall -Werror -Wextra
+# CC = gcc
+# INC = minishell.h get_next_line.h
+
+# all: $(NAME)
+
+# $(NAME): $(LIBFT) $(OBJ) minishell.h
+# 	$(CC) -Llibft -o $(NAME) $(OBJ)
+
+# $(LIBFT):
+# 	$(MAKE) -C $(dir $(LIBFT)) all
+
+# test: $(NAME)
+# 	./$(NAME)
+
+# %.o: %.c $(INC)
+# 	$(shell mkdir -p $(dir $@))
+# 	gcc $(CFLAGS) -c $< -o $@
+
+# clean:
+# 	$(RM) $(OBJ)
+# 	$(MAKE) -C $(dir $(LIBFT)) clean
+
+# fclean:	clean
+# 	$(RM) $(NAME)
+# 	$(MAKE) -C $(dir $(LIBFT)) fclean
+
+# re: fclean all
