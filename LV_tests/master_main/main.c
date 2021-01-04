@@ -43,13 +43,13 @@ void	prompt()
 int		main(int argc, char **argv)
 {
 	pid_t	ret_value;
-	t_list *list;
+	t_list 	*list;
 	char	*line;
 	int		result;
 
-	ret_value = 7;	
+	ret_value = 1;
+	result = 1;	
 	list = NULL;
-	result = 1;
 	line = NULL;
 	(void)argv;
 	if (argc != 1)
@@ -57,6 +57,7 @@ int		main(int argc, char **argv)
 		printf("no arguments needed"); //
 		return (0);
 	}
+	//if  statement -> tweede arg is cat, cd etc doe dan ret_value
 	ret_value = fork();
 	if (ret_value < 0)
 		printf("creating childprocess had failed\n"); //
@@ -92,12 +93,6 @@ int		main(int argc, char **argv)
 	{
 		wait(NULL);
 		printf("parent process\n"); //
-	}
-	while (list)  //prints list
-	{
-		printf("%s\n", (char*)list->data);
-		printf("%p\n", (char*)list->next);
-		list = list->next;
 	}
 	return (0);
 }
