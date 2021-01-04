@@ -24,7 +24,7 @@ INC = minishell.h get_next_line.h
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ)
+$(NAME): $(LIBFT) $(OBJ) minishell.h
 	$(CC) -Llibft -o $(NAME) $(OBJ)
 
 $(LIBFT):

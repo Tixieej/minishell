@@ -28,29 +28,56 @@ void	prompt()
 	write(1, "\033[38;5;105mhallo: \e[0m", 23);
 }
 
-void	divide_input(t_list *list)
+void	divide_input(t_list *list, char *line)
+{
+	size_t			len;
+	unsigned int	start;
+	char			*temp;
+
+	len = 0;
+	start = 0;
+	temp = NULL;
+	while (line[start + len] != '\0')
+	{
+		if (line[start + len] == '"')
+		{
+			if (line[start + len] == '"')
+			{
+				temp = ft_substr((char const *)line, start, len);
+				// char	*ft_substr(char const *s, unsigned int start, size_t len)
+				ft_list_push_back(&list, temp);
+				break;
+			}
+			if (line[start + len] == '\0')
+			{
+				printf("error"); //korter break combineren
+				break;
+			}
+			len++;
+		}
+		len++;
+		// if (line[start + len] == ' ')
+	}
+
+}
+
+void	read_input(t_list *list)
 {
 	int 	result;
 	char	*line;
 
 	result = 1;
 	line = NULL;
-	while (result == 1)
+	while (result == 1)  // voorbeelde cat > test.txt
 	{
-		//iets met signals? waarom hier?
 		prompt();
 		result = get_next_line(0, &line);
+		printf("LINE: %s\n", line);
+		divide_input(list, line);
 		ft_list_push_back(&list, line);
-		while (result == 1)  // voorbeelde cat > test.txt
-		{
-			result = get_next_line(0, &line);
-			ft_list_push_back(&list, line);
-		}
-		// free(line);
-		// line = NULL;
+		free(line);
+		line = NULL;
 	}
-	free(line);
-	line = NULL;
 	if (strncmp((const char *)list->data , "cat", 3) == 0)
 		printf("cat type 1\n");
 	// while (list)
@@ -98,7 +125,7 @@ int		main(int argc, char **argv)
 		return (0);
 	}
 	printf("%d\n", ft_strlen("hallo"));
-	divide_input(list);
+	read_input(list);
 	// compare_input(list); //check welke type het is
 	//start chilproces?
 	return (0);
