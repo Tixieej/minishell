@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/20 12:37:52 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/04 13:36:25 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/04 14:46:17 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char		**ft_split(char const *s, char c);
 
 void	prompt()
 {
-	write(1, "\033[38;5;105mhallo: \e[0m", 23);
+	write(1, "\033[38;5;105mlrsh$ \e[0m", 22);
 }
 
 int			ft_strncmp(char *s1, char *s2, t_size_t n)
@@ -51,34 +51,18 @@ void	ft_copy(char **command, char **envp)
 {
 	printf("kijk nu of het nieuwe bestand er staat\n");
 	(void)(command);
-	//zie voor deze test exec_cp.c
 	char *args[] = {"/bin/cp", "testfile", "vla", NULL};
-
-
-	char	**tmp = envp;
-	while (*tmp)
-	{
-		printf("%s\n", *tmp);
-		tmp++;
-	}
 
 	execve(args[0], args, envp);
 }
 
-//void	ft_echo(char **command)
-//{
-//	char app[] = "/bin/echo";
-//	char * const argv[] = { app, "success", NULL };
-//	if (execv(app, argv) < 0)
-//	{
-//		perror("execv error");
-//	}
-//	else if (processId < 0)
-//		perror("fork error");
-//	else
-//		return EXIT_SUCCESS;
-//	return EXIT_FAILURE;
-//}
+void	ft_echo(char **command, char **envp)
+{
+	(void)(command);
+	char *args[] = {"/bin/echo", "success", NULL};
+
+	execve(args[0], args, envp);
+}
 
 int     main(int argc, char **argv, char **envp)
 {
@@ -101,13 +85,17 @@ int     main(int argc, char **argv, char **envp)
 	{
 		prompt();
 		result = get_next_line(0, &line);
+		
+
+/*		Hier komt code die de ingelezen line van gnl split op spaties en van elk 'woord' een element in een linked list maakt
 		command = ft_split(line, ' ');//nu is het een array, dat wil je niet
 		//herschrijf ft_split zodat linked list...
 		ft_list_push_back(&list, line);//elementen zijn woorden in line, niet line zelf
-		//free(line);
+		//free(line);		
+*/
+
 		if (ft_strncmp(line, "cp ", 2) == 0)
 		{
-			//roep /bin/cp aan
 			printf("yay copy is aangeroepen, wat nu?\n");
 			pid = fork();
 			if (pid == 0)
@@ -117,6 +105,14 @@ int     main(int argc, char **argv, char **envp)
 				wait(NULL);
 				printf("parent\n");
 			}
+		}
+		else if (ft_strncmp(line, "echo ", 4) == 0)
+		{
+			pid = fork();
+			if (pid == 0)
+				ft_echo(command, envp);
+			else
+				wait(NULL);
 		}
 	}
 
