@@ -11,6 +11,7 @@
 # **************************************************************************** #
 
 NAME = minishell
+LIBFT = libft/libft.a
 SRC = main.c \
 		get_next_line.c \
 		get_next_line_utils.c \
@@ -23,19 +24,25 @@ INC = minishell.h get_next_line.h
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	$(CC) -o $(NAME) $(OBJ)
+$(NAME): $(LIBFT) $(OBJ)
+	$(CC) -Llibft -o $(NAME) $(OBJ)
+
+$(LIBFT):
+	$(MAKE) -C $(dir $(LIBFT)) all
 
 test: $(NAME)
 	./$(NAME)
 
 %.o: %.c $(INC)
+	$(shell mkdir -p $(dir $@))
 	gcc $(CFLAGS) -c $< -o $@
 
 clean:
 	$(RM) $(OBJ)
+	$(MAKE) -C $(dir $(LIBFT)) clean
 
 fclean:	clean
 	$(RM) $(NAME)
+	$(MAKE) -C $(dir $(LIBFT)) fclean
 
 re: fclean all

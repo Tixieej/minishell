@@ -28,14 +28,13 @@ void	prompt()
 	write(1, "\033[38;5;105mhallo: \e[0m", 23);
 }
 
-
-void	divide_input()
+void	divide_input(t_list *list)
 {
-	int result;
+	int 	result;
 	char	*line;
 
 	result = 1;
-	line == NULL;
+	line = NULL;
 	while (result == 1)
 	{
 		//iets met signals? waarom hier?
@@ -52,20 +51,21 @@ void	divide_input()
 	}
 	free(line);
 	line = NULL;
-	// while (list)
-	// {
-	// 	printf("%s\n", (char*)list->data);
-	// 	printf("%p\n", (char*)list->next);
-	// 	list = list->next;
-	// }
+	while (list)
+	{
+		printf("%s\n", (char*)list->data);
+		printf("%p\n", (char*)list->next);
+		list = list->next;
+	}
 }
 
 void compare_input(t_list *list)
 {
-	if (ft_strncmp(list->data , "cat", 3)
+	if (ft_strncmp((char *)list->data , "cat", 3) == 0)
 		printf("cat type");
 }
-int		main(int argc, char **argv, char *envp[])
+
+int		main(int argc, char **argv)
 {
 	t_list *list;
 	
@@ -76,7 +76,21 @@ int		main(int argc, char **argv, char *envp[])
 		printf("no arguments needed"); //
 		return (0);
 	}
-	compare_input(list);
+	divide_input(list);
+	compare_input(list); //check welke type het is
+	//start chilproces?
+	// ret_value = fork();
 
+	// if (ret_value < 0)
+	// 	printf("creating childprocess had failed\n"); //
+	// else if (ret_value == 0)
+	// {
+	// 	ret_value = fork();
+	// 	printf("ret_value2 %d\n", ret_value);
+	// 	printf("Child Process\n");
+	// 	printf("%s\n", argv[1]); //
+	// 	if (send_signal(ret_value) == 0)
+	// 		printf("childprocess is killed\n");
+	// }
 	return (0);
 }
