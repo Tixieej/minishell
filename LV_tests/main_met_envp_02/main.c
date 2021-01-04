@@ -28,21 +28,14 @@ void	prompt()
 	write(1, "\033[38;5;105mhallo: \e[0m", 23);
 }
 
-int		main(int argc, char **argv, char *envp[])
+
+void	divide_input()
 {
-	t_list *list;
+	int result;
 	char	*line;
-	int		result;
-	
-	list = NULL;
+
 	result = 1;
-	line = NULL;
-	(void)argv;
-	if (argc != 1)
-	{
-		printf("no arguments needed"); //
-		return (0);
-	}
+	line == NULL;
 	while (result == 1)
 	{
 		//iets met signals? waarom hier?
@@ -59,11 +52,31 @@ int		main(int argc, char **argv, char *envp[])
 	}
 	free(line);
 	line = NULL;
-	while (list)
+	// while (list)
+	// {
+	// 	printf("%s\n", (char*)list->data);
+	// 	printf("%p\n", (char*)list->next);
+	// 	list = list->next;
+	// }
+}
+
+void compare_input(t_list *list)
+{
+	if (ft_strncmp(list->data , "cat", 3)
+		printf("cat type");
+}
+int		main(int argc, char **argv, char *envp[])
+{
+	t_list *list;
+	
+	list = NULL;
+	(void)argv;
+	if (argc != 1)
 	{
-		printf("%s\n", (char*)list->data);
-		printf("%p\n", (char*)list->next);
-		list = list->next;
+		printf("no arguments needed"); //
+		return (0);
 	}
+	compare_input(list);
+
 	return (0);
 }
