@@ -17,7 +17,7 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include "ft_list.h"
-
+#include <string.h>
 
 // Names of environment variables are case-sensitive and must not contain the character ‘=’. 
 //System-defined environment variables are invariably uppercase. 
@@ -51,18 +51,39 @@ void	divide_input(t_list *list)
 	}
 	free(line);
 	line = NULL;
-	while (list)
-	{
-		printf("%s\n", (char*)list->data);
-		printf("%p\n", (char*)list->next);
-		list = list->next;
-	}
+	if (strncmp((const char *)list->data , "cat", 3) == 0)
+		printf("cat type 1\n");
+	// while (list)
+	// {
+	// 	printf("%s\n", (char*)list->data);
+	// 	printf("%p\n", (char*)list->next);
+	// 	list = list->next;
+	// }
 }
+
+// void	child_process(t_list *list)
+// {
+// 	ret_value = fork();
+// 	if (ret_value < 0)
+// 		printf("creating childprocess had failed\n"); //
+// 	else if (ret_value == 0)
+// 	{
+// 		// ret_value = fork();
+// 		printf("ret_value2 %d\n", ret_value);
+// 		printf("Child Process\n");
+// 		printf("%s\n", argv[1]); //
+// 		if (send_signal(ret_value) == 0)
+// 			printf("childprocess is killed\n");
+// 	}
+// }
 
 void compare_input(t_list *list)
 {
-	if (ft_strncmp((char *)list->data , "cat", 3) == 0)
-		printf("cat type");
+	while (list)
+	{
+		if (strncmp((const char *)list->data , "cat", 3) == 0)
+			printf("cat type\n");
+	}
 }
 
 int		main(int argc, char **argv)
@@ -76,21 +97,9 @@ int		main(int argc, char **argv)
 		printf("no arguments needed"); //
 		return (0);
 	}
+	printf("%d\n", ft_strlen("hallo"));
 	divide_input(list);
-	compare_input(list); //check welke type het is
+	// compare_input(list); //check welke type het is
 	//start chilproces?
-	// ret_value = fork();
-
-	// if (ret_value < 0)
-	// 	printf("creating childprocess had failed\n"); //
-	// else if (ret_value == 0)
-	// {
-	// 	ret_value = fork();
-	// 	printf("ret_value2 %d\n", ret_value);
-	// 	printf("Child Process\n");
-	// 	printf("%s\n", argv[1]); //
-	// 	if (send_signal(ret_value) == 0)
-	// 		printf("childprocess is killed\n");
-	// }
 	return (0);
 }
