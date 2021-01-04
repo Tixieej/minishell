@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/20 12:37:52 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/04 11:01:06 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/04 12:47:27 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	ft_copy(char **command)
 	char *args[] = {"ft_split.c", "vla", NULL};
 
 	execve("/bin/cp", args, envp);
+	//execve("/bin/cp", args);
 }
 
 int     main(int argc, char **argv)
@@ -90,11 +91,11 @@ int     main(int argc, char **argv)
 			pid = fork();
 			if (pid == 0)
 				ft_copy(command);
-		//	else
-		//	{
-		//		wait(NULL);
-		//		printf("parent\n");
-		//	}
+			else
+			{
+				wait(NULL);
+				printf("parent\n");
+			}
 		}
 	}
 
