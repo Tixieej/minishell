@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/20 12:37:52 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/04 15:20:42 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/05 10:29:25 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,28 @@ int			ft_strncmp(char *s1, char *s2, t_size_t n)
 	while (s1[i] == s2[i] && s2[i] != '\0')
 	{
 		if (i >= n)
-		{
 			return (s1[i] - s2[i]);
-		}
 		else
-		{
 			i++;
-		}
 	}
 	return (s1[i] - s2[i]);
 }
 
+//void	ft_list_to_array(t_list list)
+//{
+//	printf("1st el: %s\n", (char *)list->data);
+	//hoeveel elementen
+	
+	//malloc array
+	//zet elementen in array
+//}
 
+//void	ft_execute(geparste command array)
+//{
+//	execve(command[0], command, envp);
+
+//}
+/* onderstaande twee functies worden vervangen door ft_execute */
 void	ft_copy(char **command, char **envp)
 {
 	printf("kijk nu of het nieuwe bestand er staat\n");
