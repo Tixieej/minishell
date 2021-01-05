@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_list.h                                          :+:    :+:            */
+/*   ft_isalnum.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: livlamin <marvin@codam.nl>                   +#+                     */
+/*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/08/20 12:34:22 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/05 14:58:48 by rixt          ########   odam.nl         */
+/*   Created: 2019/11/04 12:20:43 by rde-vrie      #+#    #+#                 */
+/*   Updated: 2019/11/18 13:40:59 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_LIST_H
-# define FT_LIST_H
+#include "libft.h"
 
-typedef	struct		s_list
+int	ft_isalnum(int c)
 {
-	struct s_list	*next;
-	void			*data;
-}					t_list;
+	int	test;
 
-t_list              *ft_create_elem(void *data);
-void				ft_list_push_back(t_list **begin_list, void *data);
-
-#endif
+	if (ft_isalpha(c) || ft_isdigit(c))
+		test = 1;
+	else
+		test = 0;
+	return (test);
+}

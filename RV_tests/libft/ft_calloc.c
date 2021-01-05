@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_list.h                                          :+:    :+:            */
+/*   ft_calloc.c                                        :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: livlamin <marvin@codam.nl>                   +#+                     */
+/*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/08/20 12:34:22 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/05 14:58:48 by rixt          ########   odam.nl         */
+/*   Created: 2019/11/18 09:59:06 by rde-vrie      #+#    #+#                 */
+/*   Updated: 2019/12/03 09:53:34 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_LIST_H
-# define FT_LIST_H
+#include "libft.h"
 
-typedef	struct		s_list
+void	*ft_calloc(size_t count, size_t size)
 {
-	struct s_list	*next;
-	void			*data;
-}					t_list;
+	size_t	i;
+	size_t	total;
+	char	*ptr;
 
-t_list              *ft_create_elem(void *data);
-void				ft_list_push_back(t_list **begin_list, void *data);
-
-#endif
+	i = 0;
+	total = size * count;
+	ptr = malloc(total);
+	if (ptr == NULL)
+		return (NULL);
+	ft_bzero(ptr, total);
+	return (ptr);
+}

@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_list.h                                          :+:    :+:            */
+/*   ft_strncmp.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: livlamin <marvin@codam.nl>                   +#+                     */
+/*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/08/20 12:34:22 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/05 14:58:48 by rixt          ########   odam.nl         */
+/*   Created: 2019/10/29 10:31:43 by rde-vrie      #+#    #+#                 */
+/*   Updated: 2019/12/03 09:33:38 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_LIST_H
-# define FT_LIST_H
+#include <stdlib.h>
 
-typedef	struct		s_list
+int			ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	struct s_list	*next;
-	void			*data;
-}					t_list;
-
-t_list              *ft_create_elem(void *data);
-void				ft_list_push_back(t_list **begin_list, void *data);
-
-#endif
+	while (n)
+	{
+		if (*s1 != *s2)
+			return ((unsigned char)*s1 - (unsigned char)*s2);
+		if (*s2 == '\0')
+			return (0);
+		s1++;
+		s2++;
+		n--;
+	}
+	return (0);
+}

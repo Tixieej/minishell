@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_list.h                                          :+:    :+:            */
+/*   ft_putendl_fd.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: livlamin <marvin@codam.nl>                   +#+                     */
+/*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/08/20 12:34:22 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/05 14:58:48 by rixt          ########   odam.nl         */
+/*   Created: 2019/11/18 15:58:39 by rde-vrie      #+#    #+#                 */
+/*   Updated: 2019/11/21 15:23:33 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_LIST_H
-# define FT_LIST_H
+#include "libft.h"
 
-typedef	struct		s_list
+void	ft_putendl_fd(char *s, int fd)
 {
-	struct s_list	*next;
-	void			*data;
-}					t_list;
-
-t_list              *ft_create_elem(void *data);
-void				ft_list_push_back(t_list **begin_list, void *data);
-
-#endif
+	ft_putstr_fd(s, fd);
+	ft_putchar_fd('\n', fd);
+}

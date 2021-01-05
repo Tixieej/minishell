@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_list.h                                          :+:    :+:            */
+/*   ft_isdigit.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: livlamin <marvin@codam.nl>                   +#+                     */
+/*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/08/20 12:34:22 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/05 14:58:48 by rixt          ########   odam.nl         */
+/*   Created: 2019/11/04 12:16:01 by rde-vrie      #+#    #+#                 */
+/*   Updated: 2019/12/03 09:35:06 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_LIST_H
-# define FT_LIST_H
-
-typedef	struct		s_list
+int	ft_isdigit(int c)
 {
-	struct s_list	*next;
-	void			*data;
-}					t_list;
+	int	test;
 
-t_list              *ft_create_elem(void *data);
-void				ft_list_push_back(t_list **begin_list, void *data);
-
-#endif
+	if (47 < c && c < 58)
+		test = 1;
+	else
+		test = 0;
+	return (test);
+}

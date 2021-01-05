@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_list.h                                          :+:    :+:            */
+/*   ft_lstsize_bonus.c                                 :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: livlamin <marvin@codam.nl>                   +#+                     */
+/*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/08/20 12:34:22 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/05 14:58:48 by rixt          ########   odam.nl         */
+/*   Created: 2019/11/26 12:23:48 by rde-vrie      #+#    #+#                 */
+/*   Updated: 2019/12/02 13:25:58 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_LIST_H
-# define FT_LIST_H
+#include "libft.h"
 
-typedef	struct		s_list
+int	ft_lstsize(t_list *lst)
 {
-	struct s_list	*next;
-	void			*data;
-}					t_list;
+	int	count;
 
-t_list              *ft_create_elem(void *data);
-void				ft_list_push_back(t_list **begin_list, void *data);
-
-#endif
+	if (!lst)
+		return (0);
+	count = 1;
+	while (lst->next)
+	{
+		count++;
+		lst = lst->next;
+	}
+	return (count);
+}
