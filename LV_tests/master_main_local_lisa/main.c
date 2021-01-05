@@ -29,6 +29,18 @@ void	prompt()
 	write(1, "\033[38;5;105mhallo: \e[0m", 23);
 }
 
+
+void	create_list(t_list *list, char *line, size_t len, unsigned int start)
+{
+	char *temp;
+
+	temp = ft_substr((char const *)line, start, len);
+	ft_list_push_back(&list, temp);
+	free(temp);
+	temp = NULL;
+	// printf("%s\n", (char*)list->data);
+}
+
 void	divide_input(t_list *list, char *line)
 {
 	size_t			len;
@@ -42,28 +54,25 @@ void	divide_input(t_list *list, char *line)
 	{
 		if (line[start + len] == 34)
 		{
-			len++;
-			// printf("LINE: %c\n", line[start + len]);
-			if (line[start + len] == 34)
+			start += len + 1;
+			len = 1;
+			while (line[start + len] != '\0')
 			{
-				temp = ft_substr((char const *)line, start, len);
-				printf("%s", temp);
-				// char	*ft_substr(char const *s, unsigned int start, size_t len)
-				ft_list_push_back(&list, temp);
-				start = len++;
-				// free(temp);
-				// temp = NULL;
-				break;
-			}
-			if (line[start + len] == '\0')
-			{
-				printf("error"); //korter break combineren
-				break;
+				// if (line[start + len] == 34)
+				// {
+				// 	temp = ft_substr((char const *)line, start, len);
+				// 	ft_list_push_back(&list, temp);
+				// 	free(temp);
+				// 	temp = NULL;
+				// }
+				if (line[start + len] == 34)
+					create_list(list, line, len, start);
+				len++;
 			}
 		}
 		len++;
 	}
-
+	printf("%s\n", (char*)list->data);
 }
 
 void	read_input(t_list *list)
@@ -108,22 +117,22 @@ void	read_input(t_list *list)
 // 	}
 // }
 
-void compare_input(t_list *list, char **env)
-{
-	while (list)
-	{
-		if (ft_strncmp((const char *)list->data , "cat", 3) == 0)
-			printf("cat type\n");
-		if (ft_strncmp((const char *)list->data , "cp", 2) == 0)
-			printf("cat type\n");
-		if (ft_strncmp((const char *)list->data , "echo", 4) == 0)
-			printf("cat type\n");
-	}
-}
+// void compare_input(t_list *list)//, char **env)
+// {
+// 	while (list)
+// 	{
+// 		if (ft_strncmp((const char *)list->data , "cat", 3) == 0)
+// 			printf("cat type\n");
+// 		if (ft_strncmp((const char *)list->data , "cp", 2) == 0)
+// 			printf("cat type\n");
+// 		if (ft_strncmp((const char *)list->data , "echo", 4) == 0)
+// 			printf("cat type\n");
+// 	}
+// }
 
-int		main(int argc, char **argv, char **env)
+int		main(int argc, char **argv)//, char **env)
 {
-	t_list *list;
+	t_list	*list;
 	
 	list = NULL;
 	(void)argv;
@@ -133,8 +142,6 @@ int		main(int argc, char **argv, char **env)
 		return (0);
 	}
 	read_input(list);
-	if (ft_strncmp("cat" , "cat", 3) == 0)
-			printf("cat type\n");
 	// compare_input(list, env); //check welke type het is
 	//start chilproces?
 	return (0);
