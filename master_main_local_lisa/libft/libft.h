@@ -17,8 +17,8 @@
 
 typedef struct		s_list
 {
-	void			*content;
 	struct s_list	*next;
+	void			*content;
 }					t_list;
 
 void				*ft_memset(void *b, int c, size_t len);

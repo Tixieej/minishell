@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include "libft/libft.h"
 # include "get_next_line.h"
-
+# include <stdio.h> // WEGHALEN PRINTF
 
 // typedef	struct		s_list
 // {

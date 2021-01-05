@@ -27,7 +27,7 @@ void	prompt()
 	write(1, "\033[38;5;105mhallo: \e[0m", 23);
 }
 
-void	create_list(t_list *list, char *line, size_t len, unsigned int start)
+int		create_list(t_list *list, char *line, size_t len, unsigned int start)
 {
 	char *temp;
 
@@ -35,7 +35,8 @@ void	create_list(t_list *list, char *line, size_t len, unsigned int start)
 	ft_list_push_back(&list, temp);
 	free(temp);
 	temp = NULL;
-	// printf("%s\n", (char*)list->content);
+	printf("con%s\n", (char*)list->content);
+	return (start + len + 1);
 }
 
 void	divide_input(t_list *list, char *line)
@@ -63,13 +64,16 @@ void	divide_input(t_list *list, char *line)
 				// 	temp = NULL;
 				// }
 				if (line[start + len] == 34)
-					create_list(list, line, len, start);
+				{
+					start = create_list(list, line, len, start);
+					len = 0;
+					break;
+				}
 				len++;
 			}
 		}
 		len++;
 	}
-	printf("%s\n", (char*)list->content);
 }
 
 void	read_input(t_list *list)
@@ -131,7 +135,8 @@ int		main(int argc, char **argv)//, char **env)
 {
 	t_list	*list;
 	
-	list = malloc(sizeof(t_list));
+	// list = malloc(sizeof(t_list));
+	list = NULL;
 	(void)argv;
 	if (argc != 1)
 	{
@@ -139,6 +144,12 @@ int		main(int argc, char **argv)//, char **env)
 		return (0);
 	}
 	read_input(list);
+	// while (list)
+	// {
+	// 	printf("%s\n", (char*)list->content);
+	// 	printf("%p\n", (char*)list->next);
+	// 	list = list->next;
+	// }
 	// compare_input(list, env); //check welke type het is
 	//start chilproces?
 	return (0);
