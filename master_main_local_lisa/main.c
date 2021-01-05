@@ -29,6 +29,18 @@ void	prompt()
 	write(1, "\033[38;5;105mhallo: \e[0m", 23);
 }
 
+
+void	create_list(t_list *list, char *line, size_t len, unsigned int start)
+{
+	char *temp;
+
+	temp = ft_substr((char const *)line, start, len);
+	ft_list_push_back(&list, temp);
+	free(temp);
+	temp = NULL;
+	// printf("%s\n", (char*)list->data);
+}
+
 void	divide_input(t_list *list, char *line)
 {
 	size_t			len;
@@ -42,32 +54,25 @@ void	divide_input(t_list *list, char *line)
 	{
 		if (line[start + len] == 34)
 		{
-			len++;
-			start += len;
-			printf("LINE: %c\n", line[start]);
-			while (line[start + len + 1] != '\0')
+			start += len + 1;
+			len = 1;
+			while (line[start + len] != '\0')
 			{
+				// if (line[start + len] == 34)
+				// {
+				// 	temp = ft_substr((char const *)line, start, len);
+				// 	ft_list_push_back(&list, temp);
+				// 	free(temp);
+				// 	temp = NULL;
+				// }
 				if (line[start + len] == 34)
-				{
-					temp = ft_substr((char const *)line, start, len);
-					printf("%s\n", temp);
-					ft_list_push_back(&list, temp);
-					len++;
-					start += len;
-					free(temp);
-					temp = NULL;
-				}
-				if (line[start + len] == '\0')
-				{
-					printf("error"); //korter break combineren
-					break;
-				}
+					create_list(list, line, len, start);
 				len++;
 			}
 		}
 		len++;
 	}
-
+	printf("%s\n", (char*)list->data);
 }
 
 void	read_input(t_list *list)
