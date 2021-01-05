@@ -6,9 +6,10 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/20 12:34:22 by livlamin      #+#    #+#                 */
-/*   Updated: 2020/12/21 10:08:28 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/05 11:34:34 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef FT_LIST_H
 # define FT_LIST_H
 
