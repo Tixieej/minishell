@@ -15,11 +15,11 @@
 
 # include <stdlib.h>
 
-// typedef struct		s_list
-// {
-// 	void			*content;
-// 	struct s_list	*next;
-// }					t_list;
+typedef struct		s_list
+{
+	void			*content;
+	struct s_list	*next;
+}					t_list;
 
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
@@ -66,5 +66,7 @@ void				ft_lstclear(t_list **lst, void (*del)(void*));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *), \
 								void (*del)(void *));
+t_list              *ft_create_elem(void *data);
+void				ft_list_push_back(t_list **begin_list, void *data);
 
 #endif

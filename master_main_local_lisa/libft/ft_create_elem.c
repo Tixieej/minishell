@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
 t_list		*ft_create_elem(void *data)
 {
@@ -19,7 +19,7 @@ t_list		*ft_create_elem(void *data)
 	list = malloc(sizeof(t_list));
 	if(list)
 	{
-		list->data = data;
+		list->content = data;
 		list->next = NULL;
 	}
 	return list;

@@ -11,10 +11,8 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "libft/libft.h"
 #include <stdio.h> //
 #include <unistd.h>
-#include "get_next_line.h"
 #include <fcntl.h>
 #include <stdlib.h>
 // #include "ft_list.h"
@@ -29,7 +27,6 @@ void	prompt()
 	write(1, "\033[38;5;105mhallo: \e[0m", 23);
 }
 
-
 void	create_list(t_list *list, char *line, size_t len, unsigned int start)
 {
 	char *temp;
@@ -38,7 +35,7 @@ void	create_list(t_list *list, char *line, size_t len, unsigned int start)
 	ft_list_push_back(&list, temp);
 	free(temp);
 	temp = NULL;
-	// printf("%s\n", (char*)list->data);
+	// printf("%s\n", (char*)list->content);
 }
 
 void	divide_input(t_list *list, char *line)
@@ -72,7 +69,7 @@ void	divide_input(t_list *list, char *line)
 		}
 		len++;
 	}
-	printf("%s\n", (char*)list->data);
+	printf("%s\n", (char*)list->content);
 }
 
 void	read_input(t_list *list)
@@ -91,11 +88,11 @@ void	read_input(t_list *list)
 		free(line);
 		line = NULL;
 	}
-	// if (ft_strncmp((const char *)list->data , "cat", 3) == 0)
+	// if (ft_strncmp((const char *)list->content , "cat", 3) == 0)
 	// 	printf("cat type 1\n");
 	// while (list)
 	// {
-	// 	printf("%s\n", (char*)list->data);
+	// 	printf("%s\n", (char*)list->content);
 	// 	printf("%p\n", (char*)list->next);
 	// 	list = list->next;
 	// }
@@ -117,24 +114,24 @@ void	read_input(t_list *list)
 // 	}
 // }
 
-// void compare_input(t_list *list)//, char **env)
-// {
-// 	while (list)
-// 	{
-// 		if (ft_strncmp((const char *)list->data , "cat", 3) == 0)
-// 			printf("cat type\n");
-// 		if (ft_strncmp((const char *)list->data , "cp", 2) == 0)
-// 			printf("cat type\n");
-// 		if (ft_strncmp((const char *)list->data , "echo", 4) == 0)
-// 			printf("cat type\n");
-// 	}
-// }
+void compare_input(t_list *list)//, char **env)
+{
+	while (list)
+	{
+		if (ft_strncmp((const char *)list->content , "cat", 3) == 0)
+			printf("cat type\n");
+		if (ft_strncmp((const char *)list->content , "cp", 2) == 0)
+			printf("cp type\n");
+		if (ft_strncmp((const char *)list->content , "echo", 4) == 0)
+			printf("echo type\n");
+	}
+}
 
 int		main(int argc, char **argv)//, char **env)
 {
 	t_list	*list;
 	
-	list = NULL;
+	list = malloc(sizeof(t_list));
 	(void)argv;
 	if (argc != 1)
 	{

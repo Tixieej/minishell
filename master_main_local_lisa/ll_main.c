@@ -27,7 +27,7 @@ int     main(void)
 	
 	while (list)
 	{
-		printf("%s\n", (char*)list->data);
+		printf("%s\n", (char*)list->content);
 		list = list->next;
 	}
 	return (0);

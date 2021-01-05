@@ -13,17 +13,19 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-#include <sys/wait.h>
-#include <stdlib.h>
+# include <sys/wait.h>
+# include <stdlib.h>
+# include "libft/libft.h"
+# include "get_next_line.h"
 
-typedef	struct		s_list
-{
-	struct s_list	*next;
-	void			*data;
-}					t_list;
 
-t_list              *ft_create_elem(void *data);
-void				ft_list_push_back(t_list **begin_list, void *data);
+// typedef	struct		s_list
+// {
+// 	struct s_list	*next;
+// 	void			*data;
+// }					t_list;
+
+
 int                 main(int argc, char **argv);
 
 #endif
