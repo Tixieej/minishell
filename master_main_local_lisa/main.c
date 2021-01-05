@@ -19,7 +19,7 @@
 #include <string.h>
 
 // Names of environment variables are case-sensitive and must not contain the character ‘=’. 
-//System-defined environment variables are invariably uppercase. 
+//System-defined environment variables are invariably uppercase.
 // The values of environment variables can be anything that can be represented as a string.
 //A value must not contain an embedded null character, since this is assumed to terminate the string. 
 void	prompt()
@@ -35,7 +35,7 @@ int		create_list(t_list *list, char *line, size_t len, unsigned int start)
 	ft_list_push_back(&list, temp);
 	free(temp);
 	temp = NULL;
-	printf("con%s\n", (char*)list->content);
+	printf("list: [%s]\n", (char*)list->content);
 	return (start + len + 1);
 }
 
@@ -50,30 +50,34 @@ void	divide_input(t_list *list, char *line)
 	temp = NULL;
 	while (line[start + len] != '\0')
 	{
+		if (line[start + len] == ' ' && line[start + len + 1] != 39 && line[start + len + 1] != 34)
+		{
+			start = create_list(list, line, len, start);
+			len = 0;
+		}
+		if (line[start + len] == 39)
+		{
+			start += len + 1;
+			len = 0;
+			while (line[start + len] != '\0' && line[start + len] != 39)
+				len++;
+			start = create_list(list, line, len, start);
+			len = 0;
+		}
 		if (line[start + len] == 34)
 		{
 			start += len + 1;
-			len = 1;
-			while (line[start + len] != '\0')
-			{
-				// if (line[start + len] == 34)
-				// {
-				// 	temp = ft_substr((char const *)line, start, len);
-				// 	ft_list_push_back(&list, temp);
-				// 	free(temp);
-				// 	temp = NULL;
-				// }
-				if (line[start + len] == 34)
-				{
-					start = create_list(list, line, len, start);
-					len = 0;
-					break;
-				}
+			len = 0;
+			while (line[start + len] != '\0' && line[start + len] != 34)
 				len++;
-			}
+			start = create_list(list, line, len, start);
+			len = 0;
 		}
+			
 		len++;
 	}
+	if (len > 0)
+		start = create_list(list, line, len, start);
 }
 
 void	read_input(t_list *list)
@@ -88,12 +92,11 @@ void	read_input(t_list *list)
 		prompt();
 		result = get_next_line(0, &line);
 		divide_input(list, line);
-		// ft_list_push_back(&list, line);
 		free(line);
 		line = NULL;
 	}
-	// if (ft_strncmp((const char *)list->content , "cat", 3) == 0)
-	// 	printf("cat type 1\n");
+	if (ft_strncmp((const char *)list->content , "cat", 3) == 0)
+		printf("cat type 1\n");
 	// while (list)
 	// {
 	// 	printf("%s\n", (char*)list->content);
@@ -134,8 +137,7 @@ void compare_input(t_list *list)//, char **env)
 int		main(int argc, char **argv)//, char **env)
 {
 	t_list	*list;
-	
-	// list = malloc(sizeof(t_list));
+
 	list = NULL;
 	(void)argv;
 	if (argc != 1)
@@ -144,13 +146,66 @@ int		main(int argc, char **argv)//, char **env)
 		return (0);
 	}
 	read_input(list);
-	// while (list)
-	// {
-	// 	printf("%s\n", (char*)list->content);
-	// 	printf("%p\n", (char*)list->next);
-	// 	list = list->next;
-	// }
+	while (list)
+	{
+		printf("%s\n", (char*)list->content);
+		printf("%p\n", (char*)list->next);
+		list = list->next;
+	}
 	// compare_input(list, env); //check welke type het is
 	//start chilproces?
 	return (0);
 }
+
+
+
+
+// void	divide_input(t_list *list, char *line)
+// {
+// 	size_t			len;
+// 	unsigned int	start;
+// 	char			*temp;
+
+// 	len = 0;
+// 	start = 0;
+// 	temp = NULL;
+// 	while (line[start + len] != '\0')
+// 	{
+// 		if (line[start + len] == 39)
+// 		{
+// 			start += len + 1;
+// 			len = 1;
+// 			while (line[start + len] != '\0')
+// 			{
+// 				if (line[start + len] == 39)
+// 				{
+// 					start = create_list(list, line, len, start);
+// 					len = 0;
+// 					break;
+// 				}
+// 				len++;
+// 			}
+// 		}
+// 		if (line[start + len] == 34)
+// 		{
+// 			start += len + 1;
+// 			len = 1;
+// 			while (line[start + len] != '\0')
+// 			{
+// 				if (line[start + len] == 34)
+// 				{
+// 					start = create_list(list, line, len, start);
+// 					len = 0;
+// 					break;
+// 				}
+// 				len++;
+// 			}
+// 		}
+// 		if (line[start + len] == ' ')
+// 		{
+// 			start = create_list(list, line, len, start);
+// 			len = 0;
+// 		}
+// 		len++;
+// 	}
+// }
