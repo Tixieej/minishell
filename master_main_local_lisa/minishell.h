@@ -17,7 +17,11 @@
 # include <stdlib.h>
 # include "libft/libft.h"
 # include "get_next_line.h"
+
 # include <stdio.h> // WEGHALEN PRINTF
+# define PRINT(a,b) printf(a" %s:%i (%s)\n", b, __FILE__, __LINE__, __FUNCTION__);
+// PRINT("kijk: %p", temp)
+// printf("temp: %s:%i %s\n", __FILE__, __LINE__, __FUNCTION__);	
 
 // typedef	struct		s_list
 // {
