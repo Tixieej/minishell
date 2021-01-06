@@ -114,6 +114,25 @@ void	divide_input(t_list *list, char *line)
 		start = create_list(list, line, len, start);
 }
 
+void compare_input(t_list *list)//, char **env)
+{
+	t_list	*begin;
+
+	begin = list;
+	// list = list->next; //om voorbij de eerste start te gaan
+	while (begin)
+	{
+		if (ft_strncmp((const char *)begin->content , "cat", 3) == 0)
+			printf("cat type\n");
+		if (ft_strncmp((const char *)begin->content , "cp", 2) == 0)
+			printf("cp type\n");
+		if (ft_strncmp((const char *)begin->content , "echo", 4) == 0)
+			printf("echo type\n");
+		begin = begin->next;
+	}
+	begin = list;
+}
+
 void	read_input(t_list *list)
 {
 	int 	result;
@@ -128,17 +147,49 @@ void	read_input(t_list *list)
 		prompt();
 		result = get_next_line(0, &line);
 		divide_input(list, line);
-		// while (begin)
-		// {
-		// 	printf("list->content loop: %s\n", (char*)(begin->content));
-		// 	printf("begin adress: %p\n", begin);
-		// 	begin = begin->next;
-		// }
-		// begin = list;
+		begin = list->next;
+		compare_input(list); //check welke type het is
+		while (begin)
+		{
+			printf("list item: %s\n", (char*)(begin->content));
+			// printf("begin adress: %p\n", begin);
+			begin = begin->next;
+		}
+		ft_lstclear(&list, free);
+		list = ft_create_elem(ft_strdup("start"));
+		begin = list;
 		free(line);
 		line = NULL;
 	}
 }
+
+
+// void	read_input(t_list *list)
+// {
+// 	int 	result;
+// 	char	*line;
+// 	t_list	*begin;
+
+// 	begin = list;
+// 	result = 1;
+// 	line = NULL;
+// 	while (result == 1)
+// 	{
+// 		prompt();
+// 		result = get_next_line(0, &line);
+// 		divide_input(list, line);
+// 		compare_input(list); //check welke type het is
+// 		while (begin)
+// 		{
+// 			printf("list->content loop: %s\n", (char*)(begin->content));
+// 			printf("begin adress: %p\n", begin);
+// 			begin = begin->next;
+// 		}
+// 		begin = list;
+// 		free(line);
+// 		line = NULL;
+// 	}
+// }
 
 // void	child_process(t_list *list)
 // {
@@ -156,24 +207,13 @@ void	read_input(t_list *list)
 // 	}
 // }
 
-void compare_input(t_list *list)//, char **env)
-{
-	while (list)
-	{
-		if (ft_strncmp((const char *)list->content , "cat", 3) == 0)
-			printf("cat type\n");
-		if (ft_strncmp((const char *)list->content , "cp", 2) == 0)
-			printf("cp type\n");
-		if (ft_strncmp((const char *)list->content , "echo", 4) == 0)
-			printf("echo type\n");
-	}
-}
+
 
 int		main(int argc, char **argv)//, char **env)
 {
 	t_list	*list;
 
-	list = ft_create_elem("start");//malloc(sizeof(t_list));
+	list = ft_create_elem(ft_strdup("start"));
 	(void)argv;
 	if (argc != 1)
 	{
@@ -181,8 +221,6 @@ int		main(int argc, char **argv)//, char **env)
 		return (0);
 	}
 	read_input(list);
-	compare_input(list); //check welke type het is
-	//start chilproces?
 	return (0);
 }
 
