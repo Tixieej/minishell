@@ -23,7 +23,7 @@ all: $(NAME)
 $(NAME): $(LIBFT) $(OBJ)
 	$(CC) -L. -lft -o $(NAME) $(OBJ)
 $(LIBFT):
-	cd libft && make
+	cd libft && make && make bonus
 	mv libft/$(LIBFT) .
 test: $(NAME)
 	./$(NAME)
