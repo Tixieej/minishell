@@ -163,7 +163,6 @@ void	read_input(t_list *list)
 	}
 }
 
-
 // void	read_input(t_list *list)
 // {
 // 	int 	result;
@@ -207,8 +206,6 @@ void	read_input(t_list *list)
 // 	}
 // }
 
-
-
 int		main(int argc, char **argv)//, char **env)
 {
 	t_list	*list;
@@ -223,9 +220,6 @@ int		main(int argc, char **argv)//, char **env)
 	read_input(list);
 	return (0);
 }
-
-
-
 
 // void	divide_input(t_list *list, char *line)
 // {
