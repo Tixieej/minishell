@@ -47,15 +47,8 @@ int		create_list(t_list *list, char *line, size_t len, unsigned int start)
 // 	{
 // 		while (line[start + len] == ' ')
 // 			start++;
-// 		if (line[start + len] == 34)
-// 		{
-// 			start += len + 1;
-// 			len = 0;
-// 			printf("%c\n", line[start + len]);
-// 			while (line[start + len] != '\0' && line[start + len] != 34)
-// 				len++;
-// 			printf("%c\n", line[start + len]);
-// 		}
+// 		while (line[start + len] != ' ' && line[start + len + 1] != 39 && line[start + len + 1] != 34)
+// 			len++;
 // 		if (line[start + len] == 39)
 // 		{
 // 			start += len + 1;
@@ -63,15 +56,21 @@ int		create_list(t_list *list, char *line, size_t len, unsigned int start)
 // 			while (line[start + len] != '\0' && line[start + len] != 39)
 // 				len++;
 // 		}
-// 		while (line[start + len] != ' ' && line[start + len] != 39 && line[start + len] != 34)
-// 			len++;
-// 		if (len > 0)
+// 		if (line[start + len] == 34)
 // 		{
-// 			start = create_list(list, line, len, start);
+// 			start += len + 1;
 // 			len = 0;
+// 			while (line[start + len] != '\0' && line[start + len] != 34)
+// 				len++;
 // 		}
+// 		if (len > 0)
+// 			start = create_list(list, line, len, start);
+// 		if (line[start + len] == 34 || line[start + len] == 39)
+// 			len++;
 // 		len++;
 // 	}
+// 	// if (len > 0)
+// 	// 	start = create_list(list, line, len, start);
 // }
 
 void	divide_input(t_list *list, char *line)
@@ -151,7 +150,7 @@ void	read_input(t_list *list)
 		compare_input(list); //check welke type het is
 		while (begin)
 		{
-			printf("list item: %s\n", (char*)(begin->content));
+			printf("list item: [%s]\n", (char*)(begin->content));
 			// printf("begin adress: %p\n", begin);
 			begin = begin->next;
 		}
@@ -162,6 +161,48 @@ void	read_input(t_list *list)
 		line = NULL;
 	}
 }
+
+
+// void	divide_input(t_list *list, char *line)
+// {
+// 	size_t			len;
+// 	unsigned int	start;
+// 	char			*temp;
+
+// 	len = 0;
+// 	start = 0;
+// 	temp = NULL;
+// 	while (line[start + len] != '\0')
+// 	{
+// 		while (line[start + len] == ' ')
+// 			start++;
+// 		if (line[start + len] == 34)
+// 		{
+// 			start += len + 1;
+// 			len = 0;
+// 			printf("%c\n", line[start + len]);
+// 			while (line[start + len] != '\0' && line[start + len] != 34)
+// 				len++;
+// 			printf("%c\n", line[start + len]);
+// 		}
+// 		if (line[start + len] == 39)
+// 		{
+// 			start += len + 1;
+// 			len = 0;
+// 			while (line[start + len] != '\0' && line[start + len] != 39)
+// 				len++;
+// 		}
+// 		while (line[start + len] != ' ' && line[start + len] != 39 && line[start + len] != 34)
+// 			len++;
+// 		if (len > 0)
+// 		{
+// 			start = create_list(list, line, len, start);
+// 			len = 0;
+// 		}
+// 		len++;
+// 	}
+// }
+
 
 // void	read_input(t_list *list)
 // {
