@@ -22,158 +22,39 @@
 //A value must not contain an embedded null character, since this is assumed to terminate the string. 
 void	prompt()
 {
-	write(1, "\033[38;5;105mhallo: \e[0m", 23);
+	write(1, "\033[38;5;105mminishell: \e[0m", 27);
 }
 
-int		create_list(t_list *list, char *line, size_t len, unsigned int start)
+int		create_list(t_list *list, char *line, size_t *len, unsigned int start)
 {
 	char *temp;
 
-	temp = ft_substr((char const *)line, start, len);
+	temp = ft_substr((char const *)line, start, *len);
 	ft_list_push_back(&list, temp);
-	return (start + len);
+	start += *len;
+	*len = 0;
+	return (start);
 }
 
-// void	divide_input(t_list *list, char *line)
+// int		handle_quotation_marks(t_list *list, char *line, size_t len, unsigned int start, char)
 // {
-// 	size_t			len;
-// 	unsigned int	start;
-// 	char			*temp;
-
-// 	len = 0;
-// 	start = 0;
-// 	temp = NULL;
-// 	while (line[start + len] != '\0')
+// 	if (line[start + len] == 39)
 // 	{
-// 		while (line[start + len] == ' ')
-// 			start++;
-// 		while (line[start + len] != ' ' && line[start + len] != 39 && line[start + len + 1] != 34)
-// 			len++;
-// 		if (len > 0)
-// 		{
-// 			start = create_list(list, line, len, start);
-// 			len = 0;
-// 		}
-// 		if (line[start + len] == 39)
+// 		if (line[start + len - 1] == ' ')
 // 		{
 // 			start += len;
 // 			len = 1;
-// 			while (line[start + len] != '\0' && line[start + len] != 39)
-// 				len++;
-// 			if (line[start + len + 1] != 39)
-// 				printf("write function for extra input\n");
-// 			len++;
-// 		}
-// 		if (line[start + len] == 34)
-// 		{
-// 			start += len;
-// 			len = 1;
-// 			while (line[start + len] != '\0' && line[start + len] != 34)
-// 				len++;
-// 			if (line[start + len + 1] != 34)
-// 				printf("write function for extra input\n");
-// 			len++;
-// 		}
-// 		if (len > 0)
-// 		{
-// 			start = create_list(list, line, len, start);
-// 			len = 0;
-// 		}
-// 		if (line[start + len] == 34 || line[start + len] == 39)
-// 			len++;
-// 		len++;
-// 	}
-	// if (len > 0)
-	// 	start = create_list(list, line, len, start);
-// }
-
-// static char		**ft_to_fill(char **result, char const *s, char c)
-// {
-// 	int index;
-// 	int words;
-// 	int mem;
-
-// 	words = 0;
-// 	index = 0;
-// 	while (s[index] != '\0')
-// 	{
-// 		if (s[index] != c)
-// 		{
-// 			mem = index;
-// 			while (s[index] != c && s[index] != '\0')
-// 			{
-// 				index++;
-// 			}
-// 			result[words] = ft_substr(s, mem, (index - mem));
-// 			if (!result[words])
-// 				return (ft_free(result, words));
-// 			words++;
-// 		}
-// 		if (s[index] != 0)
-// 			index++;
-// 	}
-// 	return (result);
-// }
-
-
-// void	divide_input(t_list *list, char *line)
-// {
-// 	size_t			len;
-// 	unsigned int	start;
-// 	char			*temp;
-
-// 	len = 0;
-// 	start = 0;
-// 	temp = NULL;
-// 	while (line[start + len] != '\0')
-// 	{
-// 		if (line[start + len] != ' ' && line[start + len] != 39 && line[start + len] != 34)
-// 		{
-// 			start += len;
-// 			if (line[start + len] == '>' || line[start + len] == '<' || line[start + len] == '|')
-// 				while (line[start + len] == '>' || line[start + len] == '<' || line[start + len] == '|')
-// 					len++;
-// 			else
-// 				while (line[start + len] != '\0' && line[start + len] != ' ' && line[start + len] != 39 && line[start + len] != 34)
-// 					len++;
-// 			if (line[start + len] == ' ' || line[start + len] == '\0')
-// 			{
-// 				start = create_list(list, line, len, start);
-// 				len = 0;
-// 			}
-// 		}
-// 		if (line[start + len] == 39)
-// 		{
-// 			if (line[start + len - 1] == ' ')
-// 			{
-// 				start += len;
-// 				len = 1;
-// 			}
-// 			while (line[start + len] != '\0' && line[start + len] != 39)
-// 				len++;
-// 			if (line[start + len] != 39)
-// 				printf("write function for extra input\n");
-// 			len++;
-// 			start = create_list(list, line, len, start);
-// 			len = 0;
-// 		}
-// 		if (line[start + len] == 34)
-// 		{
-// 			if (line[start + len - 1] == ' ')
-// 				start += len;
-// 			len = 1;
-// 			while (line[start + len] != '\0' && line[start + len] != 34)
-// 				len++;
-// 			if (line[start + len] != 34)
-// 				printf("write function for extra input\n");
-// 			len++;
-// 			start = create_list(list, line, len, start);
-// 			len = 0;
 // 		}
 // 		len++;
+// 		while (line[start + len] != '\0' && line[start + len] != 39)
+// 			len++;
+// 		if (line[start + len] != 39)
+// 			printf("write function for extra input\n");
+// 		len++;
+// 		start = create_list(list, line, len, start);
+// 		len = 0;
 // 	}
-// 	// if (len > 0)
-// 	// 	start = create_list(list, line, len, start);
+// 	return (start);
 // }
 
 void	divide_input(t_list *list, char *line)
@@ -196,57 +77,119 @@ void	divide_input(t_list *list, char *line)
 				len++;
 		}
 		else
+		{
+			start += len;
 			while (line[start + len] != '\0' && line[start + len] != ' ' && line[start + len] != 39 && line[start + len] != 34)
 				len++;
-		if (line[start + len] == ' ' || line[start + len] == '\0')
-		{
-			start = create_list(list, line, len, start);
-			len = 0;
 		}
+		if (line[start + len] == ' ' || line[start + len] == '\0')
+			start = create_list(list, line, &len, start);
 		if (line[start + len] == 39)
 		{
-			if (line[start + len - 1] == ' ')
-			{
-				start += len;
-				len = 1;
-			}
-			len++;
+			// if (line[start + len - 1] == ' ') //
+			// {
+			// 	start += len;
+			// 	len = 1;
+			// }
+			// len++;
 			while (line[start + len] != '\0' && line[start + len] != 39)
 				len++;
 			if (line[start + len] != 39)
 				printf("write function for extra input\n");
 			len++;
-			start = create_list(list, line, len, start);
-			len = 0;
+			start = create_list(list, line, &len, start);
 		}
 		if (line[start + len] == 34)
 		{
-			if (line[start + len - 1] == ' ')
-			{
-				start += len;
-				len = 1;
-			}
-			len++;
+			// if (line[start + len - 1] == ' ')
+			// {
+			// 	start += len;
+			// 	len = 1;
+			// }
+			// len++;
 			while (line[start + len] != '\0' && line[start + len] != 34)
 				len++;
 			if (line[start + len] != 34)
 				printf("write function for extra input\n");
 			len++;
-			start = create_list(list, line, len, start);
-			len = 0;
+			start = create_list(list, line, &len, start);
 		}
 		len++;
 	}
-	// if (len > 0)
-	// 	start = create_list(list, line, len, start);
 }
+
+
+// void	divide_input(t_list *list, char *line)
+// {
+// 	size_t			len;
+// 	unsigned int	start;
+// 	char			*temp;
+
+// 	len = 0;
+// 	start = 0;
+// 	temp = NULL;
+// 	while (line[start + len] != '\0')
+// 	{
+// 		while (line[start + len] == ' ')
+// 			start++;
+// 		if (line[start + len] == '>' || line[start + len] == '<' || line[start + len] == '|')
+// 		{
+// 			start += len;
+// 			while (line[start + len] == '>' || line[start + len] == '<' || line[start + len] == '|')
+// 				len++;
+// 		}
+// 		else
+// 		{
+// 			start += len;
+// 			while (line[start + len] != '\0' && line[start + len] != ' ' && line[start + len] != 39 && line[start + len] != 34)
+// 				len++;
+// 		}
+// 		if (line[start + len] == ' ' || line[start + len] == '\0')
+// 		{
+// 			start = create_list(list, line, len, start);
+// 			len = 0;
+// 		}
+// 		if (line[start + len] == 39)
+// 		{
+// 			if (line[start + len - 1] == ' ')
+// 			{
+// 				start += len;
+// 				len = 1;
+// 			}
+// 			len++;
+// 			while (line[start + len] != '\0' && line[start + len] != 39)
+// 				len++;
+// 			if (line[start + len] != 39)
+// 				printf("write function for extra input\n");
+// 			len++;
+// 			start = create_list(list, line, len, start);
+// 			len = 0;
+// 		}
+// 		if (line[start + len] == 34)
+// 		{
+// 			if (line[start + len - 1] == ' ')
+// 			{
+// 				start += len;
+// 				len = 1;
+// 			}
+// 			len++;
+// 			while (line[start + len] != '\0' && line[start + len] != 34)
+// 				len++;
+// 			if (line[start + len] != 34)
+// 				printf("write function for extra input\n");
+// 			len++;
+// 			start = create_list(list, line, len, start);
+// 			len = 0;
+// 		}
+// 		len++;
+// 	}
+// }
 
 void compare_input(t_list *list)//, char **env)
 {
 	t_list	*begin;
 
 	begin = list;
-	// list = list->next; //om voorbij de eerste start te gaan
 	while (begin)
 	{
 		if (ft_strncmp((const char *)begin->content , "cat", 3) == 0)
@@ -276,7 +219,7 @@ void	read_input(t_list *list)
 		divide_input(list, line);
 		begin = list->next;
 		compare_input(list); //check welke type het is
-		while (begin)
+		while (begin) // loop om te lezen wat er gebeurd
 		{
 			printf("list item: [%s]\n", (char*)(begin->content));
 			// printf("begin adress: %p\n", begin);
@@ -289,91 +232,6 @@ void	read_input(t_list *list)
 		line = NULL;
 	}
 }
-
-
-// void	divide_input(t_list *list, char *line)
-// {
-// 	size_t			len;
-// 	unsigned int	start;
-// 	char			*temp;
-
-// 	len = 0;
-// 	start = 0;
-// 	temp = NULL;
-// 	while (line[start + len] != '\0')
-// 	{
-// 		while (line[start + len] == ' ')
-// 			start++;
-// 		if (line[start + len] == 34)
-// 		{
-// 			start += len + 1;
-// 			len = 0;
-// 			printf("%c\n", line[start + len]);
-// 			while (line[start + len] != '\0' && line[start + len] != 34)
-// 				len++;
-// 			printf("%c\n", line[start + len]);
-// 		}
-// 		if (line[start + len] == 39)
-// 		{
-// 			start += len + 1;
-// 			len = 0;
-// 			while (line[start + len] != '\0' && line[start + len] != 39)
-// 				len++;
-// 		}
-// 		while (line[start + len] != ' ' && line[start + len] != 39 && line[start + len] != 34)
-// 			len++;
-// 		if (len > 0)
-// 		{
-// 			start = create_list(list, line, len, start);
-// 			len = 0;
-// 		}
-// 		len++;
-// 	}
-// }
-
-
-// void	read_input(t_list *list)
-// {
-// 	int 	result;
-// 	char	*line;
-// 	t_list	*begin;
-
-// 	begin = list;
-// 	result = 1;
-// 	line = NULL;
-// 	while (result == 1)
-// 	{
-// 		prompt();
-// 		result = get_next_line(0, &line);
-// 		divide_input(list, line);
-// 		compare_input(list); //check welke type het is
-// 		while (begin)
-// 		{
-// 			printf("list->content loop: %s\n", (char*)(begin->content));
-// 			printf("begin adress: %p\n", begin);
-// 			begin = begin->next;
-// 		}
-// 		begin = list;
-// 		free(line);
-// 		line = NULL;
-// 	}
-// }
-
-// void	child_process(t_list *list)
-// {
-// 	ret_value = fork();
-// 	if (ret_value < 0)
-// 		printf("creating childprocess had failed\n"); //
-// 	else if (ret_value == 0)
-// 	{
-// 		// ret_value = fork();
-// 		printf("ret_value2 %d\n", ret_value);
-// 		printf("Child Process\n");
-// 		printf("%s\n", argv[1]); //
-// 		if (send_signal(ret_value) == 0)
-// 			printf("childprocess is killed\n");
-// 	}
-// }
 
 int		main(int argc, char **argv)//, char **env)
 {
@@ -389,53 +247,3 @@ int		main(int argc, char **argv)//, char **env)
 	read_input(list);
 	return (0);
 }
-
-// void	divide_input(t_list *list, char *line)
-// {
-// 	size_t			len;
-// 	unsigned int	start;
-// 	char			*temp;
-
-// 	len = 0;
-// 	start = 0;
-// 	temp = NULL;
-// 	while (line[start + len] != '\0')
-// 	{
-// 		if (line[start + len] == 39)
-// 		{
-// 			start += len + 1;
-// 			len = 1;
-// 			while (line[start + len] != '\0')
-// 			{
-// 				if (line[start + len] == 39)
-// 				{
-// 					start = create_list(list, line, len, start);
-// 					len = 0;
-// 					break;
-// 				}
-// 				len++;
-// 			}
-// 		}
-// 		if (line[start + len] == 34)
-// 		{
-// 			start += len + 1;
-// 			len = 1;
-// 			while (line[start + len] != '\0')
-// 			{
-// 				if (line[start + len] == 34)
-// 				{
-// 					start = create_list(list, line, len, start);
-// 					len = 0;
-// 					break;
-// 				}
-// 				len++;
-// 			}
-// 		}
-// 		if (line[start + len] == ' ')
-// 		{
-// 			start = create_list(list, line, len, start);
-// 			len = 0;
-// 		}
-// 		len++;
-// 	}
-// }
