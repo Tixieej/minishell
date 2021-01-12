@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/20 12:37:52 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/12 14:43:53 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/12 10:57:01 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,13 @@ int			main(int argc, char **argv, char **envp)
 	char		*path;
 	struct		stat buffer;
 	t_command	cp_command;
-	int			i;
 
 	result = 1;
 	(void)argv;
 	(void)argc;
 
 	/* dit deel doet lisa: tokenizen */
-	cp = ft_create_elem("onzin");
+	cp = ft_create_elem("../../../../../../../bin/cp");
 	ft_list_push_back(&cp, "testfile");
 	ft_list_push_back(&cp, "vla");
 	/* struct maken */
@@ -93,16 +92,16 @@ int			main(int argc, char **argv, char **envp)
 	if (ft_strchr(cp_command.program, '/') != 0)
 	{
 		path = cp_command.program;
-		paths = ft_split(path, ' ');//gewoon alleen path
 		if (stat(path, &buffer) == 0)
 			ft_exec(path, cp_command, envp);
 		else
-			printf("no such file or directory: %s\n", cp_command.program);
+			printf("command not found: %s\n", cp_command.program);
 	}
 	else
 	{
 		paths = make_path_array(envp);
-		i = 0;
+		int i = 0;
+
 		while (paths[i])
 		{
 			path = ft_strjoin(paths[i], "/");
@@ -112,13 +111,11 @@ int			main(int argc, char **argv, char **envp)
 			if (stat(path, &buffer) == 0)
 			{
 				ft_exec(path, cp_command, envp);
-				break;
+				break;// uit de while loop.
 			}
 			i++;
 		}
-		if (stat(path, &buffer) != 0)//als niet gevonden
-			printf("command not found: %s\n", cp_command.program);
+		//als na de hele while loop niks is gevonden: print "if command not found"
 	}
-	ft_exec(path, cp_command, envp);
 	return (0);
 }
