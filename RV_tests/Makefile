@@ -6,12 +6,12 @@
 #    By: rixt <marvin@codam.nl>                       +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/12/21 14:25:14 by rixt          #+#    #+#                  #
-#    Updated: 2021/01/05 16:26:01 by rixt          ########   odam.nl          #
+#    Updated: 2021/01/11 10:01:14 by rixt          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minitests
-SRC = main.c get_next_line.c get_next_line_utils.c \
+SRC = main.c get_next_line.c get_next_line_utils.c env_path.c\
 		ft_list_push_back.c ft_create_elem.c
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra

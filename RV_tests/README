@@ -1,4 +1,3 @@
-in deze map staan 2 tests
 
 als je make test doet, krijg je een programma genaamd minitests.
 hierin kun je regels typen, elke regel wordt een element in een linked list
@@ -9,3 +8,10 @@ dat je dat hebt getypt en print een hardcoded zin uit. ook voert het dan 'cp tes
 als je make exec doet krijg je een programma genaamd exec.
 deze roept het programma /bin/cp aan met de argumenten "ft_split.c" en "vla"
 het werkt nog niet helemaal.
+
+
+ft_stat.c bevat een voorbeeld voor de functie stat() die we mogen gebruiken.
+stat() kijkt of een bestand wel bestaat.
+
+pipe.c bevat een voorbeeld voor de functie pipe() die we mogen gebruiken.
+pipe() kan informatie van het ene process aan het andere doorgeven.

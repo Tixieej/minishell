@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/20 12:37:52 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/12 09:08:37 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/11 12:53:58 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,62 @@ char		**ft_list_to_array(t_list *list)
 	array[i] = NULL;
 	return (array);
 }
+/*
+char		*ft_appendpath1(char *s1, char *s2)
+{
+	char	*join;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (!s1 || !s2)
+		return (NULL);
+	join = (char *)malloc(sizeof(char *) * (ft_strlen(s1) + ft_strlen(s2) + 2));
+	if (join == NULL)
+		return (NULL);
+	while (s1[i] != '\0')
+	{
+		join[i] = s1[i];
+		i++;
+	}
+	join[i] = '/';
+	i++;
+	while (s2[j] != '\0')
+	{
+		join[i + j] = s2[j];
+		j++;
+	}
+	join[i + j] = '\0';
+	return (join);
+*/
+
+char		*ft_append_path(char *str)
+{
 
 //CHECK OF ER IN list[0] EEN / VOORKOMT DAN IS HET AL EEN PATH, DUS DAN MOET ENV ER NIET VOORGEPLAKT WORDEN	
+
+	char *path = "/bin/";
+	return (ft_strjoin(path, str));
+}
+
+void		ft_execute(char **command, char **envp)
+{
+	char	*path;
+
+	path = ft_append_path(command[0]);
+	execve(path, command, envp);
+}
 
 int			main(int argc, char **argv, char **envp)
 {
 	pid_t	pid;
 	int		result;
 	t_list	*cp;
+	//t_list	*echo;
+	//t_list	*wrong;
 	char	**paths;
 	struct	stat buffer;
-	char	*path;
 
 	result = 1;
 	(void)argv;
@@ -80,42 +125,41 @@ int			main(int argc, char **argv, char **envp)
 	/* struct maken */
 	t_command cp_command;
 	ft_make_struct(cp, &cp_command);
-	
 
-	if (ft_strchr(cp_command.program, '/') != 0)
+
+	/*	maak paths array, splits PATH var en stop die erin
+	**	for path in paths, plak cmd->program erachter en gooi in stat
+	**	als stat 0 teruggeeft, fork, in child execve(path)
+	*/	
+	paths = make_path_array(envp);
+	/* check of pad bestaat */
+	int i = 0;
+	while (paths[i])
 	{
-		path = cp_command.program;
+		char *path = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(path, cp_command.program);
+		printf("%s\n", path);
+		//char *path = "/bin/cp";
+		/* als pad bestaat, fork en exec */	
 		if (stat(path, &buffer) == 0)
 		{
+			//cp_command.args[0] = path;
 			pid = fork();
 				if (pid == 0)
+				{
+					printf("child\n");
 					execve(path, cp_command.args, envp);
+					//ft_execute(cp_command.args, envp);
+				}
 				else
+				{
+					printf("parent\n");
 					wait(NULL);
+				}
 		}
-	}
-	else
-	{
-		paths = make_path_array(envp);
-		int i = 0;
-
-		while (paths[i])
-		{
-			path = ft_strjoin(paths[i], "/");
-			path = ft_strjoin(path, cp_command.program);
-			cp_command.args[0] = path;
-			printf("%s\n", cp_command.args[0]);
-			if (stat(path, &buffer) == 0)
-			{
-				pid = fork();
-					if (pid == 0)
-						execve(path, cp_command.args, envp);
-					else
-						wait(NULL);
-				break;// uit de while loop.
-			}
-			i++;
-		}
+		else
+			printf("we zijn niet geforkt, want pad bestaat niet.\n");
+		i++;
 	}
 	return (0);
 }
