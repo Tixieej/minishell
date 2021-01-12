@@ -14,7 +14,9 @@ NAME = minishell
 LIBFT = libft.a
 SRC = main.c \
 		get_next_line.c \
-		get_next_line_utils.c
+		get_next_line_utils.c \
+		start_program.c \
+		check_type.c
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 CC = gcc

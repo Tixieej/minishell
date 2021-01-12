@@ -17,19 +17,11 @@
 # include <stdlib.h>
 # include "libft/libft.h"
 # include "get_next_line.h"
-
+# include <unistd.h> //mogen we die gebruiken? voor write
 # include <stdio.h> // WEGHALEN PRINTF
-# define PRINT(a,b) printf(a" %s:%i (%s)\n", b, __FILE__, __LINE__, __FUNCTION__);
-// PRINT("kijk: %p", temp)
-// printf("temp: %s:%i %s\n", __FILE__, __LINE__, __FUNCTION__);	
 
-// typedef	struct		s_list
-// {
-// 	struct s_list	*next;
-// 	void			*data;
-// }					t_list;
-
-
-int                 main(int argc, char **argv);
+void            check_type(t_list *list);
+void            start_program(t_list *list);
+int             main(int argc, char **argv);
 
 #endif
