@@ -31,10 +31,9 @@ static int		create_list(t_list *list, char *line, size_t *len, unsigned int star
 	char *temp;
 
 	temp = ft_substr((char const *)line, start, *len);
-	printf("temp %s\n", temp);
 	ft_list_push_back(&list, temp);
-	start += *len + 1;
-	*len = 0;
+	start += *len;
+	*len = -1;
 	return (start);
 }
 
@@ -59,7 +58,41 @@ static int		create_list(t_list *list, char *line, size_t *len, unsigned int star
 // 	return (start);
 // }
 
-static void	divide_input(t_list *list, char *line)
+// static void	divide_input(t_list *list, char *line)
+// {
+// 	size_t			len;
+// 	unsigned int	start;
+// 	char			*temp;
+
+// 	len = 0;
+// 	start = 0;
+// 	temp = NULL;
+// 	while (line[start + len] != '\0')
+// 	{
+// 		while (line[start + len] == ' ')
+// 			start++;
+// 		if (ft_strchr("|<>", line[start + len]))
+// 		{
+// 			start += len;
+// 			len = 1;
+// 			start = create_list(list, line, &len, start);
+// 			printf("line: %c\n", line[start + len]);
+// 		}
+			
+		
+// 		// while (line[start + len] == ' ')
+// 		// 	start++;
+
+// 		// if (line[start + len] == ' ' || line[start + len] == '\0')
+// 		// 	start = create_list(list, line, &len, start);
+		
+// 		len++;
+// 	}
+// }
+
+		// ft_strchr("\'\"", inp[*pos])
+
+void	divide_input(t_list *list, char *line)
 {
 	size_t			len;
 	unsigned int	start;
@@ -75,85 +108,40 @@ static void	divide_input(t_list *list, char *line)
 		if (ft_strchr("|<>", line[start + len]))
 		{
 			start += len;
+			while (ft_strchr("|<>", line[start + len]))
+				len++;
+		}
+		else if (line[start + len] != 39 && line[start + len] != 34)
+		{
+			start += len;
+			while (line[start + len] != '\0' && line[start + len] != ' ' && line[start + len] != 39 && line[start + len] != 34)
+				len++;
+		}
+		if (line[start + len] == ' ' || line[start + len] == '\0')
+			start = create_list(list, line, &len, start);
+		if (line[start + len] == 39)
+		{
+			len++;
+			while (line[start + len] != '\0' && line[start + len] != 39)
+				len++;
+			if (line[start + len] != 39)
+				printf("write function for extra input\n");
+			len++;
 			start = create_list(list, line, &len, start);
 		}
-			
-		
-		// while (line[start + len] == ' ')
-		// 	start++;
-
-		// if (line[start + len] == ' ' || line[start + len] == '\0')
-		// 	start = create_list(list, line, &len, start);
-		
+		if (line[start + len] == 34)
+		{
+			len++;
+			while (line[start + len] != '\0' && line[start + len] != 34)
+				len++;
+			if (line[start + len] != 34)
+				printf("write function for extra input\n");
+			len++;
+			start = create_list(list, line, &len, start);
+		}
 		len++;
 	}
 }
-
-		// ft_strchr("\'\"", inp[*pos])
-
-// void	divide_input(t_list *list, char *line)
-// {
-// 	size_t			len;
-// 	unsigned int	start;
-// 	char			*temp;
-
-// 	len = 0;
-// 	start = 0;
-// 	temp = NULL;
-// 	while (line[start + len] != '\0')
-// 	{
-// 		while (line[start + len] == ' ')
-// 			start++;
-// 		if (line[start + len] == '>' || line[start + len] == '<' || line[start + len] == '|')
-// 		{
-// 			start += len;
-// 			while (line[start + len] == '>' || line[start + len] == '<' || line[start + len] == '|')
-// 				len++;
-// 		}
-// 		else if (line[start + len] != 39 && line[start + len] != 34)
-// 		{
-// 			start += len;
-// 			while (line[start + len] != '\0' && line[start + len] != ' ' && line[start + len] != 39 && line[start + len] != 34)
-// 				len++;
-// 		}
-// 		if (line[start + len] == ' ' || line[start + len] == '\0')
-// 			start = create_list(list, line, &len, start);
-// 		printf("char %c\n", line[start + len]);
-// 		if (line[start + len] == 39)
-// 		{
-			
-// 			printf("char %c\n", line[start + len]);
-// 			// if (line[start + len - 1] == ' ') //
-// 			// {
-// 			// 	start += len;
-// 			// 	len = 1;
-// 			// }
-// 			len++;
-// 			while (line[start + len] != '\0' && line[start + len] != 39)
-// 				len++;
-// 			if (line[start + len] != 39)
-// 				printf("write function for extra input\n");
-// 			len++;
-// 			start = create_list(list, line, &len, start);
-// 		}
-// 		if (line[start + len] == 34)
-// 		{
-// 			// if (line[start + len - 1] == ' ')
-// 			// {
-// 			// 	start += len;
-// 			// 	len = 1;
-// 			// }
-// 			len++;
-// 			while (line[start + len] != '\0' && line[start + len] != 34)
-// 				len++;
-// 			if (line[start + len] != 34)
-// 				printf("write function for extra input\n");
-// 			len++;
-// 			start = create_list(list, line, &len, start);
-// 		}
-// 		len++;
-// 	}
-// }
 
 
 
