@@ -21,6 +21,12 @@ typedef struct		s_list
 	void			*content;
 }					t_list;
 
+typedef struct		s_link
+{
+	
+
+}					t_link;
+
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
