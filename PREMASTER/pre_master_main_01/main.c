@@ -18,17 +18,18 @@
 // The values of environment variables can be anything that can be represented as a string.
 //A value must not contain an embedded null character, since this is assumed to terminate the string. 
 
-int		main(int argc, char **argv)//, char **env)
+int		main(int argc, char **argv, char **env)
 {
 	t_list	*list;
 
-	list = ft_create_elem(ft_strdup("start"));
+	list = NULL;
+	//list = ft_create_elem(ft_strdup("start"));
 	(void)argv;
 	if (argc != 1)
 	{
 		printf("no arguments needed"); //
 		return (0);
 	}
-	start_program(list);
+	start_program(list, env);
 	return (0);
 }

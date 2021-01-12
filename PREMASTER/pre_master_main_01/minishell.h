@@ -18,10 +18,28 @@
 # include "libft/libft.h"
 # include "get_next_line.h"
 # include <unistd.h> //mogen we die gebruiken? voor write
+# include <sys/stat.h> //stat
 # include <stdio.h> // WEGHALEN PRINTF
 
-void            check_type(t_list *list);
-void            start_program(t_list *list);
-int             main(int argc, char **argv);
+typedef struct		s_command
+{
+	char			*program;
+	char			**args;//dit is al een array
+	//redirection
+	//etc ..
+}					t_command;
+
+int					main(int argc, char **argv, char **env);
+/*tokenize functions?*/
+void            	start_program(t_list *list, char **env);
+t_list				*ft_create_elem(void *data);
+void				ft_list_push_back(t_list **begin_list, void *data);
+/*parse functions*/
+void            	ft_parse(t_list *list, char **env);
+char				**ft_list_to_array(t_list *list);
+char				*ft_append_path(char *str);
+void				ft_exec(char *path, t_command command, char **envp);
+/*env_path.c*/
+char				**make_path_array(char **envp);
 
 #endif
