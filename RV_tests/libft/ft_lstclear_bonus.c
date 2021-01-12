@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_list.h                                          :+:    :+:            */
+/*   ft_lstclear_bonus.c                                :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: livlamin <marvin@codam.nl>                   +#+                     */
+/*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/08/20 12:34:22 by livlamin      #+#    #+#                 */
-/*   Updated: 2020/12/21 10:08:28 by rixt          ########   odam.nl         */
+/*   Created: 2019/12/12 09:44:56 by rde-vrie      #+#    #+#                 */
+/*   Updated: 2019/12/12 09:58:35 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef FT_LIST_H
-# define FT_LIST_H
 
-typedef	struct		s_list
+#include "libft.h"
+
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	struct s_list	*next;
-	void			*data;
-}					t_list;
+	t_list	*temp;
 
-t_list              *ft_create_elem(void *data);
-void				ft_list_push_back(t_list **begin_list, void *data);
-
-#endif
+	while (*lst)
+	{
+		temp = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		free(*lst);
+		*lst = temp;
+	}
+}

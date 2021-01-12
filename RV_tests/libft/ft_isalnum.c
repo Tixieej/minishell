@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   minishell.h                                        :+:    :+:            */
+/*   ft_isalnum.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: livlamin <marvin@codam.nl>                   +#+                     */
+/*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2020/10/23 16:03:08 by livlamin      ########   odam.nl         */
+/*   Created: 2019/11/04 12:20:43 by rde-vrie      #+#    #+#                 */
+/*   Updated: 2019/11/18 13:40:59 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-#include <sys/wait.h>
+int	ft_isalnum(int c)
+{
+	int	test;
 
-int main(int argc, char **argv);
-
-#endif
+	if (ft_isalpha(c) || ft_isdigit(c))
+		test = 1;
+	else
+		test = 0;
+	return (test);
+}
