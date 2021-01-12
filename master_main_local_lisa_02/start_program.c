@@ -62,20 +62,30 @@ static void		divide_input(t_list *list, char *line,
 	{
 		while (line[start + len] == ' ')
 			start++;
-		if (ft_strchr("|<>", line[start + len]))
+		// if (ft_strchr("|<>", line[start + len]))
+		// {
+		// 	// start += len;
+		// 	while (ft_strchr("|<>", line[start + len]))
+		// 		len++;
+		// }
+		if (!ft_strchr("\'\"", line[start + len]))
 		{
 			start += len;
-			while (ft_strchr("|<>", line[start + len]))
+			while (!ft_strchr(" <>\'\"\0", line[start + len]))
 				len++;
 		}
-		else if (!ft_strchr("\'\"", line[start + len]))
+		if (ft_strchr(" <>\0", line[start + len]))
 		{
-			start += len;
-			while (!ft_strchr(" \'\"\0", line[start + len]))
-				len++;
-		}
-		if (line[start + len] == ' ' || line[start + len] == '\0')
 			start = create_list_item(list, line, &len, start);
+			len = 0;
+			if (ft_strchr(" <>\'\"\0", line[start + len]))
+			{
+				start += len;
+				len = 1;
+				start = create_list_item(list, line, &len, start);
+			}
+			
+		}	
 		if (ft_strchr("\'\"", line[start + len]))
 			start = handle_quotation_marks(list, line, &len, start);
 		len++;
