@@ -62,20 +62,18 @@ static void		divide_input(t_list *list, char *line,
 	{
 		while (line[start + len] == ' ')
 			start++;
-		if (ft_strchr("|<>", line[start + len]))
+		if (!ft_strchr("'<''>'\'\"", line[start + len]))
 		{
 			start += len;
-			while (ft_strchr("|<>", line[start + len]))
+			while (!ft_strchr("'<''>' \'\"\0", line[start + len]))
 				len++;
 		}
-		else if (!ft_strchr("\'\"", line[start + len]))
+		if (line[start + len] == ' ' || line[start + len] == '\0' || line[start + len] == '>')
 		{
-			start += len;
-			while (!ft_strchr(" \'\"\0", line[start + len]))
-				len++;
-		}
-		if (line[start + len] == ' ' || line[start + len] == '\0')
+			if (len < 1)
+				len = 1;
 			start = create_list_item(list, line, &len, start);
+		}
 		if (ft_strchr("\'\"", line[start + len]))
 			start = handle_quotation_marks(list, line, &len, start);
 		len++;
@@ -96,7 +94,7 @@ void			start_program(t_list *list)
 		prompt();
 		result = get_next_line(0, &line);
 		divide_input(list, line, 0, 0);
-		// begin = list->next;
+		begin = list->next;
 		check_type(list);
 		while (begin)// loop om te lezen wat er gebeurd later weghalen
 		{
@@ -105,8 +103,7 @@ void			start_program(t_list *list)
 			begin = begin->next;
 		}
 		ft_lstclear(&list, free);
-		list = NULL;
-		// list = ft_create_elem(ft_strdup("start"));
+		list = ft_create_elem(ft_strdup("start"));
 		begin = list;
 		free(line);
 		line = NULL;

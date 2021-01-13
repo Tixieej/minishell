@@ -22,8 +22,7 @@ int		main(int argc, char **argv)//, char **env)
 {
 	t_list	*list;
 
-	// list = ft_create_elem(ft_strdup("start"));
-	list = NULL;
+	list = ft_create_elem(ft_strdup("start"));
 	(void)argv;
 	if (argc != 1)
 	{
