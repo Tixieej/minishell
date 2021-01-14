@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/14 10:30:54 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/14 11:14:04 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,9 @@ void		ft_parse(t_list *list, char **envp)
 {
 	t_command		cmd;
 
-	cmd->program = list[0].content;
-	cmd->args = ft_list_to_array(list);
-	/* roep hier eerst built-ins aan */
-	//check_type ();
+	cmd.program = list[0].content;
+	cmd.args = ft_list_to_array(list);
+	/* parse.c komt boven check_type functie, code hieronder komt in andere functie en wordt aangeroepen aan het eind van check_type*/
 	if (ft_strchr(cmd.program, '/') != 0)
 	{
 		with_path(cmd, envp);
