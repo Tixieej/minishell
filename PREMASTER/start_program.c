@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/12 15:55:26 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/14 12:21:46 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,33 +62,32 @@ static void		divide_input(t_list **list, char *line,
 	{
 		while (line[start + len] == ' ')
 			start++;
-		if (ft_strchr("|<>", line[start + len]))
+		if (!ft_strchr("'<''>'\'\"", line[start + len]))
 		{
 			start += len;
-			while (ft_strchr("|<>", line[start + len]))
+			while (!ft_strchr("'<''>' \'\"\0", line[start + len]))
 				len++;
 		}
-		else if (!ft_strchr("\'\"", line[start + len]))
+		if (line[start + len] == ' ' || line[start + len] == '\0' || line[start + len] == '>')
 		{
-			start += len;
-			while (!ft_strchr(" \'\"\0", line[start + len]))
-				len++;
-		}
-		if (line[start + len] == ' ' || line[start + len] == '\0')
+			if (len < 1)
+				len = 1;
 			start = create_list_item(list, line, &len, start);
+		}
 		if (ft_strchr("\'\"", line[start + len]))
 			start = handle_quotation_marks(list, line, &len, start);
 		len++;
 	}
 }
 
-void			start_program(t_list *list, char **envp)
+void			start_program(t_list *list, char **env)
 {
-	int		result;
-	char	*line;
-	t_list	*begin;
+	int			result;
+	char		*line;
+	t_list		**begin;
+	t_command	cmd;
 
-	begin = list;
+	begin = &list;
 	result = 1;
 	line = NULL;
 	while (result == 1)
@@ -96,17 +95,16 @@ void			start_program(t_list *list, char **envp)
 		prompt();
 		result = get_next_line(0, &line);
 		divide_input(&list, line, 0, 0);
-		//begin = list->next;
-		ft_parse(list, envp);
-		while (begin)// loop om te lezen wat er gebeurd later weghalen
+		cmd = parser(&list);
+		check_type(&list, env);//deze krijgt t_command ipv t_list
+		while ((*begin))// loop om te lezen wat er gebeurd later weghalen
 		{
-			printf("list item: [%s]\n", (char*)(begin->content));
+			printf("list item: [%s]\n", (char*)((*begin)->content));
 			// printf("begin adress: %p\n", begin);
-			begin = begin->next;
+			begin = &(*begin)->next;
 		}
 		ft_lstclear(&list, free);
-		//list = ft_create_elem(ft_strdup("start"));
-		begin = list;
+		begin = &list;
 		free(line);
 		line = NULL;
 	}
