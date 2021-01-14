@@ -12,6 +12,21 @@
 
 #include "minishell.h"
 
+
+// methode ;
+// we gaan door linked list t/m pipe of semicolon ;,
+// maak struct tot dat punt, loop door tot def semicolon of \0
+// voer structs uit 
+// ga door indien geen \0
+// cp main.c test ; cp main.c test2
+// struct {
+//    char *cmd;
+//    char **args;
+//    int pipe_left;
+//    int pipe_right;
+// };
+// echo hallo | cat | cat ;
+
 t_command	parser(t_list **list)
 {
 	t_command		cmd;
