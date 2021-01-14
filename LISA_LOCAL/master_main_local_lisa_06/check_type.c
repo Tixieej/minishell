@@ -40,3 +40,4 @@ void    	check_type(t_list **list, char **env)
 	begin = *list;
 // als geen van de 7 builtins voldoet bij strcmp, stuur door naar de functie 'external'
 }
+
