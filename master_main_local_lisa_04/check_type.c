@@ -12,6 +12,11 @@
 
 #include "minishell.h"
 
+// void	parser()
+// {
+// 	makes struct;
+// }
+
 void    check_type(t_list **list, char **env)
 {
 	t_list	*begin;

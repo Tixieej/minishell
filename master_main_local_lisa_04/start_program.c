@@ -94,6 +94,7 @@ void			start_program(t_list *list, char **env)
 		prompt();
 		result = get_next_line(0, &line);
 		divide_input(&list, line, 0, 0);
+		// parser.c
 		check_type(&list, env);
 		while ((*begin))// loop om te lezen wat er gebeurd later weghalen
 		{

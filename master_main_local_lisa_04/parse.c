@@ -95,5 +95,4 @@ void		ft_parse(t_list *list, char **envp)
 		if (stat(path, &buffer) != 0)
 			printf("command not found: %s\n", cp_command.program);
 	}
-	// ft_exec(path, cp_command, envp);
 }
