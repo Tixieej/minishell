@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/12 15:55:26 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/14 12:21:46 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,10 @@ static void		divide_input(t_list **list, char *line,
 
 void			start_program(t_list *list, char **env)
 {
-	int		result;
-	char	*line;
-	t_list	**begin;
+	int			result;
+	char		*line;
+	t_list		**begin;
+	t_command	cmd;
 
 	begin = &list;
 	result = 1;
@@ -94,8 +95,8 @@ void			start_program(t_list *list, char **env)
 		prompt();
 		result = get_next_line(0, &line);
 		divide_input(&list, line, 0, 0);
-		// parser.c
-		check_type(&list, env);
+		cmd = parser(&list);
+		check_type(&list, env);//deze krijgt t_command ipv t_list
 		while ((*begin))// loop om te lezen wat er gebeurd later weghalen
 		{
 			printf("list item: [%s]\n", (char*)((*begin)->content));
