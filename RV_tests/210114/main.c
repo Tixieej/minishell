@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/20 12:37:52 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/12 14:43:53 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/14 09:02:56 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,10 @@ int			main(int argc, char **argv, char **envp)
 	(void)argc;
 
 	/* dit deel doet lisa: tokenizen */
-	cp = ft_create_elem("onzin");
-	ft_list_push_back(&cp, "testfile");
-	ft_list_push_back(&cp, "vla");
+	cp = ft_create_elem("cat");
+	ft_list_push_back(&cp, "doei");
+	ft_list_push_back(&cp, ">");
+	ft_list_push_back(&cp, "hond.txt");
 	/* struct maken */
 	ft_make_struct(cp, &cp_command);
 	
@@ -119,6 +120,6 @@ int			main(int argc, char **argv, char **envp)
 		if (stat(path, &buffer) != 0)//als niet gevonden
 			printf("command not found: %s\n", cp_command.program);
 	}
-	ft_exec(path, cp_command, envp);
+	//ft_exec(path, cp_command, envp);
 	return (0);
 }
