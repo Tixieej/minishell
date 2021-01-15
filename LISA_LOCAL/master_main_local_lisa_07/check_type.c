@@ -6,53 +6,47 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/14 12:23:13 by rixt          ########   odam.nl         */
+/*   Updated: 2021/12/01 15:55:26 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-// methode ;
-// we gaan door linked list t/m pipe of semicolon ;,
-// maak struct tot dat punt, loop door tot def semicolon of \0
-// voer structs uit 
-// ga door indien geen \0
-// cp main.c test ; cp main.c test2
-// struct {
-//    char *cmd;
-//    char **args;
-//    int pipe_left;
-//    int pipe_right;
-// };
-// echo hallo | cat | cat ;
-
-t_command	parser(t_list **list)
+void	error(char *str, int ret)
 {
-	t_command		cmd;
-
-	cmd.program = list[0]->content;//zou kunnen dat dit niet werkt nu **list
-	cmd.args = ft_list_to_array(list);
-	return (cmd);
+	printf("%s\n", str);
+	if (ret < 0)
+		exit(-1);
 }
 
-void    	check_type(t_list **list, char **env)
-{//deze krijgt t_command ipv t_list
+void    check_type(t_list **list, char **env)
+{
 	t_list	*begin;
 
-	(void)env;
 	begin = *list;
 	while (begin)
 	{
-		if (ft_strncmp((const char *)begin->content, "cat", 3) == 0)
-			printf("cat type\n");
-		if (ft_strncmp((const char *)begin->content, "cp", 2) == 0)
-			parser(list);
 		if (ft_strncmp((const char *)begin->content, "echo", 4) == 0)
-			printf("echo type\n");
+			printf("cat type\n");
+		if (ft_strncmp((const char *)begin->content, "cd", 2) == 0)
+			printf("cd type\n");
+		if (ft_strncmp((const char *)begin->content, "pwd", 3) == 0)
+			printf("pwd type\n");
+		if (ft_strncmp((const char *)begin->content, "export", 6) == 0)
+			printf("export type\n");
+		if (ft_strncmp((const char *)begin->content, "unset", 5) == 0)
+			printf("unset type\n");
+		if (ft_strncmp((const char *)begin->content, "env", 3) == 0)
+			printf("env type\n");
+		if (ft_strncmp((const char *)begin->content, "exit", 4) == 0)
+			printf("exit type\n");
+		else
+			non_buildin(*list, env, begin);
+		// if (ft_parse = -1)
+		// 	error("invalid programme input", -1);
 		begin = begin->next;
 	}
 	begin = *list;
-// als geen van de 7 builtins voldoet bij strcmp, stuur door naar de functie 'external'
 }
+
 

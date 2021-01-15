@@ -17,7 +17,7 @@ SRC = main.c \
 		get_next_line_utils.c \
 		start_program.c \
 		check_type.c \
-		parse.c \
+		non_buildin.c \
 		env_path.c
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra

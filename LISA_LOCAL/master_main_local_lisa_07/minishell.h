@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/14 12:20:01 by rixt          ########   odam.nl         */
+/*   Updated: 2020/10/23 16:03:08 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,59 @@
 # include <sys/stat.h> //stat
 # include <stdio.h> // WEGHALEN PRINTF
 
-typedef struct		s_command
-{
-	char			*program;
-	char			**args;//dit is al een array
-	//redirection
-	//etc ..
-}					t_command;
+// typedef struct		s_command
+// {
+// 	char			*program;
+// 	char			**args;//dit is al een array
+// 	//redirection
+// 	//etc ..
+// }					t_command;
+
+    typedef struct s_command 
+	{
+        char	*program;
+        char	**args;
+        int		pipe_left;
+        int		pip_right;
+		int		redirection;
+    } 				t_command;
+
+	typedef struct		s_struct_list
+	{
+        struct s_command command;
+        struct s_struct_list *next;
+	}					t_struct_list;
+
+
+    // typedef struct Schedule {
+    //     char name[10];
+    //     char description[10];
+    //     int hours;
+    //     int workordernum;
+    // } Work;
+
+    // typedef struct linkedlist {
+    //     struct Schedule work;
+    //     struct linkedlist *next;
+    // } Node;
 
 int					main(int argc, char **argv, char **env);
+void				error(char *str, int ret);
 
 /*tokenize functions?*/
-void				start_program(t_list *list, char **env);
+void            	start_program(t_list *list, char **env);
 t_list				*ft_create_elem(void *data);
 void				ft_list_push_back(t_list **begin_list, void *data);
+void                check_type(t_list **list, char **env);
 
 /*parse functions*/
-t_command			parser(t_list **list);
-char				**ft_list_to_array(t_list **list);
+// void            	ft_parse(t_list *list, char **env);
+void                non_buildin(t_list *list, char **envp, t_list *begin);
+char				**ft_list_to_array(t_list *list);
 char				*ft_append_path(char *str);
-
-/* exec */
-void				check_type(t_list **list, char **env);
-void				external(t_command cmd, char **env);
-void				ft_exec(char *path, t_command command, char **env);
+void				ft_exec(char *path, t_command command, char **envp);
 
 /*env_path.c*/
-char				**make_path_array(char **env);
+char				**make_path_array(char **envp);
 
 #endif
