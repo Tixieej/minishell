@@ -20,16 +20,16 @@ t_command		*ft_create_linked_struct(char *data)
 	if (command)
 	{
         command->program = data;
-        command->args = NULL;
+        command->args = ft_strdup("");
         command->pipe_left = 0;
-        command->pip_right = 0;
+        command->pipe_right = 0;
 		command->redirection = 0;
 		command->next = NULL;
 	}
 	return (command);
 }
 
-void		ft_struct_push_back(t_command **begin_list, char *data) //t_list **list
+void		ft_struct_push_back(t_command **begin_list, char *data)
 {
 	t_command	*temp;
 
@@ -49,30 +49,46 @@ void		ft_struct_push_back(t_command **begin_list, char *data) //t_list **list
 static void	parser(t_list **list, char **env)
 {
 	t_command	*command;
-	t_list		*begin;
-	t_command	**begin_com;
+	t_list		*current;
+	t_command	**current_com;
 
 	command = NULL;
-	begin_com = &command;
-	begin = *list;
+	current_com = &command;
+	current = *list;
 
 	(void)env;
-	while (begin)
+	ft_struct_push_back(&command, (char *)current->content);
+	// printf("current content: [%s]\n", ((char *)current->content));
+	current = current->next;
+	while (current)
 	{
-		if (ft_strncmp((const char *)begin->content, "cat", 3) == 0)
-			ft_struct_push_back(&command, (char *)begin->content);
-		begin = begin->next;
+		if (ft_strncmp((const char *)current->content, ";", 1))
+		{
+			command->args = ft_strjoin(command->args, current->content);
+			command->args = ft_strjoin(command->args, " ");
+		}
+		if (ft_strncmp((const char *)current->content, ";", 1) == 0)
+			printf("go to execute function\n");
+		if (ft_strncmp((const char *)current->content, "|", 1) == 0)
+		{
+			command->pipe_right = 1;
+			current = current->next;
+			ft_struct_push_back(&command, (char *)current->content);
+			// current_com = &(*current_com)->next;
+			command->pipe_left = 1;
+		}
+		current = current->next;
 	}
-	begin = *list;
-	while (*begin_com)// loop om te lezen wat er gebeurd later weghalen
+	current = *list;
+	while (*current_com)// loop om te lezen wat er gebeurd later weghalen
 	{
-			printf("cat item: [%s]\n", ((char*)(*begin_com)->program));
-			printf("cat item: [%s]\n", ((char*)(*begin_com)->args));
-			printf("cat item: [%d]\n", ((*begin_com)->pipe_left));
-			printf("cat item: [%d]\n", ((*begin_com)->pip_right));
-			printf("cat item: [%d]\n", ((*begin_com)->redirection));
+			printf("program: [%s]\n", ((char*)(*current_com)->program));
+			printf("args: [%s]\n", ((char*)(*current_com)->args));
+			printf("pipe_left: [%d]\n", ((*current_com)->pipe_left));
+			printf("pipe_right: [%d]\n", ((*current_com)->pipe_right));
+			printf("redirection: [%d]\n", ((*current_com)->redirection));
 			// printf("begin adress: %p\n", begin);
-			begin_com = &(*begin_com)->next;
+			current_com = &(*current_com)->next;
 	}
 	
 }
@@ -96,6 +112,9 @@ void    check_type(t_list **list, char **env)
 	// }
 	// begin = *list;
 }
+
+
+
 
 // void	error(char *str, int ret)
 // {

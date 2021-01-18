@@ -66,11 +66,11 @@ static void	parser(t_list **list, char **env)
 	begin = *list;
 	while (*begin_com)// loop om te lezen wat er gebeurd later weghalen
 	{
-			printf("cat item: [%s]\n", ((char*)(*begin_com)->program));
-			printf("cat item: [%s]\n", ((char*)(*begin_com)->args));
-			printf("cat item: [%d]\n", ((*begin_com)->pipe_left));
-			printf("cat item: [%d]\n", ((*begin_com)->pip_right));
-			printf("cat item: [%d]\n", ((*begin_com)->redirection));
+			printf("program: [%s]\n", ((char*)(*begin_com)->program));
+			printf("args: [%s]\n", ((char*)(*begin_com)->args));
+			printf("pipe_left: [%d]\n", ((*begin_com)->pipe_left));
+			printf("pip_right: [%d]\n", ((*begin_com)->pip_right));
+			printf("redirection: [%d]\n", ((*begin_com)->redirection));
 			// printf("begin adress: %p\n", begin);
 			begin_com = &(*begin_com)->next;
 	}

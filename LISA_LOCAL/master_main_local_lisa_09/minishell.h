@@ -21,50 +21,16 @@
 # include <sys/stat.h> //stat
 # include <stdio.h> // WEGHALEN PRINTF
 
-// typedef struct		s_command
-// {
-// 	char			*program;
-// 	char			**args;//dit is al een array
-// 	//redirection
-// 	//etc ..
-// }					t_command;
-
-
-    typedef struct s_command 
-	{
-		// struct	s_command *previous;
-        struct	s_command *next;
-		char	*program;
-        char	**args;
-        int		pipe_left;
-        int		pip_right;
-		int		redirection;
-    } 				t_command;
-
-// 	typedef struct		s_list
-// {
-// 	struct s_list	*next;
-// 	void			*content;
-// }					t_list;
-
-	// typedef struct		s_struct
-	// {
-    //     struct s_command command;
-    //     struct s_struct_list *next;
-	// }					t_struct;
-
-
-    // typedef struct Schedule {
-    //     char name[10];
-    //     char description[10];
-    //     int hours;
-    //     int workordernum;
-    // } Work;
-
-    // typedef struct linkedlist {
-    //     struct Schedule work;
-    //     struct linkedlist *next;
-    // } Node;
+typedef struct      s_command 
+{
+	// struct	s_command *previous;
+	char	*program;
+    char	*args;
+    int		pipe_left;
+    int		pipe_right;
+	int		redirection;
+    struct	s_command *next;
+}                   t_command;
 
 int					main(int argc, char **argv, char **env);
 
