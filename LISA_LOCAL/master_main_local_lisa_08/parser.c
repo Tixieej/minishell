@@ -12,77 +12,67 @@
 
 #include "minishell.h"
 
-    // typedef struct s_command 
-	// {
-    //     char	*program;
-    //     char	**args;
-    //     int		pipe_left;
-    //     int		pip_right;
-	// 	int		redirection;
-    // } 				t_command;
-
-	// typedef struct		s_struct_list
-	// {
-    //     struct s_command command;
-    //     struct s_struct_list *next;
-	// }					t_struct_list;
-
-static t_struct		*ft_create_struct(t_command command)
+t_command		*ft_create_linked_struct(char *data)
 {
-	t_struct 	*list_struct;
+	t_command *command;
 
-	list_struct = malloc(sizeof(t_struct));
-	if (list_struct)
+	command = malloc(sizeof(t_command));
+	if (command)
 	{
-		list_struct->command = command;
-		list_struct->next = NULL;
+        command->program = data;
+        command->args = NULL;
+        command->pipe_left = 0;
+        command->pip_right = 0;
+		command->redirection = 0;
+		command->next = NULL;
 	}
-	return (list_struct);
+	return (command);
 }
-// t_list		*ft_create_elem(void *data)
-// {
-// 	t_list *list;
 
-// 	list = malloc(sizeof(t_list));
-// 	if (list)
-// 	{
-// 		list->content = data;
-// 		list->next = NULL;
-// 	}
-// 	return (list);
-// }
-
-
-static void		ft_struct_list_push_back(t_struct **begin_struct, t_command command)
+void		ft_struct_push_back(t_command **begin_list, char *data) //t_list **list
 {
-	t_struct	*temp;
+	t_command	*temp;
 
-	temp = *begin_struct;
-	if (*begin_struct)
+	temp = *begin_list;
+	if (*begin_list)
 	{
 		while (temp->next != NULL)
 		{
 			temp = temp->next;
 		}
-		temp->next = ft_create_struct(command);
+		temp->next = ft_create_linked_struct(data);
 	}
 	else
-		*begin_struct = ft_create_struct(command);
+		*begin_list = ft_create_linked_struct(data);
 }
 
 static void	parser(t_list **list, char **env)
 {
-	t_struct 	*list_struct;
-	t_command	command;
+	t_command	*command;
 	t_list		*begin;
+	t_command	**begin_com;
 
+	command = NULL;
+	begin_com = &command;
 	begin = *list;
-	list_struct = NULL;
+
+	(void)env;
 	while (begin)
 	{
 		if (ft_strncmp((const char *)begin->content, "cat", 3) == 0)
-			ft_struct_list_push_back(&list_struct, command);
+			ft_struct_push_back(&command, (char *)begin->content);
 		begin = begin->next;
+	}
+	begin = *list;
+	while (*begin_com)// loop om te lezen wat er gebeurd later weghalen
+	{
+			printf("cat item: [%s]\n", ((char*)(*begin_com)->program));
+			printf("cat item: [%s]\n", ((char*)(*begin_com)->args));
+			printf("cat item: [%d]\n", ((*begin_com)->pipe_left));
+			printf("cat item: [%d]\n", ((*begin_com)->pip_right));
+			printf("cat item: [%d]\n", ((*begin_com)->redirection));
+			// printf("begin adress: %p\n", begin);
+			begin_com = &(*begin_com)->next;
 	}
 	
 }
@@ -90,6 +80,7 @@ static void	parser(t_list **list, char **env)
 void    check_type(t_list **list, char **env)
 {
 	parser(list, env);
+
 	// t_list	*begin;
 
 	// begin = *list;
@@ -105,15 +96,6 @@ void    check_type(t_list **list, char **env)
 	// }
 	// begin = *list;
 }
-
-
-
-
-
-
-
-
-
 
 // void	error(char *str, int ret)
 // {

@@ -32,18 +32,26 @@
 
     typedef struct s_command 
 	{
-        char	*program;
+		// struct	s_command *previous;
+        struct	s_command *next;
+		char	*program;
         char	**args;
         int		pipe_left;
         int		pip_right;
 		int		redirection;
     } 				t_command;
 
-	typedef struct		s_struct
-	{
-        struct s_command command;
-        struct s_struct_list *next;
-	}					t_struct;
+// 	typedef struct		s_list
+// {
+// 	struct s_list	*next;
+// 	void			*content;
+// }					t_list;
+
+	// typedef struct		s_struct
+	// {
+    //     struct s_command command;
+    //     struct s_struct_list *next;
+	// }					t_struct;
 
 
     // typedef struct Schedule {
