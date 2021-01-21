@@ -18,7 +18,8 @@ SRC = main.c \
 		start_program.c \
 		parser.c \
 		non_buildin.c \
-		env_path.c
+		env_path.c \
+		check_type.c
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 CC = gcc

@@ -38,7 +38,8 @@ int					main(int argc, char **argv, char **env);
 void            	start_program(t_list *list, char **env);
 t_list				*ft_create_elem(void *data);
 void				ft_list_push_back(t_list **begin_list, void *data);
-void                check_type(t_list **list, char **env);
+void                parser(t_list **list, char **env, t_command	*command);
+void                check_type(t_list **list, char **env, t_command	*command);
 
 /*parse functions*/
 void            	non_buildin(t_list *list, char **env);

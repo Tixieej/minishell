@@ -85,7 +85,9 @@ void			start_program(t_list *list, char **env)
 	int		result;
 	char	*line;
 	t_list	**begin;
+	t_command	*command;
 
+	command = NULL;
 	begin = &list;
 	result = 1;
 	line = NULL;
@@ -94,8 +96,8 @@ void			start_program(t_list *list, char **env)
 		prompt();
 		result = get_next_line(0, &line);
 		divide_input(&list, line, 0, 0);
-		// parser.c
-		check_type(&list, env);
+		parser(&list, env, command);
+		// check_type(&list, env);
 		// while ((*begin))// loop om te lezen wat er gebeurd later weghalen
 		// {
 		// 	printf("list item: [%s]\n", (char*)((*begin)->content));
