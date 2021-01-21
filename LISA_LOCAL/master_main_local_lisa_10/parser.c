@@ -49,46 +49,47 @@ void		ft_struct_push_back(t_command **begin_list, char *data)
 static void	parser(t_list **list, char **env)
 {
 	t_command	*command;
-	t_list		*current;
-	t_command	**current_com;
+	t_list		*cur_lst;
+	t_command	**cur_sturct;
 
 	command = NULL;
-	current_com = &command;
-	current = *list;
+	cur_sturct = &command;
+	cur_lst = *list;
 
 	(void)env;
-	ft_struct_push_back(&command, (char *)current->content);
-	// printf("current content: [%s]\n", ((char *)current->content));
-	current = current->next;
-	while (current)
+	ft_struct_push_back(&(*cur_sturct), (char *)cur_lst->content);
+	// printf("cur_lst content: [%s]\n", ((char *)cur_lst->content));
+	cur_lst = cur_lst->next;
+	while (cur_lst)
 	{
-		if (ft_strncmp((const char *)current->content, ";", 1))
+		if (ft_strncmp((const char *)cur_lst->content, ";", 1) && ft_strncmp((const char *)cur_lst->content, "|", 1))
 		{
-			command->args = ft_strjoin(command->args, current->content);
-			command->args = ft_strjoin(command->args, " ");
+			(*cur_sturct)->args = ft_strjoin((*cur_sturct)->args, cur_lst->content);
+			(*cur_sturct)->args = ft_strjoin((*cur_sturct)->args, " "); //tijdelijk om woorden iig los te lezen
 		}
-		if (ft_strncmp((const char *)current->content, ";", 1) == 0)
+		if (ft_strncmp((const char *)cur_lst->content, ";", 1) == 0)
 			printf("go to execute function\n");
-		if (ft_strncmp((const char *)current->content, "|", 1) == 0)
+		if (ft_strncmp((const char *)cur_lst->content, "|", 1) == 0)
 		{
-			command->pipe_right = 1;
-			current = current->next;
-			ft_struct_push_back(&command, (char *)current->content);
-			// current_com = &(*current_com)->next;
-			command->pipe_left = 1;
+			(*cur_sturct)->pipe_right = 1;
+			cur_lst = cur_lst->next;
+			ft_struct_push_back(&(*cur_sturct), (char *)cur_lst->content);
+			cur_sturct = &(*cur_sturct)->next;
+			(*cur_sturct)->pipe_left = 1;
 		}
-		current = current->next;
+		cur_lst = cur_lst->next;
 	}
-	current = *list;
-	while (*current_com)// loop om te lezen wat er gebeurd later weghalen
+	cur_lst = *list;
+	cur_sturct = &command;
+	while (*cur_sturct)// loop om te lezen wat er gebeurd later weghalen
 	{
-			printf("program: [%s]\n", ((char*)(*current_com)->program));
-			printf("args: [%s]\n", ((char*)(*current_com)->args));
-			printf("pipe_left: [%d]\n", ((*current_com)->pipe_left));
-			printf("pipe_right: [%d]\n", ((*current_com)->pipe_right));
-			printf("redirection: [%d]\n", ((*current_com)->redirection));
+			printf("program: [%s]\n", ((char*)(*cur_sturct)->program));
+			printf("args: [%s]\n", ((char*)(*cur_sturct)->args));
+			printf("pipe_left: [%d]\n", ((*cur_sturct)->pipe_left));
+			printf("pipe_right: [%d]\n", ((*cur_sturct)->pipe_right));
+			printf("redirection: [%d]\n", ((*cur_sturct)->redirection));
 			// printf("begin adress: %p\n", begin);
-			current_com = &(*current_com)->next;
+			cur_sturct = &(*cur_sturct)->next;
 	}
 	
 }
