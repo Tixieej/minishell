@@ -109,4 +109,5 @@ void			start_program(t_list *list, char **env)
 		free(line);
 		line = NULL;
 	}
+	ft_lstclear(&list, free);
 }

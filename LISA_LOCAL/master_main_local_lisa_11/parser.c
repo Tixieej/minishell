@@ -58,6 +58,10 @@ void	parser(t_list **list, char **env, t_command	*command)
 	cur_lst = cur_lst->next;
 	while (cur_lst)
 	{
+		// if (ft_strncmp((const char *)cur_lst->content, ">", 1))
+		// {
+		// 	(*cur_struct)->redirection++;
+		// }
 		if (ft_strncmp((const char *)cur_lst->content, ";", 1) && ft_strncmp((const char *)cur_lst->content, "|", 1))
 		{
 			(*cur_struct)->args = ft_strjoin((*cur_struct)->args, cur_lst->content);
@@ -96,4 +100,6 @@ void	parser(t_list **list, char **env, t_command	*command)
 			cur_struct = &(*cur_struct)->next;
 	}
 	cur_struct = &command;
+	// ft_lstclear(&cur_lst, free);
+	// ft_lstclear(&list, free);  ft_strctclear schrijven
 }

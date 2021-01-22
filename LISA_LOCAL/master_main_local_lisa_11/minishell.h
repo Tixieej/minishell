@@ -18,8 +18,10 @@
 # include "libft/libft.h"
 # include "get_next_line.h"
 # include <unistd.h> //mogen we die gebruiken? voor write
-# include <sys/stat.h> //stat
-# include <stdio.h> // WEGHALEN PRINTF
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <stdio.h> // WEGHALEN PRINTF ? die mag wel toch
 
 typedef struct      s_command 
 {
@@ -49,5 +51,9 @@ void				ft_exec(char *path, t_command command, char **envp);
 
 /*env_path.c*/
 char				**make_path_array(char **envp);
+
+/*buildins*/
+void                cd(t_command *command);
+void                echo(t_command *command);
 
 #endif
