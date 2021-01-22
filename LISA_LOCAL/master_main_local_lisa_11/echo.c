@@ -22,6 +22,7 @@ void        echo(t_command *command)
     // if file doesnt exist && TRUNC
     // fd = open("test", O_CREAT | O_RDWR | O_TRUNC, 0644);
     fd = open("test", O_CREAT | O_RDWR | O_APPEND, 0644);
+    command->args = ft_strjoin(command->args, "\n");
     if (write(fd, command->args, ft_strlen(command->args)) < 0)
         printf("error\n");
     // printf("%s\n", command->args);
