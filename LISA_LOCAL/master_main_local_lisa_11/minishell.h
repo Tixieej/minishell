@@ -30,7 +30,8 @@ typedef struct      s_command
     char	*args;
     int		pipe_left;
     int		pipe_right;
-	int		redirection;
+	// int		redirection;
+    struct  s_list *redirection;
     struct	s_command *next;
 }                   t_command;
 

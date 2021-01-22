@@ -15,15 +15,17 @@
 t_command		*ft_create_linked_struct(char *data)
 {
 	t_command *command;
+	// t_list	*redirection;
 
 	command = malloc(sizeof(t_command));
+	// redirection = malloc(sizeof(t_list));
 	if (command)
 	{
         command->program = data;
         command->args = ft_strdup("");
         command->pipe_left = 0;
         command->pipe_right = 0;
-		command->redirection = 0;
+		command->redirection = NULL;
 		command->next = NULL;
 	}
 	return (command);
@@ -58,10 +60,13 @@ void	parser(t_list **list, char **env, t_command	*command)
 	cur_lst = cur_lst->next;
 	while (cur_lst)
 	{
-		// if (ft_strncmp((const char *)cur_lst->content, ">", 1))
-		// {
-		// 	(*cur_struct)->redirection++;
-		// }
+		if (ft_strncmp((const char *)cur_lst->content, ">", 1))
+		{
+			printf("JA\n");
+			// cur_lst = cur_lst->next;
+			ft_list_push_back(&(*cur_struct)->redirection, cur_lst->content);
+			// (*cur_struct)->redirection++;
+		}
 		if (ft_strncmp((const char *)cur_lst->content, ";", 1) && ft_strncmp((const char *)cur_lst->content, "|", 1))
 		{
 			(*cur_struct)->args = ft_strjoin((*cur_struct)->args, cur_lst->content);
@@ -95,7 +100,11 @@ void	parser(t_list **list, char **env, t_command	*command)
 			printf("args: [%s]\n", ((char*)(*cur_struct)->args));
 			printf("pipe_left: [%d]\n", ((*cur_struct)->pipe_left));
 			printf("pipe_right: [%d]\n", ((*cur_struct)->pipe_right));
-			printf("redirection: [%d]\n", ((*cur_struct)->redirection));
+			while ((*cur_struct)->redirection)
+			{
+				printf("redirection: [%s]\n", ((*cur_struct)->redirection->content));
+				(*cur_struct)->redirection = (*cur_struct)->redirection->next;
+			}
 			// printf("begin adress: %p\n", begin);
 			cur_struct = &(*cur_struct)->next;
 	}

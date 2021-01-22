@@ -14,5 +14,10 @@
 
 void        cd(t_command *command)
 {
+    char *path;
+
+    path = getcwd(NULL, 0);
+    int chdir(const char *path);
+    printf("%s\n", path);
    printf("%s\n", command->program);
 }
