@@ -19,12 +19,13 @@ void        echo(t_command *command)
     // command->args moet met een spatie minder
     int fd;
 
+	(void)command;
     // if file doesnt exist && TRUNC
     // fd = open("test", O_CREAT | O_RDWR | O_TRUNC, 0644);
     fd = open("test", O_CREAT | O_RDWR | O_APPEND, 0644);
-    command->args = ft_strjoin(command->args, "\n");
-    if (write(fd, command->args, ft_strlen(command->args)) < 0)
-        printf("error\n");
+	//command->args = ft_strjoin(command->args, "\n"); //dit werkt niet meer, want command->args = linked list nu
+    //if (write(fd, command->args, ft_strlen(command->args)) < 0)
+    //    printf("error\n");
     // printf("%s\n", command->args);
     // printf("echo\n");
 }

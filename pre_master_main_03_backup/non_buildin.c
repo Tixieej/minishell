@@ -15,11 +15,11 @@
 // void		ft_make_struct(t_list *list, t_command *cmd)
 // {
 // 	cmd->program = list[0].content;
-// 	cmd->args = ft_list_to_array(list);
+// 	cmd->args = list_to_array(list);
 // 	printf("struct: %s, args[1]: %s args[2]: %s\n", cmd->program, cmd->args[1], cmd->args[2]);
 // }
 
-// char		**ft_list_to_array(t_list *list)
+// char		**list_to_array(t_list *list)
 // {
 // 	int		count;
 // 	char	**array;

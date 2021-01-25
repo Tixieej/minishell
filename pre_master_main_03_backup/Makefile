@@ -17,6 +17,7 @@ SRC = main.c \
 		get_next_line_utils.c \
 		start_program.c \
 		parser.c \
+		parse.c \
 		non_buildin.c \
 		env_path.c \
 		check_type.c \
@@ -30,7 +31,7 @@ all: $(NAME)
 $(NAME): $(LIBFT) $(OBJ)
 	$(CC) -L. -lft -o $(NAME) $(OBJ)
 $(LIBFT):
-	cd libft && make && make bonus
+	cd libft && make bonus
 	mv libft/$(LIBFT) .
 test: $(NAME)
 	./$(NAME)

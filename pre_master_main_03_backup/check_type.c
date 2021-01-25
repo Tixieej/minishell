@@ -35,7 +35,7 @@ void    check_type(t_list **list, char **env, t_command *command) //moet list we
 	else if (ft_strncmp((const char *)cur_struct->program, "exit", 4) == 0)
 		printf("exit type\n");
 	else
-        printf("non buildin function\n");
-		// if (non_buildin = -1)
+		external(command, env);
+		// if (non_builtin = -1)
 		// 	error("invalid programme input", -1);
 }
