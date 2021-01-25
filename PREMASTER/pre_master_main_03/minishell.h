@@ -34,6 +34,14 @@ typedef struct      s_command
     struct	s_command *next;
 }                   t_command;
 
+// typedef struct		s_command
+// {
+// 	char			*program;
+// 	char			**args;//dit is al een array
+// 	//redirection
+// 	//etc ..
+// }					t_command;
+
 int					main(int argc, char **argv, char **env);
 
 /*tokenize functions?*/
