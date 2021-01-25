@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/12 17:43:39 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/14 13:57:27 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,4 @@ void		ft_parse(t_list *list, char **envp)
 		if (stat(path, &buffer) != 0)
 			printf("command not found: %s\n", cp_command.program);
 	}
-	ft_exec(path, cp_command, envp);
 }
