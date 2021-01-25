@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/14 12:21:46 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/23 12:24:40 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void			start_program(t_list *list, char **env)
 	char		*line;
 	t_list		**begin;
 	t_command	cmd;
+	t_list		**cmd_list;
 
 	begin = &list;
 	result = 1;
@@ -95,9 +96,10 @@ void			start_program(t_list *list, char **env)
 		prompt();
 		result = get_next_line(0, &line);
 		divide_input(&list, line, 0, 0);
-		cmd = parser(&list);
-		check_type(&list, env);//deze krijgt t_command ipv t_list
-		while ((*begin))// loop om te lezen wat er gebeurd later weghalen
+		cmd_list = de_loop(&list);
+		voer_uit(cmd_list, &list, env);
+		check_type(&cmd, &list, env);//deze krijgt t_command ipv t_list
+		while ((*begin))// loop om te lezen wat er gebeurt later weghalen
 		{
 			printf("list item: [%s]\n", (char*)((*begin)->content));
 			// printf("begin adress: %p\n", begin);

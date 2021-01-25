@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/01/14 12:21:00 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/23 12:23:35 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,14 @@ void		attach_path(t_command cmd, char **env)
 		printf("command not found: %s\n", cmd.program);
 }
 
-void		external(t_command cmd, char **env)
+void		external(t_command *cmd, char **env)
 {
-	/* parse.c komt boven check_type functie, code hieronder komt in andere functie en wordt aangeroepen aan het eind van check_type*/
-	if (ft_strchr(cmd.program, '/') != 0)
+	if (ft_strchr(cmd->program, '/') != 0)
 	{
-		with_path(cmd, env);
+		with_path(*cmd, env);
 	}
 	else
 	{
-		attach_path(cmd, env);
+		attach_path(*cmd, env);
 	}
 }
