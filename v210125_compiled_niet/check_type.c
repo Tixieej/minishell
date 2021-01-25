@@ -18,7 +18,6 @@ void		remove_next(t_list **list)
 	//free the lost element?
 }
 
-
 void		voer_uit(t_list **cmd_list, t_list **list, char **env)
 {
 	//loop door lijst en voer elk cmd uit
@@ -126,11 +125,11 @@ t_command	parser(t_list **list)
 }
 */
 
-t_command	make_command(t_list **list)
+t_command	*make_command(t_list **list)
 {
 	t_command		cmd;
 
-	cmd.program = list[0]->content;//zou kunnen dat dit niet werkt nu **list
+	cmd.program = (*list)->content;//zou kunnen dat dit niet werkt nu **list
 	//hier moet nog > >> en < opgevangen worden
 	cmd.args = ft_list_to_array(list);
 	return (&cmd);

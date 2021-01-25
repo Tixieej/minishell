@@ -42,7 +42,7 @@ void				ft_list_push_back(t_list **begin_list, void *data);
 
 /*parse functions*/
 //t_command			parser(t_list **list);
-t_command			make_command(t_list **list);
+t_command			*make_command(t_list **list);
 char				**ft_list_to_array(t_list **list);
 char				*ft_append_path(char *str);
 void				remove_next(t_list **list);
