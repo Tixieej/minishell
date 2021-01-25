@@ -15,10 +15,8 @@
 t_command		*ft_create_linked_struct(char *data)
 {
 	t_command *command;
-	// t_list	*redirection;
 
 	command = malloc(sizeof(t_command));
-	// redirection = malloc(sizeof(t_list));
 	if (command)
 	{
         command->program = data;
@@ -60,15 +58,13 @@ void	parser(t_list **list, char **env, t_command	*command)
 	cur_lst = cur_lst->next;
 	while (cur_lst)
 	{
-		if (ft_strncmp((const char *)cur_lst->content, ">", 1))
-		{
-			printf("JA\n");
-			// cur_lst = cur_lst->next;
-			ft_list_push_back(&(*cur_struct)->redirection, cur_lst->content);
-			// (*cur_struct)->redirection++;
-		}
+		// if (ft_strncmp((const char *)cur_lst->content, ">", 0))
+		// {
+		// 	printf("JA\n");
+		// }
 		if (ft_strncmp((const char *)cur_lst->content, ";", 1) && ft_strncmp((const char *)cur_lst->content, "|", 1))
 		{
+			// Hier binnen kan je dan de dubbele array opbouwen als je zou willen
 			(*cur_struct)->args = ft_strjoin((*cur_struct)->args, cur_lst->content);
 			(*cur_struct)->args = ft_strjoin((*cur_struct)->args, " "); //tijdelijk om woorden iig los te lezen
 		}
@@ -106,6 +102,7 @@ void	parser(t_list **list, char **env, t_command	*command)
 				(*cur_struct)->redirection = (*cur_struct)->redirection->next;
 			}
 			// printf("begin adress: %p\n", begin);
+			printf("\n");
 			cur_struct = &(*cur_struct)->next;
 	}
 	cur_struct = &command;

@@ -38,5 +38,4 @@ void    check_type(t_list **list, char **env, t_command *command) //moet list we
         printf("non buildin function\n");
 		// if (non_buildin = -1)
 		// 	error("invalid programme input", -1);
-    // cur_struct = cur_struct->next;
 }
