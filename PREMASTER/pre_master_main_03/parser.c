@@ -20,7 +20,7 @@ t_command		*ft_create_linked_struct(char *data)
 	if (command)
 	{
         command->program = data;
-        command->args = ft_strdup("");
+        command->args = ft_strdup(""); //deze moet dan jouw **char worden
         command->pipe_left = 0;
         command->pipe_right = 0;
 		command->redirection = NULL;
@@ -96,13 +96,6 @@ void	parser(t_list **list, char **env, t_command	*command)
 			printf("args: [%s]\n", ((char*)(*cur_struct)->args));
 			printf("pipe_left: [%d]\n", ((*cur_struct)->pipe_left));
 			printf("pipe_right: [%d]\n", ((*cur_struct)->pipe_right));
-			while ((*cur_struct)->redirection)
-			{
-				printf("redirection: [%s]\n", ((*cur_struct)->redirection->content));
-				(*cur_struct)->redirection = (*cur_struct)->redirection->next;
-			}
-			// printf("begin adress: %p\n", begin);
-			printf("\n");
 			cur_struct = &(*cur_struct)->next;
 	}
 	cur_struct = &command;

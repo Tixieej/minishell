@@ -27,7 +27,7 @@ typedef struct      s_command
 {
 	// struct	s_command *previous;
 	char	*program;
-    char	*args;
+    char	*args; //**
     int		pipe_left;
     int		pipe_right;
     struct  s_list *redirection;
