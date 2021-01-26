@@ -72,10 +72,9 @@ void	parser(t_list **list, char **env, t_command	*command)
 		if (ft_strncmp((const char *)cur_lst->content, ";", 1) && ft_strncmp((const char *)cur_lst->content, "|", 1))
 		{
 			printf("- het is geen ; of |\n");
-			ft_list_push_back(&((*cur_struct)->args), cur_lst->content);//segfault hierdoor.
+			ft_list_push_back(&((*cur_struct)->args), cur_lst->content);
 			// Hier binnen kan je dan de dubbele array opbouwen als je zou willen
 			//(*cur_struct)->args = ft_strjoin((*cur_struct)->args, cur_lst->content);
-			//(*cur_struct)->args = ft_strjoin((*cur_struct)->args, " "); //tijdelijk om woorden iig los te lezen
 		}
 		else if (ft_strncmp((const char *)cur_lst->content, ";", 1) == 0)
 		{
@@ -94,24 +93,22 @@ void	parser(t_list **list, char **env, t_command	*command)
 			cur_struct = &(*cur_struct)->next;
 			(*cur_struct)->pipe_left = 1;
 		}
-		cur_lst = cur_lst->next;//segfault hierdoor?
+		cur_lst = cur_lst->next;
 	}
 	check_type(list, env, *cur_struct);
 	cur_lst = *list;
-	//cur_struct = &command;
-	command = *cur_struct;
+	cur_struct = &command;
 	// printf("go to execute function\n");
 	while (*cur_struct)// loop om te lezen wat er gebeurt, later weghalen
 	{
-			printf("program: [%s]\n", ((char*)(*cur_struct)->program));
-			printf("eerste arg: [%s]\n", ((*cur_struct)->args)->content);
-			//printf("args: [%s]\n", ((char*)(*cur_struct)->args));
-			printf("pipe_left: [%d]\n", ((*cur_struct)->pipe_left));
-			printf("pipe_right: [%d]\n", ((*cur_struct)->pipe_right));
+			printf("\tprogram: [%s]\n", ((char*)(*cur_struct)->program));
+			if (((*cur_struct)->args))
+				printf("\teerste arg: [%s]\n", ((*cur_struct)->args)->content);
+			printf("\tpipe_left: [%d]\n", ((*cur_struct)->pipe_left));
+			printf("\tpipe_right: [%d]\n\n", ((*cur_struct)->pipe_right));
 			cur_struct = &(*cur_struct)->next;
 	}
-	//cur_struct = &command;
-	command = *cur_struct;
+	cur_struct = &command;
 	// ft_lstclear(&cur_lst, free);
 	// ft_lstclear(&list, free);  ft_strctclear schrijven
 }
