@@ -35,6 +35,7 @@ typedef struct      s_command
 }                   t_command;
 
 int					main(int argc, char **argv, char **env);
+void                error_handler(char *error, t_list **list, t_command *command);
 
 /*tokenize functions?*/
 void            	start_program(t_list *list, char **env);

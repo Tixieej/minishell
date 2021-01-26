@@ -21,7 +21,8 @@ SRC = main.c \
 		env_path.c \
 		check_type.c \
 		echo.c \
-		cd.c
+		cd.c \
+		error_handler.c
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 CC = gcc

@@ -38,7 +38,7 @@ static int		handle_quotation_marks(t_list **list, char *line,
 		while (!ft_strchr("\'\0", line[start + *len]))
 			(*len)++;
 		if (line[start + *len] != '\'')
-			printf("write function for extra input\n");
+			error_handler("missing quotation marks\n", list, NULL);
 		(*len)++;
 		start = create_list_item(list, line, len, start);
 	}
@@ -48,7 +48,7 @@ static int		handle_quotation_marks(t_list **list, char *line,
 		while (!ft_strchr("\"\0", line[start + *len]))
 			(*len)++;
 		if (line[start + *len] != '\"')
-			printf("write function for extra input\n");
+			error_handler("missing quotation marks\n", list, NULL);
 		(*len)++;
 		start = create_list_item(list, line, len, start);
 	}
@@ -70,8 +70,12 @@ static void		divide_input(t_list **list, char *line,
 		}
 		if (line[start + len] == ' ' || line[start + len] == '\0' || line[start + len] == '>')
 		{
+			if (len < 1 && line[start + len + 1] == '>')
+				len = 2;
+			if (line[start + len + 1] == '>')
+				error_handler("syntax error near unexpected token `>'\n", list, NULL);
 			if (len < 1)
-				len = 1;
+				len = 1;	
 			start = create_list_item(list, line, &len, start);
 		}
 		if (ft_strchr("\'\"", line[start + len]))
@@ -98,16 +102,17 @@ void			start_program(t_list *list, char **env)
 		divide_input(&list, line, 0, 0);
 		parser(&list, env, command);
 		// check_type(&list, env);
-		// while ((*begin))// loop om te lezen wat er gebeurd later weghalen
-		// {
-		// 	printf("list item: [%s]\n", (char*)((*begin)->content));
-		// 	// printf("begin adress: %p\n", begin);
-		// 	begin = &(*begin)->next;
-		// }
+		while ((*begin))// loop om te lezen wat er gebeurd later weghalen
+		{
+			printf("list item: [%s]\n", (char*)((*begin)->content));
+			// printf("begin adress: %p\n", begin);
+			begin = &(*begin)->next;
+		}
 		ft_lstclear(&list, free);
 		begin = &list;
 		free(line);
 		line = NULL;
 	}
 	ft_lstclear(&list, free);
+	exit(0);
 }
