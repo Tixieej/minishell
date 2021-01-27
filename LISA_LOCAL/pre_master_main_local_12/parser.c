@@ -71,14 +71,30 @@ void	parser(t_list **list, char **env, t_command	*command)
 		}*/
 		if (ft_strncmp((const char *)cur_lst->content, ";", 1) && ft_strncmp((const char *)cur_lst->content, "|", 1))
 		{
-			printf("- het is geen ; of |\n");
-			ft_list_push_back(&((*cur_struct)->args), cur_lst->content);
+			// printf("- het is geen ; of |\n");
+			
+			
+			// if (ft_strchr("<>", (int)cur_lst->content))
+			if (!(ft_strncmp((const char *)cur_lst->content, ">", 1)))
+			{
+				ft_list_push_back(&((*cur_struct)->out_red), cur_lst->content);
+				cur_lst = cur_lst->next;
+				ft_list_push_back(&((*cur_struct)->out_red), cur_lst->content);
+			}
+			else if (!(ft_strncmp((const char *)cur_lst->content, "<", 1)))
+			{
+				ft_list_push_back(&((*cur_struct)->in_red), cur_lst->content);
+				cur_lst = cur_lst->next;
+				ft_list_push_back(&((*cur_struct)->in_red), cur_lst->content);
+			}
+			else
+				ft_list_push_back(&((*cur_struct)->args), cur_lst->content);
 			// Hier binnen kan je dan de dubbele array opbouwen als je zou willen
 			//(*cur_struct)->args = ft_strjoin((*cur_struct)->args, cur_lst->content);
 		}
 		else if (ft_strncmp((const char *)cur_lst->content, ";", 1) == 0)
 		{
-			printf("- het is een ;\n");
+			// printf("- het is een ;\n");
 			check_type(list, env, *cur_struct);
 			cur_lst = cur_lst->next;
 			ft_struct_push_back(&(*cur_struct), (char *)cur_lst->content);
@@ -86,7 +102,7 @@ void	parser(t_list **list, char **env, t_command	*command)
 		}	
 		else if (ft_strncmp((const char *)cur_lst->content, "|", 1) == 0)
 		{
-			printf("- het is een |\n");
+			// printf("- het is een |\n");
 			(*cur_struct)->pipe_right = 1;
 			cur_lst = cur_lst->next;
 			ft_struct_push_back(&(*cur_struct), (char *)cur_lst->content);
@@ -102,8 +118,16 @@ void	parser(t_list **list, char **env, t_command	*command)
 	while (*cur_struct)// loop om te lezen wat er gebeurt, later weghalen
 	{
 			printf("\tprogram: [%s]\n", ((char*)(*cur_struct)->program));
-			if (((*cur_struct)->args))
-				printf("\teerste arg: [%s]\n", ((*cur_struct)->args)->content);
+			while (((*cur_struct)->in_red))
+			{
+				printf("\tin_red: [%s]\n", ((*cur_struct)->in_red)->content);
+				(*cur_struct)->in_red = (*cur_struct)->in_red->next;
+			}
+			while (((*cur_struct)->args))
+			{
+				printf("\targs: [%s]\n", ((*cur_struct)->args)->content);
+				(*cur_struct)->args = (*cur_struct)->args->next;
+			}
 			printf("\tpipe_left: [%d]\n", ((*cur_struct)->pipe_left));
 			printf("\tpipe_right: [%d]\n\n", ((*cur_struct)->pipe_right));
 			cur_struct = &(*cur_struct)->next;
