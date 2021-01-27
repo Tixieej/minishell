@@ -123,6 +123,11 @@ void	parser(t_list **list, char **env, t_command	*command)
 				printf("\tin_red: [%s]\n", ((*cur_struct)->in_red)->content);
 				(*cur_struct)->in_red = (*cur_struct)->in_red->next;
 			}
+			while (((*cur_struct)->out_red))
+			{
+				printf("\tin_red: [%s]\n", ((*cur_struct)->out_red)->content);
+				(*cur_struct)->out_red = (*cur_struct)->out_red->next;
+			}
 			while (((*cur_struct)->args))
 			{
 				printf("\targs: [%s]\n", ((*cur_struct)->args)->content);
