@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2020/10/23 16:03:08 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/01/28 15:46:35 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void                parser(t_list **list, char **env, t_command	*command);
 
 /*parse functions*/
 //t_command			*make_command(t_list **list);
-void            	non_buildin(t_list *list, char **env);
+//void            	non_buildin(t_list *list, char **env);
 char				**list_to_array(t_list **list);
 char				*ft_append_path(char *str);
 //void				ft_lstadd_front(t_list **lst, t_list *new);

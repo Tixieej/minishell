@@ -6,13 +6,13 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/01/23 12:23:35 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/28 15:46:08 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char		**list_to_array(t_list **list)
+char		**list_to_array(t_list **list)
 {
 	int		count;
 	char	**array;
@@ -45,7 +45,7 @@ static char		**list_to_array(t_list **list)
 	return (array);
 }
 
-static void		ft_exec(char *path, t_command cmd, char **env)
+void		ft_exec(char *path, t_command cmd, char **env)
 {
 	pid_t	pid;
 	char	**args;

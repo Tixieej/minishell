@@ -6,7 +6,7 @@
 #    By: rde-vrie <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/02/13 10:40:20 by rde-vrie      #+#    #+#                  #
-#    Updated: 2020/11/26 13:22:23 by rixt          ########   odam.nl          #
+#    Updated: 2021/01/28 15:48:57 by rixt          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ SRC = main.c \
 		start_program.c \
 		parser.c \
 		external.c \
-		non_buildin.c \
 		env_path.c \
 		check_type.c \
 		echo.c \
