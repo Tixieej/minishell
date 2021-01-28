@@ -17,7 +17,7 @@ void    check_type(t_list **list, char **env, t_command *command) //moet list we
 	t_list		*cur_lst;
 	t_command	*cur_struct;
 
-	printf("check_type\n");
+	//printf("check_type\n");
 	cur_struct = command;
 	cur_lst = *list;
 	if (ft_strncmp((const char *)cur_struct->program, "echo", 4) == 0)

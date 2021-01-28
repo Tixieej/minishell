@@ -70,7 +70,7 @@ static void		divide_input(t_list **list, char *line,
 		}
 		if (line[start + len] == '>' && line[start + len + 1] == '>' && line[start + len + 2] == '>')
 			error_handler("syntax error near unexpected token `>'\n", list, NULL);
-		if (line[start + len] == ' ' || line[start + len] == '\0' || line[start + len] == '>')
+		if (line[start + len] == ' ' || line[start + len] == '\0' || line[start + len] == '>' || line[start + len] == '<')
 		{
 			if (len < 1 && line[start + len + 1] == '>')
 				len = 2;
