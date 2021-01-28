@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char		**list_to_array(t_list **list)
+static char		**list_to_array(t_list **list)
 {
 	int		count;
 	char	**array;
@@ -45,7 +45,7 @@ char		**list_to_array(t_list **list)
 	return (array);
 }
 
-void		ft_exec(char *path, t_command cmd, char **env)
+static void		ft_exec(char *path, t_command cmd, char **env)
 {
 	pid_t	pid;
 	char	**args;
@@ -64,7 +64,7 @@ void		ft_exec(char *path, t_command cmd, char **env)
 		wait(NULL);
 }
 
-void		with_path(t_command cmd, char **env)
+static void		with_path(t_command cmd, char **env)
 {
 	struct stat		buffer;
 	char			*path;
@@ -76,7 +76,7 @@ void		with_path(t_command cmd, char **env)
 		printf("no such file or directory: %s\n", cmd.program);
 }
 
-void		attach_path(t_command cmd, char **env)
+static void		attach_path(t_command cmd, char **env)
 {
 	char		**paths;
 	char		*path;
