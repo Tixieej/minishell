@@ -17,7 +17,7 @@ SRC = main.c \
 		get_next_line_utils.c \
 		start_program.c \
 		parser.c \
-		parse.c \
+		external.c \
 		non_buildin.c \
 		env_path.c \
 		check_type.c \
