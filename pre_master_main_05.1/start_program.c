@@ -55,29 +55,34 @@ static int		handle_quotation_marks(t_list **list, char *line,
 	return (start);
 }
 
-static void		divide_input(t_list **list, char *line,
-							size_t len, unsigned int start)
+static void     divide_input(t_list **list, char *line,
+                            size_t len, unsigned int start)
 {
-	while (line[start + len] != '\0')
-	{
-		while (line[start + len] == ' ')
-			start++;
-		if (!ft_strchr("'<''>'\'\"", line[start + len]))
-		{
-			start += len;
-			while (!ft_strchr("'<''>' \'\"\0", line[start + len]))
-				len++;
-		}
-		if (line[start + len] == ' ' || line[start + len] == '\0' || line[start + len] == '>')
-		{
-			if (len < 1)
-				len = 1;
-			start = create_list_item(list, line, &len, start);
-		}
-		if (ft_strchr("\'\"", line[start + len]))
-			start = handle_quotation_marks(list, line, &len, start);
-		len++;
-	}
+    while (line[start + len] != '\0')
+    {
+        while (line[start + len] == ' ')
+            start++;
+        if (!ft_strchr("'<''>'\'\"", line[start + len]))
+        {
+            start += len;
+            while (!ft_strchr("'<''>' \'\"\0", line[start + len]))
+                len++;
+        }
+        if (line[start + len] == '>' && line[start + len + 1] == '>' && line[start + len + 2] == '>')
+			printf("syntax error near unexpected token `>'\n");
+            //error_handler("syntax error near unexpected token `>'\n", list, NULL);
+        if (line[start + len] == ' ' || line[start + len] == '\0' || line[start + len] == '>')
+        {
+            if (len < 1 && line[start + len + 1] == '>')
+                len = 2;
+            if (len < 1)
+                len = 1;    
+            start = create_list_item(list, line, &len, start);
+        }
+        if (ft_strchr("\'\"", line[start + len]))
+            start = handle_quotation_marks(list, line, &len, start);
+        len++;
+    }
 }
 
 void			start_program(t_list *list, char **env)

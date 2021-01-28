@@ -19,7 +19,6 @@ char		**list_to_array(t_list **list)
 	int		i;
 	t_list	*current;
 
-	printf("list_to_array\n");
 	if (!(*list) || !((*list)->content))// klopt dit?
 	{
 		array = (char **)malloc(sizeof(char *));
@@ -52,12 +51,11 @@ void		ft_exec(char *path, t_command cmd, char **env)
 	char	**args;
 	t_list	*arglist;
 
-	printf("ft_exec\n");
 	arglist = cmd.args;
 	ft_lstadd_front(&arglist, ft_create_elem(path));
 	//in create_elem wordt gemalloct dus we moeten nog checken of dat gelukt is.
 	//dat kunnen we toevoegen in create_elem zelf, of hieronder..
-	args = list_to_array(&(cmd.args));
+	args = list_to_array(&arglist);
 	printf(" ft_exec: forken hieronder!\n");
 	pid = fork();
 	if (pid == 0)
@@ -72,7 +70,6 @@ void		with_path(t_command cmd, char **env)
 	char			*path;
 
 	path = cmd.program;
-	//paths = ft_split(path, ' ');
 	if (stat(path, &buffer) == 0)
 		ft_exec(path, cmd, env);
 	else
@@ -86,7 +83,6 @@ void		attach_path(t_command cmd, char **env)
 	struct stat	buffer;
 	int			i;
 
-	printf("attach_path\n");
 	paths = make_path_array(env);
 	i = 0;
 	while (paths[i])
@@ -94,7 +90,6 @@ void		attach_path(t_command cmd, char **env)
 		path = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(path, cmd.program);
 		//cmd.args[0] = path;
-		//printf("%s\n", cmd.args[0]);
 		if (stat(path, &buffer) == 0)
 		{
 			ft_exec(path, cmd, env);
@@ -108,7 +103,6 @@ void		attach_path(t_command cmd, char **env)
 
 void		external(t_command *cmd, char **env)
 {
-	printf("external\n");
 	if (ft_strchr(cmd->program, '/') != 0)
 	{
 		with_path(*cmd, env);

@@ -41,13 +41,14 @@ int					main(int argc, char **argv, char **env);
 void            	start_program(t_list *list, char **env);
 t_list				*ft_create_elem(void *data);
 void				ft_list_push_back(t_list **begin_list, void *data);
-void                parser(t_list **list, char **env, t_command	*command);
 
 /*parse functions*/
 //t_command			*make_command(t_list **list);
 void            	non_buildin(t_list *list, char **env);
 char				**list_to_array(t_list **list);
 char				*ft_append_path(char *str);
+void				add_redirection(t_list **list, t_command **cmd);
+void                parser(t_list **list, char **env, t_command	*command);
 //void				ft_lstadd_front(t_list **lst, t_list *new);
 
 /* exec */

@@ -33,6 +33,7 @@ t_command		*ft_create_linked_struct(char *data)
 void		ft_struct_push_back(t_command **begin_list, char *data)
 {
 	t_command	*temp;
+	
 	temp = *begin_list;
 	if (*begin_list)
 	{
@@ -44,6 +45,31 @@ void		ft_struct_push_back(t_command **begin_list, char *data)
 	}
 	else
 		*begin_list = ft_create_linked_struct(data);
+}
+
+void	add_redirection(t_list **cur_lst, t_command **cmd)
+{
+	//char	*red_string;
+
+	//red_string = ft_strjoin((*cur_lst)->content, (*cur_lst)->next->content);
+	//string niet joinen, twee aparte elementen houden
+	if (ft_strncmp((*cur_lst)->content, "<", 1) == 0)
+	{
+		//ft_list_push_back(&((*cmd)->in_red), red_string);
+		ft_list_push_back(&((*cmd)->in_red), (*cur_lst)->content);
+		printf("\tredirection : [%s]\n", (*cmd)->in_red->content);
+	}
+	//(*cmd)->out_red->content
+	if (ft_strncmp((*cur_lst)->content, ">", 1) == 0)
+	{
+		//ft_list_push_back(&((*cmd)->out_red), red_string);
+		ft_list_push_back(&((*cmd)->out_red), (*cur_lst)->content);
+		*cur_lst = (*cur_lst)->next;
+		if (cur_lst)
+			ft_list_push_back(&((*cmd)->out_red), (*cur_lst)->next->content);
+		printf("\tredirection : [%s]\n", (*cmd)->out_red->content);
+	}
+	*cur_lst = (*cur_lst)->next;
 }
 
 void	parser(t_list **list, char **env, t_command	*command)
@@ -59,26 +85,15 @@ void	parser(t_list **list, char **env, t_command	*command)
 	cur_lst = cur_lst->next;
 	while (cur_lst)
 	{
-		// if (ft_strncmp((const char *)cur_lst->content, ">", 0))
-		// {
-		// 	printf("JA\n");
-		// }
-
-		/*if (ft_strncmp(<) && ft_strncmp(>) && ft_strncmp(>>) )
+		printf("--> [%s]:\n", cur_lst->content);
+		if (ft_strncmp((const char *)cur_lst->content, "<", 1) == 0 || ft_strncmp((const char *)cur_lst->content, ">", 1) == 0)
 		{
-			cur_struct
-
-		}*/
-		if (ft_strncmp((const char *)cur_lst->content, ";", 1) && ft_strncmp((const char *)cur_lst->content, "|", 1))
-		{
-			printf("- het is geen ; of |\n");
-			ft_list_push_back(&((*cur_struct)->args), cur_lst->content);
-			// Hier binnen kan je dan de dubbele array opbouwen als je zou willen
-			//(*cur_struct)->args = ft_strjoin((*cur_struct)->args, cur_lst->content);
+			printf(" - het is een redirection!\n");
+			add_redirection(&cur_lst, cur_struct);
 		}
 		else if (ft_strncmp((const char *)cur_lst->content, ";", 1) == 0)
 		{
-			printf("- het is een ;\n");
+			printf(" - het is een ;\n");
 			check_type(list, env, *cur_struct);
 			cur_lst = cur_lst->next;
 			ft_struct_push_back(&(*cur_struct), (char *)cur_lst->content);
@@ -86,12 +101,19 @@ void	parser(t_list **list, char **env, t_command	*command)
 		}	
 		else if (ft_strncmp((const char *)cur_lst->content, "|", 1) == 0)
 		{
-			printf("- het is een |\n");
+			printf(" - het is een |\n");
 			(*cur_struct)->pipe_right = 1;
 			cur_lst = cur_lst->next;
-			ft_struct_push_back(&(*cur_struct), (char *)cur_lst->content);
+			ft_struct_push_back(cur_struct, (char *)cur_lst->content);
 			cur_struct = &(*cur_struct)->next;
 			(*cur_struct)->pipe_left = 1;
+		}
+		else //geen speciale > >> < ; |
+		{
+			printf(" - het is een arg\n");
+			ft_list_push_back(&((*cur_struct)->args), cur_lst->content);
+			// Hier binnen kan je dan de dubbele array opbouwen als je zou willen
+			//(*cur_struct)->args = ft_strjoin((*cur_struct)->args, cur_lst->content);
 		}
 		cur_lst = cur_lst->next;
 	}
@@ -101,11 +123,13 @@ void	parser(t_list **list, char **env, t_command	*command)
 	// printf("go to execute function\n");
 	while (*cur_struct)// loop om te lezen wat er gebeurt, later weghalen
 	{
-			printf("\tprogram: [%s]\n", ((char*)(*cur_struct)->program));
+			printf("\tprogram: \t[%s]\n", ((char*)(*cur_struct)->program));
 			if (((*cur_struct)->args))
-				printf("\teerste arg: [%s]\n", ((*cur_struct)->args)->content);
-			printf("\tpipe_left: [%d]\n", ((*cur_struct)->pipe_left));
-			printf("\tpipe_right: [%d]\n\n", ((*cur_struct)->pipe_right));
+				printf("\teerste arg: \t[%s]\n", ((*cur_struct)->args)->content);
+			if (((*cur_struct)->out_red))
+				printf("\teerste red: \t[%s]\n", ((*cur_struct)->out_red->content));
+			printf("\tpipe_left: \t[%d]\n", ((*cur_struct)->pipe_left));
+			printf("\tpipe_right: \t[%d]\n\n", ((*cur_struct)->pipe_right));
 			cur_struct = &(*cur_struct)->next;
 	}
 	cur_struct = &command;
