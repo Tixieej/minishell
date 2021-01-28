@@ -6,7 +6,7 @@
 #    By: rde-vrie <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/02/13 10:40:20 by rde-vrie      #+#    #+#                  #
-#    Updated: 2021/01/28 15:48:57 by rixt          ########   odam.nl          #
+#    Updated: 2021/01/28 18:19:09 by rixt          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,23 +28,31 @@ OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 CC = gcc
 INC = minishell.h get_next_line.h
+
 all: $(NAME)
+
 $(NAME): $(LIBFT) $(OBJ)
 	$(CC) -L. -lft -o $(NAME) $(OBJ)
+
 $(LIBFT):
 	cd libft && make bonus
 	mv libft/$(LIBFT) .
+
 test: $(NAME)
 	./$(NAME)
+
 %.o: %.c $(INC)
 	$(shell mkdir -p $(dir $@))
-	gcc $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) -c $< -o $@
+
 clean:
 	$(RM) $(OBJ)
 	cd libft && make clean
+
 fclean:	clean
 	$(RM) $(NAME)
 	rm -rf $(LIBFT)
+
 re: fclean all
 
 # NAME = minishell

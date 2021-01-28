@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parser.c                                           :+:    :+:            */
+/*   check_type.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: livlamin <marvin@codam.nl>                   +#+                     */
+/*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/21/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/21/01 15:55:26 by livlamin          ########   odam.nl     */
+/*   Created: 2021/01/28 17:53:20 by rixt          #+#    #+#                 */
+/*   Updated: 2021/01/28 17:54:26 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void    check_type(t_list **list, char **env, t_command *command) //moet list wel mee?
+void	check_type(t_list **list, char **env, t_command *command) //moet list wel mee?
 {
 	t_list		*cur_lst;
 	t_command	*cur_struct;

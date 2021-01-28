@@ -6,13 +6,13 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/01/28 15:46:08 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/28 18:00:24 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char		**list_to_array(t_list **list)
+char			**list_to_array(t_list **list)
 {
 	int		count;
 	char	**array;
@@ -27,7 +27,7 @@ char		**list_to_array(t_list **list)
 	}
 	current = *list;
 	count = 0;
-	while (current) // misschien met list lopen maar dan met de kopie begin;
+	while (current)// misschien met list lopen maar dan met de kopie begin;
 	{
 		current = current->next; //
 		count++;
@@ -45,7 +45,7 @@ char		**list_to_array(t_list **list)
 	return (array);
 }
 
-void		ft_exec(char *path, t_command cmd, char **env)
+void			ft_exec(char *path, t_command cmd, char **env)
 {
 	pid_t	pid;
 	char	**args;
@@ -101,7 +101,7 @@ static void		attach_path(t_command cmd, char **env)
 		printf("command not found: %s\n", cmd.program);
 }
 
-void		external(t_command *cmd, char **env)
+void			external(t_command *cmd, char **env)
 {
 	if (ft_strchr(cmd->program, '/') != 0)
 	{

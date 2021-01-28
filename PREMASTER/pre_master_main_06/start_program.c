@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/12 15:55:26 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/28 17:59:16 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void		divide_input(t_list **list, char *line,
 			if (len < 1 && line[start + len + 1] == '>')
 				len = 2;
 			if (len < 1)
-				len = 1;	
+				len = 1;
 			start = create_list_item(list, line, &len, start);
 		}
 		if (ft_strchr("\'\"", line[start + len]))
@@ -86,9 +86,9 @@ static void		divide_input(t_list **list, char *line,
 
 void			start_program(t_list *list, char **env)
 {
-	int		result;
-	char	*line;
-	t_list	**begin;
+	int			result;
+	char		*line;
+	t_list		**begin;
 	t_command	*command;
 
 	command = NULL;

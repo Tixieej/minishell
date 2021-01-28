@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2020/11/26 15:55:26 by rixt          ########   odam.nl         */
+/*   Updated: 2021/01/28 17:55:38 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int		main(int argc, char **argv, char **env)
 	(void)argv;
 	if (argc != 1)
 	{
-		printf("no arguments needed"); //
+		printf("no arguments needed");
 		return (0);
 	}
 	start_program(list, env);

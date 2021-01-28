@@ -1,8 +1,8 @@
 #include <stdio.h>
 
-void		array_printer(char **array)
+void			array_printer(char **array)
 {
-	int		i;
+	int			i;
 
 	i = 0;
 	while (args[i])
@@ -19,5 +19,4 @@ void			print_list(t_list *list)
 		printf("[%s]-\n", list->content);
 		list = list->next;
 	}
-
 }
