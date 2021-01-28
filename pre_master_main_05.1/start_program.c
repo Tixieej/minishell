@@ -71,13 +71,14 @@ static void     divide_input(t_list **list, char *line,
         if (line[start + len] == '>' && line[start + len + 1] == '>' && line[start + len + 2] == '>')
 			printf("syntax error near unexpected token `>'\n");
             //error_handler("syntax error near unexpected token `>'\n", list, NULL);
-        if (line[start + len] == ' ' || line[start + len] == '\0' || line[start + len] == '>')
+        if (line[start + len] == ' ' || line[start + len] == '\0' || line[start + len] == '>' || line[start + len] == '<')
         {
             if (len < 1 && line[start + len + 1] == '>')
                 len = 2;
             if (len < 1)
                 len = 1;    
             start = create_list_item(list, line, &len, start);
+            len ++;
         }
         if (ft_strchr("\'\"", line[start + len]))
             start = handle_quotation_marks(list, line, &len, start);

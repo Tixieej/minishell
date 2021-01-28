@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2020/10/23 16:03:08 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/01/28 13:01:42 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,9 @@ char				**make_path_array(char **envp);
 /*builtins*/
 void                cd(t_command *command);
 void                echo(t_command *command);
+
+/*hulpfuncties*/
+void				print_array(char **array);
+void				print_list(t_list *list);
 
 #endif

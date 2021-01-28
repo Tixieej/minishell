@@ -49,20 +49,13 @@ void		ft_struct_push_back(t_command **begin_list, char *data)
 
 void	add_redirection(t_list **cur_lst, t_command **cmd)
 {
-	//char	*red_string;
-
-	//red_string = ft_strjoin((*cur_lst)->content, (*cur_lst)->next->content);
-	//string niet joinen, twee aparte elementen houden
 	if (ft_strncmp((*cur_lst)->content, "<", 1) == 0)
 	{
-		//ft_list_push_back(&((*cmd)->in_red), red_string);
 		ft_list_push_back(&((*cmd)->in_red), (*cur_lst)->content);
 		printf("\tredirection : [%s]\n", (*cmd)->in_red->content);
 	}
-	//(*cmd)->out_red->content
 	if (ft_strncmp((*cur_lst)->content, ">", 1) == 0)
 	{
-		//ft_list_push_back(&((*cmd)->out_red), red_string);
 		ft_list_push_back(&((*cmd)->out_red), (*cur_lst)->content);
 		*cur_lst = (*cur_lst)->next;
 		if (cur_lst)
@@ -76,8 +69,6 @@ void	parser(t_list **list, char **env, t_command	*command)
 {
 	t_list		*cur_lst;
 	t_command	**cur_struct;
-	//linked list die de args bijhoudt
-	//t_list		*arg_list;
 
 	cur_lst = *list;
 	ft_struct_push_back(&command, (char *)cur_lst->content);
@@ -122,17 +113,28 @@ void	parser(t_list **list, char **env, t_command	*command)
 	cur_struct = &command;
 	// printf("go to execute function\n");
 	while (*cur_struct)// loop om te lezen wat er gebeurt, later weghalen
-	{
-			printf("\tprogram: \t[%s]\n", ((char*)(*cur_struct)->program));
-			if (((*cur_struct)->args))
-				printf("\teerste arg: \t[%s]\n", ((*cur_struct)->args)->content);
-			if (((*cur_struct)->out_red))
-				printf("\teerste red: \t[%s]\n", ((*cur_struct)->out_red->content));
-			printf("\tpipe_left: \t[%d]\n", ((*cur_struct)->pipe_left));
-			printf("\tpipe_right: \t[%d]\n\n", ((*cur_struct)->pipe_right));
-			cur_struct = &(*cur_struct)->next;
-	}
-	cur_struct = &command;
+		{
+				printf("\tprogram: [%s]\n", ((char*)(*cur_struct)->program));
+				while (((*cur_struct)->in_red))
+				{
+					printf("\tin_red: [%s]\n", ((*cur_struct)->in_red)->content);
+					(*cur_struct)->in_red = (*cur_struct)->in_red->next;
+				}
+				while (((*cur_struct)->out_red))
+				{
+					printf("\tout_red: [%s]\n", ((*cur_struct)->out_red)->content);
+					(*cur_struct)->out_red = (*cur_struct)->out_red->next;
+				}
+				while (((*cur_struct)->args))
+				{
+					printf("\targs: [%s]\n", ((*cur_struct)->args)->content);
+					(*cur_struct)->args = (*cur_struct)->args->next;
+				}
+				printf("\tpipe_left: [%d]\n", ((*cur_struct)->pipe_left));
+				printf("\tpipe_right: [%d]\n\n", ((*cur_struct)->pipe_right));
+				cur_struct = &(*cur_struct)->next;
+		}
+		cur_struct = &command;
 	// ft_lstclear(&cur_lst, free);
 	// ft_lstclear(&list, free);  ft_strctclear schrijven
 }

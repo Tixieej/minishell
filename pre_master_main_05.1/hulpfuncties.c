@@ -11,3 +11,13 @@ void		array_printer(char **array)
 		i++;
 	}
 }
+
+void			print_list(t_list *list)
+{
+	while (list)
+	{
+		printf("[%s]-\n", list->content);
+		list = list->next;
+	}
+
+}
