@@ -53,8 +53,8 @@ void	parser(t_list **list, char **env, t_command	*command)
 
 	cur_lst = *list;
 	cur_struct = &command;
-	cur_lst = cur_lst->next;
 	ft_struct_push_back(&command, (char *)cur_lst->content);
+	cur_lst = cur_lst->next;
 	while (cur_lst)
 	{
 		if (*cur_lst->content == ';')
@@ -84,6 +84,7 @@ void	parser(t_list **list, char **env, t_command	*command)
 			}
 			else if (*cur_lst->content == '<')
 			{
+				printf("JA");
 				ft_list_push_back(&((*cur_struct)->in_red), cur_lst->content);
 				cur_lst = cur_lst->next;
 				ft_list_push_back(&((*cur_struct)->in_red), cur_lst->content);

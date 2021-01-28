@@ -77,6 +77,7 @@ static void		divide_input(t_list **list, char *line,
 			if (len < 1)
 				len = 1;	
 			start = create_list_item(list, line, &len, start);
+			len++;
 		}
 		if (ft_strchr("\'\"", line[start + len]))
 			start = handle_quotation_marks(list, line, &len, start);
@@ -102,12 +103,12 @@ void			start_program(t_list *list, char **env)
 		divide_input(&list, line, 0, 0);
 		parser(&list, env, command);
 		// check_type(&list, env);
-		// while ((*begin))// loop om te lezen wat er gebeurd later weghalen
-		// {
-		// 	printf("list item: [%s]\n", (char*)((*begin)->content));
-		// 	// printf("begin adress: %p\n", begin);
-		// 	begin = &(*begin)->next;
-		// }
+		while ((*begin))// loop om te lezen wat er gebeurd later weghalen
+		{
+			printf("list item: [%s]\n", (char*)((*begin)->content));
+			// printf("begin adress: %p\n", begin);
+			begin = &(*begin)->next;
+		}
 		ft_lstclear(&list, free);
 		begin = &list;
 		free(line);
