@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+//LET OP CLOSEN!!
+
 int    redirection(t_command *command)
 {
     int fd;
@@ -20,10 +22,7 @@ int    redirection(t_command *command)
     cur_struct = &command;
     fd = 1;
     if ((*cur_struct)->in_red)
-    {
-        fd = open((const char *)(*cur_struct)->out_red->content, O_CREAT | O_RDONLY, 0644);
-        // fd = 1;
-    }
+        fd = open((const char *)(*cur_struct)->out_red->content, O_RDONLY, 0644);
     while ((*cur_struct)->out_red)
     {
         if (!(ft_strncmp((const char *)(*cur_struct)->out_red->content, ">>", 2)))
@@ -32,7 +31,7 @@ int    redirection(t_command *command)
             if ((*cur_struct)->out_red)
                 fd = open((const char *)(*cur_struct)->out_red->content, O_CREAT | O_RDWR | O_APPEND, 0644);
         }
-        else if (!(ft_strchr(">", (int)(*cur_struct)->out_red->content)))
+        else if ((ft_strchr(">", (int)(*cur_struct)->out_red->content)))
         {
             (*cur_struct)->out_red = (*cur_struct)->out_red->next;
             if ((*cur_struct)->out_red)
