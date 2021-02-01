@@ -69,6 +69,7 @@ void			parser(t_list **list, char **env, t_command *command)
 			ft_list_push_back(&((*cur_struct)->args), cur_lst->content);
 		cur_lst = cur_lst->next;
 	}
+	//redirect(*cur_struct);
 	check_type(list, env, *cur_struct);
 	cur_lst = *list;
 	cur_struct = &command;

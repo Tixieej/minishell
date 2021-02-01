@@ -101,8 +101,56 @@ static void		attach_path(t_command cmd, char **env)
 		printf("command not found: %s\n", cmd.program);
 }
 
+
+int			out_redirect(t_command *cmd)
+{
+	int		out_fd = 0;
+	int		stdout_fd;
+
+	//maak backup van originele fd = 0 en fd = 1 met dup
+	// check of out_red bestaat
+	stdout_fd = dup(STDOUT_FILENO);
+	if (cmd->out_red)
+	{
+		if (stdout_fd < 0)
+			printf("bouw hier error in!\n");
+		out_fd = open(ft_lstlast(cmd->out_red)->content, O_CREAT | O_WRONLY, 0644);
+		if(dup2(out_fd, STDOUT_FILENO) < 0)
+		{
+			printf("Unable to duplicate file descriptor.");
+			exit(EXIT_FAILURE);
+		}
+	}
+	return (stdout_fd);
+}
+
+int			in_redirect(t_command *cmd)
+{
+	int		in_fd = 0;
+	int		stdin_fd;
+	
+	stdin_fd = dup(STDIN_FILENO);
+	if (cmd->in_red)
+	{
+		if (stdin_fd < 0)
+			printf("bouw hier error in!\n");
+		in_fd = open(ft_lstlast(cmd->in_red)->content, O_RDONLY);
+		if (dup2(STDIN_FILENO, in_fd) < 0)
+		{
+			printf("Unable to duplicate file descriptor.");
+			exit(EXIT_FAILURE);
+		}
+	}
+	return (stdin_fd);
+}
+
 void			external(t_command *cmd, char **env)
 {
+	int		stdout_fd;
+	int		stdin_fd;
+
+	stdout_fd = out_redirect(cmd);
+	stdin_fd = in_redirect(cmd);
 	if (ft_strchr(cmd->program, '/') != 0)
 	{
 		with_path(*cmd, env);
@@ -111,4 +159,14 @@ void			external(t_command *cmd, char **env)
 	{
 		attach_path(*cmd, env);
 	}
+	if (dup2(STDOUT_FILENO, stdout_fd) < 0)
+		{
+			printf("Unable to duplicate file descriptor.");
+			exit(EXIT_FAILURE);
+		}
+	if (dup2(STDIN_FILENO, stdin_fd) < 0)
+		{
+			printf("Unable to duplicate file descriptor.");
+			exit(EXIT_FAILURE);
+		}
 }
