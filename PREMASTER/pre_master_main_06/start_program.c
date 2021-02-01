@@ -62,10 +62,10 @@ static void		divide_input(t_list **list, char *line,
 	{
 		while (line[start + len] == ' ')
 			start++;
-		if (!ft_strchr("'<''>'\'\"", line[start + len]))
+		if (!ft_strchr("'<''>'\'\"", line[start + len]) && line[start + len] != '\0')
 		{
 			start += len;
-			while (!ft_strchr("'<''>' \'\"\0", line[start + len]))
+			while (!ft_strchr("'<''>' \'\"\0", line[start + len]) && line[start + len] != '\0')
 				len++;
 		}
 		if (line[start + len] == '>' && line[start + len + 1] == '>' && line[start + len + 2] == '>')
