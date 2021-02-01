@@ -14,14 +14,17 @@
 
 void	check_type(t_list **list, char **env, t_command *command) //moet list wel mee?
 {
-	t_list		*cur_lst;
+	t_list		*cur_lst; //weg?
 	t_command	*cur_struct;
+	int			fd;
 
 	//printf("check_type\n");
 	cur_struct = command;
-	cur_lst = *list;
+	cur_lst = *list; // weg?
+	fd = redirection(command);
+	// pipefunctie?
 	if (ft_strncmp((const char *)cur_struct->program, "echo", 4) == 0)
-		echo(command);
+		echo(command, fd);
 	else if (ft_strncmp((const char *)cur_struct->program, "cd", 2) == 0)
 		cd(command);
 	else if (ft_strncmp((const char *)cur_struct->program, "pwd", 3) == 0)

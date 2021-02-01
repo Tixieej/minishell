@@ -60,7 +60,7 @@ static void		divide_input(t_list **list, char *line,
 {
 	while (line[start + len] != '\0')
 	{
-		while (line[start + len] == ' ')
+		while (line[start + len] == ' ' && line[start + len] != '\0')
 			start++;
 		if (!ft_strchr("'<''>'\'\"", line[start + len]) && line[start + len] != '\0')
 		{
@@ -74,9 +74,8 @@ static void		divide_input(t_list **list, char *line,
 		{
 			if (len < 1 && line[start + len + 1] == '>')
 				len = 2;
-			if (len < 1)
-				len = 1;
-			start = create_list_item(list, line, &len, start);
+			if (len != 0)
+				start = create_list_item(list, line, &len, start);
 		}
 		if (ft_strchr("\'\"", line[start + len]))
 			start = handle_quotation_marks(list, line, &len, start);

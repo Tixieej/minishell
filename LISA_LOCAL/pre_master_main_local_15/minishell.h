@@ -39,6 +39,7 @@ int						main(int argc, char **argv, char **env);
 void					error_handler(char *error, t_list **list, t_command *cmd);
 t_command				*ft_create_linked_struct(char *data);
 void					ft_struct_push_back(t_command **begin_list, char *data);
+int						redirection(t_command *command);
 
 /*
 ** tokenize functions?
@@ -73,6 +74,6 @@ char					**make_path_array(char **envp);
 ** builtins
 */
 void					cd(t_command *command);
-void					echo(t_command *command);
+void					echo(t_command *command, int fd);
 
 #endif

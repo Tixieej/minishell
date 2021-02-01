@@ -13,14 +13,14 @@
 #include "minishell.h"
 
 // modes : O_RDONLY, O_WRONLY, or O_RDWR.
-void        echo(t_command *command)
+void        echo(t_command *command, int fd)
 {
-    int fd;
+    // int fd;
     char *s;
     t_command	**cur_struct;
 
     cur_struct = &command;
-    fd = 1;
+    // fd = 1;
     s = ft_strdup("");
     while ((*cur_struct)->args)
     {
@@ -32,25 +32,25 @@ void        echo(t_command *command)
         s = ft_strdup("\n");
     else
         s[ft_strlen(s) - 1] = '\n';
-    if ((*cur_struct)->in_red)
-    {
-        fd = open((const char *)(*cur_struct)->out_red->content, O_CREAT | O_RDONLY, 0644);
-        fd = 1;
-    }
-    while ((*cur_struct)->out_red)
-    {
-        if (!(ft_strncmp((const char *)(*cur_struct)->out_red->content, ">>", 2)))
-            (*cur_struct)->out_red = (*cur_struct)->out_red->next;
-            if ((*cur_struct)->out_red)
-                fd = open((const char *)(*cur_struct)->out_red->content, O_CREAT | O_RDWR | O_APPEND, 0644);
-        else if (!(ft_strchr(">", (int)(*cur_struct)->out_red->content)))
-            (*cur_struct)->out_red = (*cur_struct)->out_red->next;
-            if ((*cur_struct)->out_red)
-                fd = open((const char *)(*cur_struct)->out_red->content, O_CREAT | O_RDWR | O_TRUNC, 0644);
-        if (fd < 0)
-            error_handler("open file failed\n", NULL, (*cur_struct));
-        (*cur_struct)->out_red = (*cur_struct)->out_red->next;
-    }
+    // if ((*cur_struct)->in_red)
+    // {
+    //     fd = open((const char *)(*cur_struct)->out_red->content, O_CREAT | O_RDONLY, 0644);
+    //     fd = 1;
+    // }
+    // while ((*cur_struct)->out_red)
+    // {
+    //     if (!(ft_strncmp((const char *)(*cur_struct)->out_red->content, ">>", 2)))
+    //         (*cur_struct)->out_red = (*cur_struct)->out_red->next;
+    //         if ((*cur_struct)->out_red)
+    //             fd = open((const char *)(*cur_struct)->out_red->content, O_CREAT | O_RDWR | O_APPEND, 0644);
+    //     else if (!(ft_strchr(">", (int)(*cur_struct)->out_red->content)))
+    //         (*cur_struct)->out_red = (*cur_struct)->out_red->next;
+    //         if ((*cur_struct)->out_red)
+    //             fd = open((const char *)(*cur_struct)->out_red->content, O_CREAT | O_RDWR | O_TRUNC, 0644);
+    //     if (fd < 0)
+    //         error_handler("open file failed\n", NULL, (*cur_struct));
+    //     (*cur_struct)->out_red = (*cur_struct)->out_red->next;
+    // }
     if (write(fd, s, ft_strlen(s)) < 0)
         printf("error\n");
     free(s);

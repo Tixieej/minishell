@@ -23,7 +23,8 @@ SRC = main.c \
 		echo.c \
 		cd.c \
 		error_handler.c \
-		linked_struct.c
+		linked_struct.c \
+		redirection.c
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 CC = gcc
