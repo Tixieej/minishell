@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   pipes.c                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
+/*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/02/03 14:20:04 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/03 14:20:25 by livlamin      ########   odam.nl         */
+/*   Created: 2021/02/03 14:20:04 by rixt          #+#    #+#                 */
+/*   Updated: 2021/02/03 15:38:34 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
