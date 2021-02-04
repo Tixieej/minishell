@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void		prompt(void)
+void			prompt(void)
 {
 	write(1, "\033[38;5;105mminishell: \e[0m", 27);
 }
@@ -91,13 +91,15 @@ void			start_program(t_list *list, char **env)
 	char		*line;
 	t_list		**begin;
 	t_command	*command;
-
 	command = NULL;
 	begin = &list;
 	result = 1;
 	line = NULL;
 	while (result == 1)
 	{
+		signal(SIGINT, handle_sigint);
+		signal(SIGKILL, handle_sigkill);
+		signal(SIGQUIT, SIG_IGN);
 		prompt();
 		result = get_next_line(0, &line);
 		if (line[0] == '\0') //als je gelijk op enter drukt, terug naar begin while loop

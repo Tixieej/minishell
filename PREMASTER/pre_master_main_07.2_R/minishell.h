@@ -22,6 +22,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include <stdio.h>
+# include <signal.h>
 
 typedef struct			s_command
 {
@@ -39,6 +40,8 @@ int						main(int argc, char **argv, char **env);
 void					error_handler(char *error, t_list **list, t_command *cmd);
 t_command				*ft_create_linked_struct(char *data);
 void					ft_struct_push_back(t_command **begin_list, char *data);
+void					prompt(void);
+
 
 /*
 ** tokenize functions?
@@ -62,7 +65,7 @@ int						redirection(t_command *command);
 */
 void					check_type(char **env, t_command *cmd);
 pid_t					pipes(t_command *cmd);
-void					external(t_command *cmd, char **env, int fd, pid_t process);
+void					external(t_command *cmd, char **env, int out_fd, pid_t process);
 char					*ft_append_path(char *str);
 void					ft_exec(char *path, t_command command, char **env, pid_t process);
 
@@ -78,4 +81,11 @@ char					*check_env(char **env, char *var);
 void					cd(t_command *command);
 void					echo(t_command *command, int fd);
 void        			pwd(int fd);
+
+/*
+** signals
+*/
+void					handle_sigint(int sig);
+void					handle_sigkill(int sig);
+
 #endif
