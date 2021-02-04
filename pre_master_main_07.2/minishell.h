@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/28 17:50:33 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/03 14:28:06 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void					start_program(t_list *list, char **env);
 t_list					*ft_create_elem(void *data);
 void					ft_list_push_back(t_list **begin_list, void *data);
 void					parser(t_list **list, char **env, t_command *command);
+pid_t					pipes(t_command *cmd);
 
 /*
 ** parse functions
@@ -75,5 +76,5 @@ char					**make_path_array(char **envp);
 */
 void					cd(t_command *command);
 void					echo(t_command *command, int fd);
-
+void        			pwd(int fd);
 #endif

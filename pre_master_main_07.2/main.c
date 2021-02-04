@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   main.c                                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: livlamin <marvin@codam.nl>                   +#+                     */
+/*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/28 17:55:38 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/03 13:15:07 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

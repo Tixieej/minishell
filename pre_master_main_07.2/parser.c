@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parser.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: livlamin <marvin@codam.nl>                   +#+                     */
+/*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/28 17:28:48 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/03 14:24:08 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ static void		add_pipe(t_list **cur_lst, t_command **cur_struct)
 
 static void		add_redirection(t_list **cur_lst, t_command **cur_struct)
 {
+	char *path;
+
+	path = NULL;
 	if (*(*cur_lst)->content == '>')
 	{
 		ft_list_push_back(&((*cur_struct)->out_red), (*cur_lst)->content);
@@ -60,7 +63,7 @@ void			parser(t_list **list, char **env, t_command *command)
 		{
 			check_type(list, env, *cur_struct);
 			add_semicolon(&cur_lst, cur_struct);
-			// doen we hier niet 2x check_type, want onder de while loop gebeurt het weer?
+			// doen we hier niet 2x check_type, want onder de while loop gebeurt het weer? nee wat de ; staat in principe niet achter aan iets toch? 
 		}
 		else if (*cur_lst->content == '|')
 			add_pipe(&cur_lst, cur_struct);

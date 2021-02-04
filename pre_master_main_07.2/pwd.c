@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   error_handler.c                                    :+:    :+:            */
+/*   pwd.c                                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/25/01 11:04:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/28 17:51:06 by rixt          ########   odam.nl         */
+/*   Created: Invalid date        by livlamin      #+#    #+#                 */
+/*   Updated: 2021/02/03 14:34:51 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	error_handler(char *error, t_list **list, t_command *command)
+void        pwd(int fd)
 {
-	write(1, "minishell: ", 11);
-	write(1, error, ft_strlen(error));
-	(void)command;
-	ft_lstclear(list, free); //checken of dit goed werkt
-	// free(t_command)
-	exit(0); // of moeten we ook op vork letten?
+    char *path;
+
+    path = getcwd(NULL, 0);
+    if (path == NULL)
+        error_handler("pwd failure", NULL, NULL); //veranderen met geheugen;
+    path = ft_strjoin(path, "\n");
+    if (write(fd, path, ft_strlen(path)) < 0)
+        printf("error\n");
+    free(path);
+    path = NULL;
 }

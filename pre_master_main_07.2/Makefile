@@ -6,7 +6,7 @@
 #    By: rde-vrie <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/02/13 10:40:20 by rde-vrie      #+#    #+#                  #
-#    Updated: 2021/01/28 18:19:09 by rixt          ########   odam.nl          #
+#    Updated: 2021/02/03 14:20:38 by livlamin      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,9 @@ SRC = main.c \
 		cd.c \
 		error_handler.c \
 		linked_struct.c \
-		redirection.c
+		redirection.c \
+		pwd.c \
+		pipes.c
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 CC = gcc

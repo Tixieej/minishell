@@ -3,49 +3,49 @@
 /*                                                        ::::::::            */
 /*   check_type.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: rixt <marvin@codam.nl>                       +#+                     */
+/*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/01/28 17:53:20 by rixt          #+#    #+#                 */
-/*   Updated: 2021/01/28 17:54:26 by rixt          ########   odam.nl         */
+/*   Created: 2021/01/28 17:53:20 by livlamin      #+#    #+#                 */
+/*   Updated: 2021/02/03 14:28:17 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-pid_t	pipes(t_command *cmd)
-{
-	int     fd[2];
-	pid_t   process;
+// pid_t	pipes(t_command *cmd)
+// {
+// 	int     fd[2];
+// 	pid_t   process;
 
-	pipe(fd);
-	if ((process = fork()) == -1) // check of fork lukt
-	{
-		perror("fork");
-		exit(1);
-	}
-	if (process == 0) // Child process
-	{
-		printf("pipe child process\n");
-		if (cmd->pipe_right != 1)
-		{
-			printf("no pipe on right side\n");
-			close(fd[1]); // sluit schrijfkant af
-		}
-		if (cmd->pipe_left != 1)
-		{
-			printf("no pipe on left side\n");
-			close(fd[0]); // sluit leeskant af
-		}
-	}
-	else
-	{
-		/* Parent process */
-		wait(NULL);
-		printf("pipe parent process\n");
-		//close(fd[1]);
-	}
-	return (process);
-}
+// 	pipe(fd);
+// 	if ((process = fork()) == -1) // check of fork lukt
+// 	{
+// 		perror("fork");
+// 		exit(1);
+// 	}
+// 	if (process == 0) // Child process
+// 	{
+// 		printf("pipe child process\n");
+// 		if (cmd->pipe_right != 1)
+// 		{
+// 			printf("no pipe on right side\n");
+// 			close(fd[1]); // sluit schrijfkant af
+// 		}
+// 		if (cmd->pipe_left != 1)
+// 		{
+// 			printf("no pipe on left side\n");
+// 			close(fd[0]); // sluit leeskant af
+// 		}
+// 	}
+// 	else
+// 	{
+// 		/* Parent process */
+// 		wait(NULL);
+// 		printf("pipe parent process\n");
+// 		//close(fd[1]);
+// 	}
+// 	return (process);
+// }
 
 void	check_type(t_list **list, char **env, t_command *command) //moet list wel mee?
 {
@@ -55,7 +55,7 @@ void	check_type(t_list **list, char **env, t_command *command) //moet list wel m
 	int			process;
 
 	/* dit is een check en kan later weg */
-	printf("check_type\n");
+	// printf("check_type\n");
 	t_list *begin = command->args;
 	while ((command->args))
 	{
@@ -77,7 +77,7 @@ void	check_type(t_list **list, char **env, t_command *command) //moet list wel m
 	else if (ft_strncmp((const char *)cur_struct->program, "cd", 2) == 0)
 		cd(command);
 	else if (ft_strncmp((const char *)cur_struct->program, "pwd", 3) == 0)
-		printf("pwd type\n");
+		pwd(fd);
 	else if (ft_strncmp((const char *)cur_struct->program, "export", 6) == 0)
 		printf("export type\n");
 	else if (ft_strncmp((const char *)cur_struct->program, "unset", 5) == 0)

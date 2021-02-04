@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   start_program.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: livlamin <marvin@codam.nl>                   +#+                     */
+/*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/01/28 17:59:16 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/03 13:14:48 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ static void		divide_input(t_list **list, char *line,
 		{
 			if (len < 1 && line[start + len + 1] == '>')
 				len = 2;
+			if (line[start + len] == '>' || line[start + len] == '<')
+				len = 1;
 			if (len != 0)
 				start = create_list_item(list, line, &len, start);
 		}
@@ -106,6 +108,7 @@ void			start_program(t_list *list, char **env)
 			// printf("begin adress: %p\n", begin);
 			begin = &(*begin)->next;
 		}
+		
 		ft_lstclear(&list, free);
 		begin = &list;
 		free(line);

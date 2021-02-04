@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   redirection.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: livlamin <marvin@codam.nl>                   +#+                     */
+/*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/21/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/21/01 15:55:26 by livlamin          ########   odam.nl     */
+/*   Created: 2021/02/03 13:16:00 by livlamin      #+#    #+#                 */
+/*   Updated: 2021/02/03 13:16:04 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int    redirection(t_command *command)
             if ((*cur_struct)->out_red)
                 fd = open((const char *)(*cur_struct)->out_red->content, O_CREAT | O_RDWR | O_APPEND, 0644);
         }
-        else if ((ft_strchr(">", (int)(*cur_struct)->out_red->content)))
+        else if (!(ft_strncmp((const char *)(*cur_struct)->out_red->content, ">", 1)))
         {
             (*cur_struct)->out_red = (*cur_struct)->out_red->next;
             if ((*cur_struct)->out_red)
