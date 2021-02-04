@@ -86,8 +86,13 @@ static void		attach_path(t_command cmd, char **env, pid_t process)
 	struct stat	buffer;
 	int			i;
 
-	paths = make_path_array(env);
+	paths = make_path_array(env);// check_env aanroepen? dan is het een string en geen array.
 	i = 0;
+	if (paths == NULL) // dit kan mooier. misschien naar de errorfunctie sluizen?
+	{
+		printf("command not found: %s\n", cmd.program);
+		return ;
+	}
 	while (paths[i])
 	{
 		path = ft_strjoin(paths[i], "/");

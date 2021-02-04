@@ -12,44 +12,8 @@
 
 #include "minishell.h"
 
-// pid_t	pipes(t_command *cmd)
-// {
-// 	int     fd[2];
-// 	pid_t   process;
-
-// 	pipe(fd);
-// 	if ((process = fork()) == -1) // check of fork lukt
-// 	{
-// 		perror("fork");
-// 		exit(1);
-// 	}
-// 	if (process == 0) // Child process
-// 	{
-// 		printf("pipe child process\n");
-// 		if (cmd->pipe_right != 1)
-// 		{
-// 			printf("no pipe on right side\n");
-// 			close(fd[1]); // sluit schrijfkant af
-// 		}
-// 		if (cmd->pipe_left != 1)
-// 		{
-// 			printf("no pipe on left side\n");
-// 			close(fd[0]); // sluit leeskant af
-// 		}
-// 	}
-// 	else
-// 	{
-// 		/* Parent process */
-// 		wait(NULL);
-// 		printf("pipe parent process\n");
-// 		//close(fd[1]);
-// 	}
-// 	return (process);
-// }
-
-void	check_type(t_list **list, char **env, t_command *command) //moet list wel mee?
+void	check_type(char **env, t_command *command) //moet list wel mee?
 {
-	t_list		*cur_lst; //weg?
 	t_command	*cur_struct;
 	int			fd;
 	int			process;
@@ -66,9 +30,7 @@ void	check_type(t_list **list, char **env, t_command *command) //moet list wel m
 	/* einde check */
 
 	cur_struct = command;
-	cur_lst = *list; // weg?
 	fd = redirection(cur_struct);
-	// pipefunctie?
 	process = -1;
 	if (command->pipe_right == 1 || command->pipe_left == 1)
 		process = pipes(cur_struct);

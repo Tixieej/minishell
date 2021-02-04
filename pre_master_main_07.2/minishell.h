@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/03 14:28:06 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/04 14:48:56 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int						main(int argc, char **argv, char **env);
 void					error_handler(char *error, t_list **list, t_command *cmd);
 t_command				*ft_create_linked_struct(char *data);
 void					ft_struct_push_back(t_command **begin_list, char *data);
-int						redirection(t_command *command);
 
 /*
 ** tokenize functions?
@@ -47,29 +46,31 @@ int						redirection(t_command *command);
 void					start_program(t_list *list, char **env);
 t_list					*ft_create_elem(void *data);
 void					ft_list_push_back(t_list **begin_list, void *data);
-void					parser(t_list **list, char **env, t_command *command);
-pid_t					pipes(t_command *cmd);
 
 /*
 ** parse functions
 */
+void					parser(t_list **list, char **env, t_command *command);
 //t_command				*make_command(t_list **list);
 //void            		non_buildin(t_list *list, char **env);
 char					**list_to_array(t_list **list);
-char					*ft_append_path(char *str);
 //void					ft_lstadd_front(t_list **lst, t_list *new);
+int						redirection(t_command *command);
 
 /*
 ** exec
 */
-void					check_type(t_list **list, char **env, t_command *cmd);
+void					check_type(char **env, t_command *cmd);
+pid_t					pipes(t_command *cmd);
 void					external(t_command *cmd, char **env, int fd, pid_t process);
+char					*ft_append_path(char *str);
 void					ft_exec(char *path, t_command command, char **env, pid_t process);
 
 /*
 ** env_path.c
 */
 char					**make_path_array(char **envp);
+char					*check_env(char **env, char *var);
 
 /*
 ** builtins

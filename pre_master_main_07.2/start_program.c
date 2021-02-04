@@ -100,9 +100,11 @@ void			start_program(t_list *list, char **env)
 	{
 		prompt();
 		result = get_next_line(0, &line);
+		if (line[0] == '\0') //als je gelijk op enter drukt, terug naar begin while loop
+			continue ;
 		divide_input(&list, line, 0, 0);
 		parser(&list, env, command);
-		while ((*begin))// loop om te lezen wat er gebeurd later weghalen
+		while ((*begin))// loop om te lezen wat er gebeurt, later weghalen
 		{
 			printf("list item: [%s]\n", (char*)((*begin)->content));
 			// printf("begin adress: %p\n", begin);

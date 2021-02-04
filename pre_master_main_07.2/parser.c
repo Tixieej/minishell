@@ -61,9 +61,8 @@ void			parser(t_list **list, char **env, t_command *command)
 	{
 		if (*cur_lst->content == ';')
 		{
-			check_type(list, env, *cur_struct);
+			check_type(env, *cur_struct);
 			add_semicolon(&cur_lst, cur_struct);
-			// doen we hier niet 2x check_type, want onder de while loop gebeurt het weer? nee wat de ; staat in principe niet achter aan iets toch? 
 		}
 		else if (*cur_lst->content == '|')
 			add_pipe(&cur_lst, cur_struct);
@@ -73,7 +72,7 @@ void			parser(t_list **list, char **env, t_command *command)
 			ft_list_push_back(&((*cur_struct)->args), cur_lst->content);
 		cur_lst = cur_lst->next;
 	}
-	check_type(list, env, *cur_struct);
+	check_type(env, *cur_struct);
 	cur_lst = *list;
 	cur_struct = &command;
 	// printf("go to execute function\n");
