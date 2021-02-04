@@ -26,7 +26,8 @@ SRC = main.c \
 		linked_struct.c \
 		redirection.c \
 		pwd.c \
-		pipes.c
+		pipes.c \
+		signals.c
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 CC = gcc

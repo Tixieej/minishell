@@ -145,13 +145,13 @@ static int		out_redirect(t_command *cmd, int out_fd)
 // 	return (stdin_fd);
 // }
 
-void			external(t_command *cmd, char **env, int fd, int process)
+void			external(t_command *cmd, char **env, int out_fd, int process)
 {
 	int		stdout_fd;
 	//int		stdin_fd;
 
-	stdout_fd = out_redirect(cmd, fd);
-	//stdin_fd = in_redirect(cmd);
+	stdout_fd = out_redirect(cmd, out_fd);
+	//stdin_fd = in_redirect(cmd, in_fd);
 	if (ft_strchr(cmd->program, '/') != 0)
 	{
 		with_path(*cmd, env, process);

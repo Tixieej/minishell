@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	check_type(char **env, t_command *command) //moet list wel mee?
+void	check_type(char **env, t_command *command)
 {
 	t_command	*cur_struct;
 	int			fd;
@@ -30,7 +30,7 @@ void	check_type(char **env, t_command *command) //moet list wel mee?
 	/* einde check */
 
 	cur_struct = command;
-	fd = redirection(cur_struct);
+	fd = redirection(cur_struct); // hier komt denk ik een aparte functie voor input redirection onder? of wordt de return van deze functie anders?
 	process = -1;
 	if (command->pipe_right == 1 || command->pipe_left == 1)
 		process = pipes(cur_struct);
