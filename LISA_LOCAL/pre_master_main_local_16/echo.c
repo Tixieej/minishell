@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/21 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/03 13:19:29 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/04 09:34:44 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,3 +35,5 @@ void        echo(t_command *command, int fd)
     free(s);
     s = NULL;
 }
+
+// -n functie!

@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/01/28 18:00:24 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/04 10:46:16 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static void		with_path(t_command cmd, char **env, pid_t process)
 	char			*path;
 
 	path = cmd.program;
+	// buffer == ?
 	if (stat(path, &buffer) == 0)
 		ft_exec(path, cmd, env, process);
 	else
@@ -88,6 +89,8 @@ static void		attach_path(t_command cmd, char **env, pid_t process)
 
 	paths = make_path_array(env);
 	i = 0;
+	// buffer == ?
+	// path = ?
 	while (paths[i])
 	{
 		path = ft_strjoin(paths[i], "/");

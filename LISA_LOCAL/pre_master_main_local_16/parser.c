@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/03 14:24:08 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/04 10:46:16 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void		add_redirection(t_list **cur_lst, t_command **cur_struct)
 
 void			parser(t_list **list, char **env, t_command *command)
 {
-	t_list		*cur_lst;
+	t_list		*cur_lst; // moet die niet weg we gaan er maar een keer doorheen?
 	t_command	**cur_struct;
 
 	cur_lst = *list;
@@ -61,7 +61,7 @@ void			parser(t_list **list, char **env, t_command *command)
 	{
 		if (*cur_lst->content == ';')
 		{
-			check_type(list, env, *cur_struct);
+			check_type(env, *cur_struct);
 			add_semicolon(&cur_lst, cur_struct);
 			// doen we hier niet 2x check_type, want onder de while loop gebeurt het weer? nee wat de ; staat in principe niet achter aan iets toch? 
 		}
@@ -73,9 +73,11 @@ void			parser(t_list **list, char **env, t_command *command)
 			ft_list_push_back(&((*cur_struct)->args), cur_lst->content);
 		cur_lst = cur_lst->next;
 	}
-	check_type(list, env, *cur_struct);
-	cur_lst = *list;
+	check_type(env, *cur_struct);
+	ft_lstclear(&(*list), free); // klopt dit?
+	*list = NULL; //klopt dit?
 	cur_struct = &command;
+
 	// printf("go to execute function\n");
 	while (*cur_struct)// loop om te lezen wat er gebeurt, later weghalen
 	{

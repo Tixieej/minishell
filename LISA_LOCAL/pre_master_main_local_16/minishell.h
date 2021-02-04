@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/03 14:28:06 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/04 14:42:38 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void					error_handler(char *error, t_list **list, t_command *cmd);
 t_command				*ft_create_linked_struct(char *data);
 void					ft_struct_push_back(t_command **begin_list, char *data);
 int						redirection(t_command *command);
+char					*check_env(char **env, char *var);
 
 /*
 ** tokenize functions?
@@ -62,7 +63,7 @@ char					*ft_append_path(char *str);
 /*
 ** exec
 */
-void					check_type(t_list **list, char **env, t_command *cmd);
+void					check_type(char **env, t_command *cmd);
 void					external(t_command *cmd, char **env, int fd, pid_t process);
 void					ft_exec(char *path, t_command command, char **env, pid_t process);
 
@@ -74,7 +75,7 @@ char					**make_path_array(char **envp);
 /*
 ** builtins
 */
-void					cd(t_command *command);
+void					cd(t_command *command, char **env);
 void					echo(t_command *command, int fd);
 void        			pwd(int fd);
 #endif

@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/03 13:14:48 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/04 09:56:03 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,15 +100,14 @@ void			start_program(t_list *list, char **env)
 	{
 		prompt();
 		result = get_next_line(0, &line);
-		divide_input(&list, line, 0, 0);
-		parser(&list, env, command);
+		divide_input(&list, line, 0, 0); //linker list
+		parser(&list, env, command); // struct en uitvoer
 		while ((*begin))// loop om te lezen wat er gebeurd later weghalen
 		{
 			printf("list item: [%s]\n", (char*)((*begin)->content));
 			// printf("begin adress: %p\n", begin);
 			begin = &(*begin)->next;
 		}
-		
 		ft_lstclear(&list, free);
 		begin = &list;
 		free(line);
