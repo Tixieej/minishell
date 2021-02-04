@@ -98,7 +98,7 @@ void			start_program(t_list *list, char **env)
 	while (result == 1)
 	{
 		signal(SIGINT, handle_sigint);
-		signal(SIGKILL, handle_sigkill); //iets met line?
+		signal(SIGKILL, handle_sigkill);
 		signal(SIGQUIT, SIG_IGN);
 		prompt();
 		result = get_next_line(0, &line);
