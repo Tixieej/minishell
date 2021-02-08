@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/05 14:28:39 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/08 12:33:25 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,35 +72,15 @@ void			parser(t_list **list, char **env, t_command *command)
 			ft_list_push_back(&((*cur_struct)->args), cur_lst->content);
 		cur_lst = cur_lst->next;
 	}
+	cur_lst = *list; // weg?
+	print_cur_struct(command); // weg !!
 	check_type(env, *cur_struct);
+	// command = ft_clear_linked_struct(command);
+	print_cur_struct(command); // weg !!
+	// command = NULL;
 	ft_lstclear(&(*list), free); // klopt dit?
 	*list = NULL; //klopt dit?
-	cur_struct = &command;
-	
-	// printf("go to execute function\n");
-	while (*cur_struct)// loop om te lezen wat er gebeurt, later weghalen
-	{
-		printf("\tprogram: [%s]\n", ((char*)(*cur_struct)->program));
-		while (((*cur_struct)->in_red))
-		{
-			printf("\tin_red: [%s]\n", ((*cur_struct)->in_red)->content);
-			(*cur_struct)->in_red = (*cur_struct)->in_red->next;
-		}
-		while (((*cur_struct)->out_red))
-		{
-			printf("\tout_red: [%s]\n", ((*cur_struct)->out_red)->content);
-			(*cur_struct)->out_red = (*cur_struct)->out_red->next;
-		}
-		while (((*cur_struct)->args))
-		{
-			printf("\targs: [%s]\n", ((*cur_struct)->args)->content);
-			(*cur_struct)->args = (*cur_struct)->args->next;
-		}
-		printf("\tpipe_left: [%d]\n", ((*cur_struct)->pipe_left));
-		printf("\tpipe_right: [%d]\n\n", ((*cur_struct)->pipe_right));
-		cur_struct = &(*cur_struct)->next;
-	}
-	cur_struct = &command;
+
 	// ft_lstclear(&cur_lst, free);
 	// ft_lstclear(&list, free);  ft_strctclear schrijven
 }

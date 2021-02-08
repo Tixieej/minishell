@@ -6,7 +6,7 @@
 #    By: rde-vrie <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/02/13 10:40:20 by rde-vrie      #+#    #+#                  #
-#    Updated: 2021/02/05 14:35:48 by livlamin      ########   odam.nl          #
+#    Updated: 2021/02/08 12:03:37 by livlamin      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ SRC = main.c \
 		pwd.c \
 		pipes.c \
 		signals.c \
-		check_env.c
+		check_env.c \
+		REMOVE_HULPFUNCTIE.c
 OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 CC = gcc

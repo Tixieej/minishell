@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/08 11:00:59 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/08 12:04:25 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,19 @@ typedef struct			s_command
 	struct s_command	*next;
 }						t_command;
 
+
+/*
+** HULPFUNCTIE WEG!
+*/
+void			print_cur_struct(t_command *command);
+
+
 int						main(int argc, char **argv, char **env);
 void					error_handler(char *error, t_list **list, t_command *cmd);
 t_command				*ft_create_linked_struct(char *data);
+t_command				*ft_clear_linked_struct(t_command *command);
 void					ft_struct_push_back(t_command **begin_list, char *data);
 void					prompt(void);
-
 
 /*
 ** tokenize functions?
@@ -94,5 +101,6 @@ void        			pwd(int fd);
 */
 void					handle_sigint(int sig);
 void					handle_sigkill(int sig);
+void					signal_handler(t_command *command);
 
 #endif
