@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 17:53:20 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/08 12:27:07 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/08 13:04:28 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	check_type(char **env, t_command *command)
 
 	// print_cur_struct(command); // weg !!
 
+	// printf("%s\n", (char *)command->args->content);
 	cur_struct = command;
 	redirection(cur_struct); // hier komt denk ik een aparte functie voor input redirection onder? of wordt de return van deze functie anders?
 	process = -1;

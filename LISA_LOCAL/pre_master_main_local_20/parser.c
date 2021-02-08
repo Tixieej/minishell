@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/08 12:33:25 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/08 13:51:22 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static void		add_semicolon(t_list **cur_lst, t_command **cur_struct)
 {
 	(*cur_lst) = (*cur_lst)->next;
 	ft_struct_push_back(&(*cur_struct), (char *)(*cur_lst)->content);
-	cur_struct = &(*cur_struct)->next;
 }
 
 static void		add_pipe(t_list **cur_lst, t_command **cur_struct)
@@ -59,10 +58,12 @@ void			parser(t_list **list, char **env, t_command *command)
 	cur_lst = cur_lst->next;
 	while (cur_lst)
 	{
+		printf("%s\n", cur_lst->content);
 		if (*cur_lst->content == ';')
 		{
 			check_type(env, *cur_struct);
 			add_semicolon(&cur_lst, cur_struct);
+			cur_struct = &(*cur_struct)->next;
 		}
 		else if (*cur_lst->content == '|')
 			add_pipe(&cur_lst, cur_struct);
@@ -75,12 +76,12 @@ void			parser(t_list **list, char **env, t_command *command)
 	cur_lst = *list; // weg?
 	print_cur_struct(command); // weg !!
 	check_type(env, *cur_struct);
-	// command = ft_clear_linked_struct(command);
+	command = ft_clear_linked_struct(command);
+	printf("check is struct is leeg hieronder\n"); // weg
 	print_cur_struct(command); // weg !!
-	// command = NULL;
+	// command = NULL; ?
 	ft_lstclear(&(*list), free); // klopt dit?
 	*list = NULL; //klopt dit?
-
 	// ft_lstclear(&cur_lst, free);
 	// ft_lstclear(&list, free);  ft_strctclear schrijven
 }
