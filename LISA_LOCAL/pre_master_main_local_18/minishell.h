@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/04 14:48:56 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/08 10:15:02 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct			s_command
 	t_list				*args;
 	int					pipe_left;
 	int					pipe_right;
+	int					fd_stdin;
+	int					fd_stdout;
 	t_list				*in_red;
 	t_list				*out_red;
 	struct s_command	*next;
@@ -58,7 +60,7 @@ void					parser(t_list **list, char **env, t_command *command);
 //void            		non_buildin(t_list *list, char **env);
 char					**list_to_array(t_list **list);
 //void					ft_lstadd_front(t_list **lst, t_list *new);
-int						redirection(t_command *command);
+void					redirection(t_command *command);
 
 /*
 ** exec
@@ -79,7 +81,7 @@ char					*check_env(char **env, char *var);
 ** builtins
 */
 void					cd(t_command *command);
-void					echo(t_command *command, int fd);
+void					echo(t_command *command);
 void        			pwd(int fd);
 
 /*

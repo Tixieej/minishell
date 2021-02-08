@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/01/28 18:00:24 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/08 10:24:32 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,23 +109,23 @@ static void		attach_path(t_command cmd, char **env, pid_t process)
 		printf("command not found: %s\n", cmd.program);
 }
 
-static int		out_redirect(t_command *cmd, int out_fd)
-{
-	int		stdout_fd;
+// static int		out_redirect(t_command *cmd, int out_fd)
+// {
+// 	int		stdout_fd;
 
-	stdout_fd = dup(STDOUT_FILENO);
-	if (cmd->out_red)
-	{
-		if (stdout_fd < 0)
-			printf("bouw hier error in!\n");
-		if(dup2(out_fd, STDOUT_FILENO) < 0)
-		{
-			printf("Unable to duplicate file descriptor.");
-			exit(EXIT_FAILURE);
-		}
-	}
-	return (stdout_fd);
-}
+// 	stdout_fd = dup(STDOUT_FILENO);
+// 	if (cmd->out_red)
+// 	{
+// 		if (stdout_fd < 0)
+// 			printf("bouw hier error in!\n");
+// 		if(dup2(out_fd, STDOUT_FILENO) < 0)
+// 		{
+// 			printf("Unable to duplicate file descriptor.");
+// 			exit(EXIT_FAILURE);
+// 		}
+// 	}
+// 	return (stdout_fd);
+// }
 
 // static int		in_redirect(t_command *cmd, int in_fd)
 // {
@@ -150,7 +150,9 @@ void			external(t_command *cmd, char **env, int out_fd, int process)
 	int		stdout_fd;
 	//int		stdin_fd;
 
-	stdout_fd = out_redirect(cmd, out_fd);
+	stdout_fd = cmd->fd_stdout;
+	(void)out_fd;
+	// stdout_fd = out_redirect(cmd, out_fd);
 	//stdin_fd = in_redirect(cmd, in_fd);
 	if (ft_strchr(cmd->program, '/') != 0)
 	{
