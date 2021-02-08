@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/08 10:42:32 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/08 11:00:59 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef struct			s_command
 	t_list				*args;
 	int					pipe_left;
 	int					pipe_right;
-	int					fd_stdin;
-	int					fd_stdout;
+	int					fd_in;
+	int					fd_out;
 	t_list				*in_red;
 	t_list				*out_red;
 	struct s_command	*next;

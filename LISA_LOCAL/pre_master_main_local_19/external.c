@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/08 10:24:32 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/08 11:01:36 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,14 +145,19 @@ static void		attach_path(t_command cmd, char **env, pid_t process)
 // 	return (stdin_fd);
 // }
 
-void			external(t_command *cmd, char **env, int out_fd, int process)
+void			external(t_command *cmd, char **env, int out_fd, int process) // deze dan zonder int out_fd
 {
+	//command->fd_out;
+	// command->fd_in;
 	int		stdout_fd;
 	//int		stdin_fd;
 
-	stdout_fd = cmd->fd_stdout;
+	/**/ //stukje lisa als je de dup aan zou willen houden /**/
+	stdout_fd = cmd->fd_out;     
 	(void)out_fd;
-	// stdout_fd = out_redirect(cmd, out_fd);
+
+	/**/ //stukje RIXT als je terug wilt naar de oude versie/**/
+	// stdout_fd = out_redirect(cmd, out_fd); // deze had jij ungecomment;
 	//stdin_fd = in_redirect(cmd, in_fd);
 	if (ft_strchr(cmd->program, '/') != 0)
 	{
