@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/08 13:57:16 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/08 13:51:22 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void			parser(t_list **list, char **env, t_command *command)
 	cur_lst = cur_lst->next;
 	while (cur_lst)
 	{
+		printf("%s\n", cur_lst->content);
 		if (*cur_lst->content == ';')
 		{
 			check_type(env, *cur_struct);

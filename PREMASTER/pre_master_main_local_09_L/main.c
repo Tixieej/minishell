@@ -6,17 +6,49 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/03 13:15:07 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/08 14:08:37 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft/libft.h"
+ 
+static void			start_program(t_list *list, char **env)
+{
+	int			result;
+	char		*line;
+	t_list		**begin;
+	t_command	*command;
+	command = NULL;
+	begin = &list;
+	result = 1;
+	line = NULL;
+	while (result == 1)
+	{
+		signal_handler(command);
+		prompt();
+		result = get_next_line(0, &line);
+		// if (result == -1) //check inbouwen?
+		if (line[0] == '\0') //als je gelijk op enter drukt, terug naar begin while loop
+			continue ;
+		divide_input(&list, line, 0, 0);
+		parser(&list, env, command);
+		// while ((*begin))// loop om te lezen wat er gebeurt, later weghalen
+		// {
+		// 	printf("list item: [%s]\n", (char*)((*begin)->content));
+		// 	// printf("begin adress: %p\n", begin);
+		// 	begin = &(*begin)->next;
+		// }
+		ft_lstclear(&list, free);
+		list = NULL;
+		// begin = &list;
+		free(line);
+		line = NULL;
+	}
+	ft_lstclear(&list, free);
+	exit(0);
+}
 
-// Names of environment variables are case-sensitive and must not contain the character ‘=’. 
-//System-defined environment variables are invariably uppercase.
-// The values of environment variables can be anything that can be represented as a string.
-//A value must not contain an embedded null character, since this is assumed to terminate the string. 
 
 int		main(int argc, char **argv, char **env)
 {

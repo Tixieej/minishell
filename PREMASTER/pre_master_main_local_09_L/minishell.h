@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/08 12:04:25 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/08 14:07:43 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void			print_cur_struct(t_command *command);
 
 
 int						main(int argc, char **argv, char **env);
-void					error_handler(char *error, t_list **list, t_command *cmd);
+void					error_handler(char *error, t_list *list, t_command *cmd);
 t_command				*ft_create_linked_struct(char *data);
 t_command				*ft_clear_linked_struct(t_command *command);
 void					ft_struct_push_back(t_command **begin_list, char *data);
@@ -55,7 +55,7 @@ void					prompt(void);
 /*
 ** tokenize functions?
 */
-void					start_program(t_list *list, char **env);
+void					divide_input(t_list **list, char *line, size_t len, unsigned int start);
 t_list					*ft_create_elem(void *data);
 void					ft_list_push_back(t_list **begin_list, void *data);
 

@@ -6,7 +6,7 @@
 #    By: rde-vrie <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/02/13 10:40:20 by rde-vrie      #+#    #+#                  #
-#    Updated: 2021/02/08 12:03:37 by livlamin      ########   odam.nl          #
+#    Updated: 2021/02/08 14:07:29 by livlamin      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ LIBFT = libft.a
 SRC = main.c \
 		get_next_line.c \
 		get_next_line_utils.c \
-		start_program.c \
+		divide_input.c \
 		parser.c \
 		external.c \
 		env_path.c \
