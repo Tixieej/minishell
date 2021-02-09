@@ -80,7 +80,7 @@ void			parser(t_list **list, char **env, t_command *command)
 	printf("check of struct is leeg hieronder\n"); // weg
 	print_cur_struct(command); // weg !!
 	// command = NULL; ?
-	//ft_lstclear(&(*list), free); // klopt dit? DEZE GEEFT EEN FOUT!!! pointer being freed was not allocated
+	//ft_lstclear(&(*list), free); // klopt dit? DEZE GEEFT EEN FOUT: pointer being freed was not allocated
 	*list = NULL; //klopt dit?
 	// ft_lstclear(&cur_lst, free);
 	// ft_lstclear(&list, free);  ft_strctclear schrijven
