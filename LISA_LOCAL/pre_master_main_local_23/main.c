@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/09 12:10:10 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/09 15:34:11 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,10 @@ static void			start_program(t_list *list, char **env)
 		// 	// printf("begin adress: %p\n", begin);
 		// 	begin = &(*begin)->next;
 		// }
-		if (list)
-		{
-			ft_lstclear(&list, free);
-			list = NULL;
-		}
-		free(line);
-		line = NULL;
-	}
-	if (list)
-	{
 		ft_lstclear(&list, free);
 		list = NULL;
+		free(line);
+		line = NULL;
 	}
 	exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/08 12:03:58 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/09 11:50:31 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/09 14:21:59 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,30 @@ void			print_cur_struct(t_command *command)
 	cur_args = cur_struct->args;
 	cur_in_red = cur_struct->in_red;
 	cur_out_red = cur_struct->out_red;
-	
 	while (cur_struct)// loop om te lezen wat er gebeurt, later weghalen
 	{
 		cur_args = cur_struct->args;
+		cur_in_red = cur_struct->in_red;
+		cur_out_red = cur_struct->out_red;
 		printf("\n");
 		printf("\tprogram: [%s]\n", ((char*)(cur_struct)->program));
 		if (!(cur_struct)->in_red)
-			printf("\tin_red: [(null)]\n");
+			printf("\tin_red: [null]\n");
 		while (cur_in_red)
 		{
 			printf("\tin_red: [%s]\n", ((cur_struct)->in_red)->content);
 			cur_in_red = cur_in_red->next;
 		}
 		if (!cur_out_red)
-			printf("\tout_red: [(null)]\n");
+			printf("\tout_red: [null]\n");
 		while (cur_out_red)
 		{
 			printf("\tout_red: [%s]\n", cur_out_red->content);
 			cur_out_red = cur_out_red->next;
 		}
 		if (!cur_args)
-			printf("\targs: [(null)]\n");
-		while ((cur_args))
+			printf("\targs: [null]\n");
+		while (cur_args)
 		{
 			printf("\targs: [%s]\n", cur_args->content);
 			cur_args = cur_args->next;
@@ -75,13 +76,12 @@ void			print_cur_struct(t_command *command)
 		printf("\tpipe_right: [%d]\n", ((cur_struct)->pipe_right));
 		printf("\tfd_in: [%d]\n", ((cur_struct)->fd_in));
 		printf("\tfd_out: [%d]\n\n", ((cur_struct)->fd_out));
+		cur_args = cur_struct->args;
+		cur_in_red = cur_struct->in_red;
+		cur_out_red = cur_struct->out_red;
 		cur_struct = (cur_struct)->next;
 	}
 	cur_struct = command;
-	cur_args = cur_struct->args;
-	cur_in_red = cur_struct->in_red;
-	cur_out_red = cur_struct->out_red;
-	// printf("%p\n", command->args);
 }
 
 // void			print_cur_struct(t_command *command)
