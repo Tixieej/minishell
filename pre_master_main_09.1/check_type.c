@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 17:53:20 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/08 16:21:16 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/09 09:46:24 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,4 @@ void	check_type(char **env, t_command *command)
 		//dup_func(command);
 		external(command, env, process);
 	}
-		// if (non_builtin = -1)
-		// 	error("invalid programme input", -1);
 }

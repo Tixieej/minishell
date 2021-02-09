@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/08 14:08:37 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/09 10:13:56 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ static void			start_program(t_list *list, char **env)
 		signal_handler(command);
 		prompt();
 		result = get_next_line(0, &line);
-		// if (result == -1) //check inbouwen?
-		if (line[0] == '\0') //als je gelijk op enter drukt, terug naar begin while loop
+		if (result == -1)
+			error_handler("get next line failed", list, NULL);
+		if (line[0] == '\0') //gelijk op enter drukken
 			continue ;
 		divide_input(&list, line, 0, 0);
 		parser(&list, env, command);
@@ -41,7 +42,6 @@ static void			start_program(t_list *list, char **env)
 		// }
 		ft_lstclear(&list, free);
 		list = NULL;
-		// begin = &list;
 		free(line);
 		line = NULL;
 	}

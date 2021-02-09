@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/08 16:21:14 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/09 10:07:56 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ static int		out_redirect(t_command *cmd)
 	{
 		if (stdout_fd < 0)
 			printf("bouw hier error in!\n");
-		if(dup2(cmd->fd_out, STDOUT_FILENO) < 0)
+		if(dup2(STDOUT_FILENO, cmd->fd_out) < 0)
 		{
 			printf("Unable to duplicate file descriptor.");
 			exit(EXIT_FAILURE);
@@ -145,7 +145,7 @@ static int		out_redirect(t_command *cmd)
 // 	return (stdin_fd);
 // }
 
-void			external(t_command *cmd, char **env, int process) // deze dan zonder int out_fd
+void			external(t_command *cmd, char **env, int process)
 {
 	int		stdout_fd;
 	//int		stdin_fd;
@@ -165,7 +165,7 @@ void			external(t_command *cmd, char **env, int process) // deze dan zonder int 
 	{
 		attach_path(*cmd, env, process);
 	}
-	if (dup2(stdout_fd, STDOUT_FILENO) < 0)// dit alleen uitvoeren als er redirections zijn?
+	if (dup2(STDOUT_FILENO, stdout_fd) < 0)// dit alleen uitvoeren als er redirections zijn?
 	{//dit zet stdout backup weer terug
 		printf("Unable to duplicate file descriptor.");
 		//exit(EXIT_FAILURE); exiten stopt heel minishell, dus hier komt iets anders

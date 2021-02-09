@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: Invalid date        by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/03 14:34:51 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/09 10:20:32 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@ void        pwd(int fd)
     path = ft_strjoin(path, "\n");
     if (write(fd, path, ft_strlen(path)) < 0)
         printf("error\n");
-    	free(path);
+    free(path);
     path = NULL;
 }

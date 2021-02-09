@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/08 12:22:48 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/09 10:08:56 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,22 @@ t_command		*ft_clear_linked_struct(t_command *command)
 	{
 		if ((*cur_struct)->program)
 		{
-				free((*cur_struct)->program); //fixen
+			free((*cur_struct)->program); //fixen
 			(*cur_struct)->program = NULL;
 		}
 		if ((*cur_struct)->args)
 		{
-				ft_lstclear(&(*cur_struct)->args, free);
+			ft_lstclear(&(*cur_struct)->args, free);
 			(*cur_struct)->args = NULL;
 		}
 		if ((*cur_struct)->in_red)
 		{
-				ft_lstclear(&(*cur_struct)->in_red, free);
+			ft_lstclear(&(*cur_struct)->in_red, free);
 			(*cur_struct)->in_red = NULL;
 		}
 		if ((*cur_struct)->out_red)
 		{
-				ft_lstclear(&(*cur_struct)->out_red, free);
+			ft_lstclear(&(*cur_struct)->out_red, free);
 			(*cur_struct)->out_red = NULL;
 		}
 		(*cur_struct)->pipe_left = 0;
