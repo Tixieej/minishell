@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/08 14:46:48 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/09 10:48:05 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void			parser(t_list **list, char **env, t_command *command)
 
 	cur_lst = *list;
 	cur_struct = &command;
-	ft_struct_push_back(&command, (char *)cur_lst->content);
+	ft_struct_push_back(&(*cur_struct), (char *)cur_lst->content);
 	cur_lst = cur_lst->next;
 	while (cur_lst)
 	{
@@ -70,20 +70,25 @@ void			parser(t_list **list, char **env, t_command *command)
 			add_redirection(&cur_lst, cur_struct);
 		else
 		{
-			// printf("%s\n", cur_lst->content);
 			ft_list_push_back(&(*cur_struct)->args, (char *)(*cur_lst).content);
 		}
 		cur_lst = cur_lst->next;
 	}
 	cur_lst = *list; // weg?
 	cur_struct = &command;
-	print_cur_struct(command); // weg !!
+	printf("command");
+	print_cur_struct(command);
+	// print_cur_struct(*cur_struct); // weg !!
 	// cur_struct = &command;
-	check_type(env, *cur_struct);
+	// check_type(env, *cur_struct);
+	printf("p comd: %p\n", command);
+	check_type(env, command);
 	command = ft_clear_linked_struct(command);
-	// cur_struct = &command;
-	printf("check is struct is leeg hieronder\n"); // weg
+	cur_struct = &command;
+
+	// printf("check is struct is leeg hieronder\n"); // weg
 	// print_cur_struct(command); // weg !!
+
 	// command = NULL; ?
 	ft_lstclear(&(*list), free); // klopt dit?
 	*list = NULL; //klopt dit?
