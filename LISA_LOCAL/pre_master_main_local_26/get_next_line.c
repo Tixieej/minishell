@@ -3,84 +3,116 @@
 /*                                                        ::::::::            */
 /*   get_next_line.c                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
+/*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/02/20 09:06:41 by rde-vrie      #+#    #+#                 */
-/*   Updated: 2021/02/10 12:34:24 by livlamin      ########   odam.nl         */
+/*   Created: 2020/01/03 11:42:44 by livlamin      #+#    #+#                 */
+/*   Updated: 2021/02/11 09:26:40 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdlib.h>
 #include "get_next_line.h"
-#include <limits.h>
 
-int		read_till_end(int fd, char **line, char *buffer, int *ret)
+static int		ft_newline(t_data *data)
 {
-	int pos;
+	int		temp_len;
+	char	*str;
 
-	while (gnl_strchr(buffer, '\n') == -1 && *ret != 0)
+	temp_len = 0;
+	str = NULL;
+	if (data->temp)
 	{
-		*line = gnl_strjoin(*line, buffer, BUFFER_SIZE);
-		if (*line == NULL)
+		temp_len = ft_strlen(data->temp);
+		str = ft_strdup(data->temp);
+		if (!str)
 			return (-1);
-		*ret = read(fd, buffer, BUFFER_SIZE);
-		if (*ret == -1)
-		{
-			free(*line);
-			return (-1);
-		}
-		buffer[*ret] = '\0';
+		free(data->temp);
+		data->temp = NULL;
 	}
-	pos = gnl_strchr(buffer, '\n');
-	*line = gnl_strjoin(*line, buffer, pos);
-	if (*line == NULL)
+	data->temp = (char *)malloc(sizeof(char) * (temp_len + data->i + 1));
+	if (!data->temp)
 		return (-1);
-	return (pos);
-}
-
-void	shift_buffer(char *buffer, int n)
-{
-	int i;
-
-	i = 0;
-	while (n + i < BUFFER_SIZE)
-	{
-		buffer[i] = buffer[n + i];
-		i++;
-	}
-	while (i < BUFFER_SIZE)
-	{
-		buffer[i] = '\0';
-		i++;
-	}
-}
-#include <stdio.h>
-
-int		get_next_line(int fd, char **line)
-{
-	static char buffer[OPEN_MAX][BUFFER_SIZE + 1];
-	int			ret;
-	int			pos;
-
-	if (!(line) || fd > OPEN_MAX || read(fd, NULL, 0) == -1)
-		return (-1);
-	ret = 1;
-	if (*buffer[fd] == '\0')
-	{
-		ret = read(fd, buffer[fd], BUFFER_SIZE);
-		if (ret == -1)
-			return (-1);
-	}
-	*line = malloc(1);
-	if (!(*line))
-		return (-1);
-	**line = '\0';
-	pos = read_till_end(fd, line, buffer[fd], &ret);
-	if (ret == -1 || *line == NULL)
-		return (-1);
-	shift_buffer(buffer[fd], pos + 1);
-	if (ret == 0)
-		return (0);
+	ft_memcpy(data->temp, str, temp_len);
+	ft_memcpy(data->temp + temp_len, data->buf + data->line_start, data->i);
+	ft_memcpy((data->temp + temp_len + data->i), "", 1);
+	data->line_start = data->i + data->line_start + 1;
+	free(str);
 	return (1);
+}
+
+static int		ft_make_struct(t_data **data)
+{
+	*data = (t_data *)malloc(sizeof(t_data));
+	if (!(*data))
+		return (-1);
+	(*data)->i = 0;
+	(*data)->bytes_read = 0;
+	(*data)->line_start = 0;
+	(*data)->temp = NULL;
+	return (0);
+}
+
+static int		ft_read(t_data *data, int fd)
+{
+	if ((ssize_t)data->line_start == data->bytes_read)
+	{
+		data->line_start = 0;
+		ft_bzero(data->buf, BUFFER_SIZE);
+		data->bytes_read = read(fd, data->buf, BUFFER_SIZE);
+		ft_memcpy(&data->buf[data->bytes_read], "", 1);
+	}
+	if (data->bytes_read == 0)
+	{
+		if (!data->temp)
+		{
+			data->temp = (char *)malloc(sizeof(char) * 1);
+			if (!data->temp)
+				return (-1);
+			ft_memcpy(data->temp, "", 1);
+		}
+		return (0);
+	}
+	return (1);
+}
+
+static int		ft_scan_data(t_data *data, int fd)
+{
+	if (ft_read(data, fd) != 1)
+		return (ft_read(data, fd));
+	data->i = 0;
+	while (data->bytes_read > (data->i + data->line_start))
+	{
+		if (data->buf[data->line_start + data->i] == '\n')
+			return (ft_newline(data));
+		data->i++;
+	}
+	if (ft_strjoin_gnl(data) == -1)
+		return (-1);
+	data->line_start += data->i;
+	return (ft_scan_data(data, fd));
+}
+
+int				get_next_line(int fd, char **line)
+{
+	int				return_value;
+	static t_data	*data[FD_SETSIZE];
+
+	if (fd < 0 || line == NULL || read(fd, 0, 0) == -1)
+		return (-1);
+	if (data[fd] == NULL)
+		if (ft_make_struct(&data[fd]) == -1)
+			return (-1);
+	return_value = ft_scan_data(data[fd], fd);
+	if (return_value == -1)
+		return (-1);
+	*line = ft_strdup(data[fd]->temp);
+	if (!line)
+		return (-1);
+	free(data[fd]->temp);
+	data[fd]->temp = NULL;
+	if (return_value == 0)
+	{
+		free(data[fd]);
+		data[fd] = NULL;
+	}
+	return (return_value);
 }

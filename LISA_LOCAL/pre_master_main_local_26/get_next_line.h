@@ -3,25 +3,37 @@
 /*                                                        ::::::::            */
 /*   get_next_line.h                                    :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
+/*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/12/03 16:42:29 by rde-vrie      #+#    #+#                 */
-/*   Updated: 2020/11/26 13:23:07 by rixt          ########   odam.nl         */
+/*   Created: 2020/01/03 11:43:19 by livlamin      #+#    #+#                 */
+/*   Updated: 2021/02/11 09:27:21 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 5
 # endif
 
-int		get_next_line(int fd, char **line);
-void	shift_buffer(char *buffer, int n);
-int		read_till_end(int fd, char **line, char *buffer, int *ret);
-char	*gnl_strcpy(char *join, char *s1, char *s2);
-char	*gnl_strjoin(char *s1, char *s2, int n);
-int		gnl_strchr(char *s, char c);
+# include <unistd.h>
+# include <stdlib.h>
+# include "libft/libft.h"
+
+typedef	struct		s_data
+{
+	char			buf[BUFFER_SIZE + 1];
+	ssize_t			bytes_read;
+	int				i;
+	int				line_start;
+	char			*temp;
+}					t_data;
+
+int					get_next_line(int fd, char **line);
+size_t				ft_strlen(const char *str);
+void				ft_bzero(void *s, size_t n);
+void				*ft_memcpy(void *dst, const void *src, size_t n);
+// char				*ft_strdup(char *line);
+int					ft_strjoin_gnl(t_data *data);
 
 #endif

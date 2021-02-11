@@ -3,71 +3,103 @@
 /*                                                        ::::::::            */
 /*   get_next_line_utils.c                              :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
+/*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/12/05 16:44:21 by rde-vrie      #+#    #+#                 */
-/*   Updated: 2020/02/11 10:09:37 by rde-vrie      ########   odam.nl         */
+/*   Created: 2020/01/03 11:43:03 by livlamin      #+#    #+#                 */
+/*   Updated: 2021/02/11 09:27:51 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "get_next_line.h"
 
-char	*gnl_strcpy(char *join, char *s1, char *s2, int n)
+size_t	ft_strlen(const char *str)
 {
-	int i;
-	int j;
+	size_t i;
 
 	i = 0;
-	j = 0;
-	while (s1[i] != '\0')
-	{
-		join[i] = s1[i];
-		i++;
-	}
-	while (s2[j] != '\0' && j < n)
-	{
-		join[i + j] = s2[j];
-		j++;
-	}
-	join[i + j] = '\0';
-	return (join);
-}
-
-int		ft_strlen(char *s)
-{
-	int i;
-
-	i = 0;
-	while (s[i] != '\0')
+	if (!str)
+		return (i);
+	while (str[i] != '\0')
 		i++;
 	return (i);
 }
 
-char	*gnl_strjoin(char *s1, char *s2, int n)
+void	ft_bzero(void *s, size_t n)
 {
-	char	*join;
+	size_t			i;
+	unsigned char	*str;
 
-	if (!s1 || !s2)
-		return (NULL);
-	join = (char *)malloc(sizeof(char *) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (join == NULL)
+	i = 0;
+	str = (unsigned char *)s;
+	while (i < n)
 	{
-		free(s1);
-		return (NULL);
+		str[i] = '\0';
+		i++;
 	}
-	join = gnl_strcpy(join, s1, s2, n);
-	free(s1);
-	return (join);
 }
 
-int		gnl_strchr(char *s, char c)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	int pos;
+	unsigned char *dst2;
+	unsigned char *src2;
 
-	pos = 0;
-	while (s[pos] != '\0' && s[pos] != c)
-		pos++;
-	if (s[pos] == '\0')
+	dst2 = (unsigned char *)dst;
+	src2 = (unsigned char *)src;
+	if (src == NULL && dst == NULL)
+		return (NULL);
+	while (n > 0)
+	{
+		*dst2 = *src2;
+		dst2++;
+		src2++;
+		n--;
+	}
+	return (dst);
+}
+
+char	*ft_strdup_gnl(char *line)
+{
+	char		*result;
+	size_t		length;
+
+	length = ft_strlen(line);
+	result = (char *)malloc(sizeof(char) * length + 1);
+	if (!result)
+		return (NULL);
+	result[length] = '\0';
+	length = 0;
+	while (line[length] != '\0')
+	{
+		result[length] = line[length];
+		length++;
+	}
+	return (result);
+}
+
+int		ft_strjoin_gnl(t_data *data)
+{
+	char	*str;
+	size_t	len_temp;
+
+	str = NULL;
+	len_temp = 0;
+	if (data->temp)
+	{
+		len_temp = ft_strlen(data->temp);
+		str = ft_strdup_gnl(data->temp);
+		if (!str)
+			return (-1);
+	}
+	free(data->temp);
+	data->temp = NULL;
+	data->temp = (char *)malloc(sizeof(char) * (len_temp + data->i + 1));
+	if (!data->temp)
 		return (-1);
-	return (pos);
+	if (str)
+		ft_memcpy(data->temp, str, len_temp);
+	ft_memcpy(data->temp + len_temp, data->buf + data->line_start, data->i);
+	ft_memcpy(data->temp + len_temp + data->i, "", 1);
+	free(str);
+	str = NULL;
+	return (0);
 }

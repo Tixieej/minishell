@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/11 09:14:23 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/11 09:21:01 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ static void			start_program(char **env)
 	{
 		signal_handler(command);
 		prompt();
+		printf("bef: [%s]\n", line);
 		result = get_next_line(0, &line);
+		printf("af: [%s]\n", line);
 		if (result == -1)
 		 	error_handler("get next line failed", list, NULL);
 		if (line[0] == '\0')
