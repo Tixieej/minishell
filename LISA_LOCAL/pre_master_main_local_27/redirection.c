@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:16:00 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/08 11:01:30 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/11 11:53:52 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void    in_red(t_command *command)
     cur_struct = &command;
     while ((*cur_struct)->in_red)
     {
-        if (!(ft_strncmp((const char *)(*cur_struct)->out_red->content, "<", 1)))
+        if (!(ft_strncmp((const char *)(*cur_struct)->in_red->content, "<", 1)))
         {
             (*cur_struct)->in_red = (*cur_struct)->in_red->next;
             if ((*cur_struct)->in_red)
-                command->fd_in = open((const char *)(*cur_struct)->out_red->content, O_RDONLY, 0644);
+                command->fd_in = open((const char *)(*cur_struct)->in_red->content, O_RDONLY, 0644);
         }
         if (command->fd_in < 0)
             error_handler("open file failed\n", NULL, NULL); //checken

@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/10 12:29:49 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/11 11:53:01 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,19 @@ static void		add_pipe(t_list **cur_lst, t_command **cur_struct)
 
 static void		add_redirection(t_list **cur_lst, t_command **cur_struct)
 {
-	char *path;
-
-	path = NULL;
 	if (*(*cur_lst)->content == '>')
 	{
-		ft_list_push_back(&((*cur_struct)->out_red), ft_strdup((*cur_lst)->content));
+		ft_list_push_back(&(*cur_struct)->out_red, ft_strdup((*cur_lst)->content));
 		(*cur_lst) = (*cur_lst)->next;
-		ft_list_push_back(&((*cur_struct)->out_red), ft_strdup((*cur_lst)->content));
+		if (*cur_lst)
+			ft_list_push_back(&(*cur_struct)->out_red, ft_strdup((*cur_lst)->content));
 	}
-	else if (*(*cur_lst)->content == '<')
+	if (*(*cur_lst)->content == '<')
 	{
-		ft_list_push_back(&((*cur_struct)->in_red), ft_strdup((*cur_lst)->content));
+		ft_list_push_back(&(*cur_struct)->in_red, ft_strdup((*cur_lst)->content));
 		(*cur_lst) = (*cur_lst)->next;
-		if ((*cur_lst))
-			ft_list_push_back(&((*cur_struct)->in_red), ft_strdup((*cur_lst)->content));
+		if (*cur_lst)
+			ft_list_push_back(&(*cur_struct)->in_red, ft_strdup((*cur_lst)->content));
 	}
 }
 
@@ -68,6 +66,7 @@ void			parser(t_list **list, char **env, t_command *command)
 			add_pipe(&cur_lst, cur_struct);
 		else if (*cur_lst->content == '>' || *cur_lst->content == '<')
 			add_redirection(&cur_lst, cur_struct);
+
 		else
 			ft_list_push_back(&(*cur_struct)->args, ft_strdup((char *)(*cur_lst).content));
 		cur_lst = cur_lst->next;

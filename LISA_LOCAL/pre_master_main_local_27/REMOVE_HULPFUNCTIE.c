@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/08 12:03:58 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/09 14:21:59 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/11 11:51:34 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void			print_cur_struct(t_command *command)
 			printf("\tin_red: [null]\n");
 		while (cur_in_red)
 		{
-			printf("\tin_red: [%s]\n", ((cur_struct)->in_red)->content);
+			printf("\tin_red: [%s]\n", cur_in_red->content);
 			cur_in_red = cur_in_red->next;
 		}
 		if (!cur_out_red)
