@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/10 12:34:20 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/11 09:15:48 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ static void			start_program(char **env)
 	char		*line;
 	// t_list		**begin;
 
-
-	
 	command = NULL;
 	list = NULL;
 	// begin = &list;
