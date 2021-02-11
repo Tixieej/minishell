@@ -95,6 +95,7 @@ char					*get_pointer_env(char **env, char *var);
 void					cd(t_command *command, char **env, char *path);
 void					echo(t_command *command);
 void        			pwd(int fd);
+void					exit_func(t_command *command);
 
 /*
 ** signals

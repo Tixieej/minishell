@@ -21,7 +21,7 @@ char		**list_to_array(t_list **list)
 
 	if (!(*list) || !((*list)->content))// klopt dit?
 	{
-		array = (char **)malloc(sizeof(char *));
+		array = (char **)malloc(sizeof(char *)); // WAAR FREEEN?
 		array[0] = NULL;
 		return (array);
 	}
@@ -32,7 +32,7 @@ char		**list_to_array(t_list **list)
 		current = current->next; //
 		count++;
 	}
-	array = (char **)malloc(sizeof(char *) * (count + 1));
+	array = (char **)malloc(sizeof(char *) * (count + 1)); // WAAR FREEEN?
 	i = 0;
 	current = *list;
 	while (i < count)
@@ -55,12 +55,17 @@ void		ft_exec(char *path, t_command cmd, char **env)
 	ft_lstadd_front(&arglist, ft_create_elem(path));
 	//in create_elem wordt gemalloct dus we moeten nog checken of dat gelukt is.
 	//dat kunnen we toevoegen in create_elem zelf, of hieronder..
-	args = list_to_array(&(cmd.args));
+	args = list_to_array(&(cmd.args)); //Hier heb je een array gemalloct.
 	pid = fork();
 	if (pid == 0)
+	{
 		execve(path, args, env);
+	}
 	else
+	{
 		wait(NULL);
+		free(args); //is dit de goede plek?
+	}
 }
 
 void		with_path(t_command cmd, char **env)

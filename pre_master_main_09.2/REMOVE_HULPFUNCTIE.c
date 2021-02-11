@@ -33,42 +33,44 @@
 // 	}
 // }
 
-
 void			print_cur_struct(t_command *command)
 {
-	t_command **cur_struct;
-	
-	cur_struct = &command;
-	while (*cur_struct)// loop om te lezen wat er gebeurt, later weghalen
+	t_command	*cur_struct;
+	t_list		*args;
+
+	cur_struct = command;
+	while (cur_struct)// loop om te lezen wat er gebeurt, later weghalen
 	{
+		args = cur_struct->args; //begin van arglist onthouden
 		printf("\n");
-		printf("\tprogram: [%s]\n", ((char*)(*cur_struct)->program));
-		if (!(*cur_struct)->in_red)
+		printf("\tprogram: [%s]\n", ((char*)(cur_struct)->program));
+		if (!(cur_struct)->in_red)
 			printf("\tin_red: [(null)]\n");
-		while (((*cur_struct)->in_red))
+		while (((cur_struct)->in_red))
 		{
-			printf("\tin_red: [%s]\n", ((*cur_struct)->in_red)->content);
-			(*cur_struct)->in_red = (*cur_struct)->in_red->next;
+			printf("\tin_red: [%s]\n", ((cur_struct)->in_red)->content);
+			(cur_struct)->in_red = (cur_struct)->in_red->next;
 		}
-		if (!(*cur_struct)->out_red)
+		if (!(cur_struct)->out_red)
 			printf("\tout_red: [(null)]\n");
-		while (((*cur_struct)->out_red))
+		while (((cur_struct)->out_red))
 		{
-			printf("\tout_red: [%s]\n", ((*cur_struct)->out_red)->content);
-			(*cur_struct)->out_red = (*cur_struct)->out_red->next;
+			printf("\tout_red: [%s]\n", ((cur_struct)->out_red)->content);
+			(cur_struct)->out_red = (cur_struct)->out_red->next;
 		}
-		if (!(*cur_struct)->args)
+		if (!(cur_struct)->args)
 			printf("\targs: [(null)]\n");
-		while (((*cur_struct)->args))
+		while (((cur_struct)->args))
 		{
-			printf("\targs: [%s]\n", ((*cur_struct)->args)->content);
-			(*cur_struct)->args = (*cur_struct)->args->next;
+			printf("\targs: [%s]\n", ((cur_struct)->args)->content);
+			(cur_struct)->args = (cur_struct)->args->next;
 		}
-		printf("\tpipe_left: [%d]\n", ((*cur_struct)->pipe_left));
-		printf("\tpipe_right: [%d]\n", ((*cur_struct)->pipe_right));
-		printf("\tfd_in: [%d]\n", ((*cur_struct)->fd_in));
-		printf("\tfd_out: [%d]\n\n", ((*cur_struct)->fd_out));
-		cur_struct = &(*cur_struct)->next;
+		cur_struct->args = args;
+		printf("\tpipe_left: [%d]\n", ((cur_struct)->pipe_left));
+		printf("\tpipe_right: [%d]\n", ((cur_struct)->pipe_right));
+		printf("\tfd_in: [%d]\n", ((cur_struct)->fd_in));
+		printf("\tfd_out: [%d]\n\n", ((cur_struct)->fd_out));
+		cur_struct = (cur_struct)->next;
 	}
-	cur_struct = &command;
+	cur_struct = command;
 }

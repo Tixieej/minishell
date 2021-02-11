@@ -16,15 +16,17 @@
 void        echo(t_command *command)
 {
     char *s;
-    t_command	**cur_struct;
+    t_list	*args;
 
-    cur_struct = &command;
+    args = command->args;
     s = ft_strdup("");
-    while ((*cur_struct)->args)
+	printf("wtf???\n");
+    while (args)
     {
-        s = ft_strjoin(s, (const char *)(*cur_struct)->args->content);
+		printf("\t--> %s\n", (char *)args->content);
+        s = ft_strjoin(s, (const char *)args->content);
         s = ft_strjoin(s, " ");
-        (*cur_struct)->args = (*cur_struct)->args->next;
+        args = args->next;
     }
     if (ft_strlen(s) == 0)
         s = ft_strdup("\n");

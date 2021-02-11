@@ -35,7 +35,7 @@ void	check_type(char **env, t_command *command)
 
 	// printf("%s\n", (char *)command->args->content);
 	cur_struct = command;
-	redirection(cur_struct); // hier komt denk ik een aparte functie voor input redirection onder? of wordt de return van deze functie anders?
+	redirection(cur_struct);
 	process = -1;
 	if (command->pipe_right == 1 || command->pipe_left == 1)
 		process = pipes(cur_struct);
@@ -52,7 +52,7 @@ void	check_type(char **env, t_command *command)
 	else if (ft_strncmp((const char *)cur_struct->program, "env", 3) == 0)
 		printf("env type\n");
 	else if (ft_strncmp((const char *)cur_struct->program, "exit", 4) == 0)
-		printf("exit type\n");
+		exit_func(command);
 	else
 	{
 		//dup_func(command);

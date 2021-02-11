@@ -79,6 +79,6 @@ void			parser(t_list **list, char **env, t_command *command)
 	check_type(env, *cur_struct);
 	command = ft_clear_linked_struct(command);
 	printf("check of struct is leeg hieronder\n"); // weg
-	//ft_lstclear(&(*list), free); // DEZE GAF EEN FOUT: pointer being freed was not allocated
+	//ft_lstclear(&(*list), free); // klopt dit? DEZE GAF EEN FOUT: pointer being freed was not allocated
 	*list = NULL; //klopt dit?
 }

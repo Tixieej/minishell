@@ -19,6 +19,7 @@ static void			start_program(t_list *list, char **env)
 	char		*line;
 	t_list		**begin;
 	t_command	*command;
+	
 	command = NULL;
 	begin = &list;
 	result = 1;
@@ -45,7 +46,7 @@ static void			start_program(t_list *list, char **env)
 		free(line);
 		line = NULL;
 	}
-	ft_lstclear(&list, free);
+	//ft_lstclear(&list, free);
 	exit(0);
 }
 

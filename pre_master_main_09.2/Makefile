@@ -6,7 +6,7 @@
 #    By: rde-vrie <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/02/13 10:40:20 by rde-vrie      #+#    #+#                  #
-#    Updated: 2021/02/08 17:58:53 by rixt          ########   odam.nl          #
+#    Updated: 2021/02/09 13:43:46 by rixt          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,16 +29,20 @@ SRC = main.c \
 		pipes.c \
 		signals.c \
 		check_env.c \
-		REMOVE_HULPFUNCTIE.c
-OBJ = $(SRC:.c=.o)
+		REMOVE_HULPFUNCTIE.c \
+		exit.c
+OBJ = $(SRC:%.c=%.o)
 CFLAGS = -Wall -Werror -Wextra
 CC = gcc
 INC = minishell.h get_next_line.h
+ifdef DEBUG
+CFLAGS += -g -fsanitize=address
+endif
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) -L. -lft -o $(NAME) $(OBJ)
+	$(CC) $(CFLAGS) -L. -lft -o $(NAME) $(OBJ)
 
 $(LIBFT):
 	cd libft && make bonus
