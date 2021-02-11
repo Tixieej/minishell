@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/11 10:58:28 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/11 11:00:15 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int		handle_quotation_marks(t_list **list, char *line,
 	return (start);
 }
 
-void		divide_input(t_list **list, char *line,
+void			divide_input(t_list **list, char *line,
 							size_t len, unsigned int start)
 {
 	while (line[start + len] != '\0')
@@ -84,34 +84,3 @@ void		divide_input(t_list **list, char *line,
 		len++;
 	}
 }
-
-
-// void		divide_input(t_list **list, char *line,
-// 							size_t len, unsigned int start)
-// {
-// 	while (line[start + len] != '\0')
-// 	{
-// 		while (line[start + len] == ' ' && line[start + len] != '\0')
-// 			start++;
-// 		if (!ft_strchr("'<''>'\'\"", line[start + len]) && line[start + len] != '\0')
-// 		{
-// 			start += len;
-// 			while (!ft_strchr("'<''>' \'\"\0", line[start + len]) && line[start + len] != '\0')
-// 				len++;
-// 		}
-// 		if (line[start + len] == '>' && line[start + len + 1] == '>' && line[start + len + 2] == '>')
-// 			error_handler("syntax error near unexpected token `>'\n", *list, NULL);
-// 		if (line[start + len] == ' ' || line[start + len] == '\0' || line[start + len] == '>' || line[start + len] == '<')
-// 		{
-// 			if (len < 1 && line[start + len + 1] == '>')
-// 				len = 2;
-// 			if (line[start + len] == '>' || line[start + len] == '<')
-// 				len = 1;
-// 			if (len != 0)
-// 				start = create_list_item(list, line, &len, start);
-// 		}
-// 		if (ft_strchr("\'\"", line[start + len]))
-// 			start = handle_quotation_marks(list, line, &len, start);
-// 		len++;
-// 	}
-// }
