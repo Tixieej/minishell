@@ -12,6 +12,19 @@
 
 #include "minishell.h"
 
+static void		ft_free(char **array)
+{
+	int i;
+
+	i = 0;
+	while (array[i] != NULL)
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
 char			**list_to_array(t_list **list)
 {
 	int		count;
@@ -32,7 +45,7 @@ char			**list_to_array(t_list **list)
 		current = current->next; //
 		count++;
 	}
-	array = (char **)malloc(sizeof(char *) * (count + 1));
+	array = (char **)malloc(sizeof(char *) * (count + 1)); //wordt gefreed in ft_exec
 	i = 0;
 	current = *list;
 	while (i < count)
@@ -62,9 +75,15 @@ void			ft_exec(char *path, t_command cmd, char **env, pid_t process)
 		process = fork();
 	}
 	if (process == 0)
+	{
 		execve(path, args, env);
+		ft_free(args);
+	}
 	else
+	{
 		wait(NULL);
+		ft_free(args);
+	}
 }
 
 static void		with_path(t_command cmd, char **env, pid_t process)
@@ -107,6 +126,7 @@ static void		attach_path(t_command cmd, char **env, pid_t process)
 	}
 	if (stat(path, &buffer) != 0)
 		printf("command not found: %s\n", cmd.program);
+	ft_free(paths);
 }
 
 static int		out_redirect(t_command *cmd)

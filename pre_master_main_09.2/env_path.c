@@ -25,7 +25,7 @@ char		**make_path_array(char **envp)
 		if (ft_strncmp("PATH=", *tmp, 5) == 0)
 		{
 			pre_paths = ft_split(*tmp, '=');//later misschien de hele env splitten op var en values, dan daaruit de PATH lezen?
-			paths = ft_split(pre_paths[1], ':');
+			paths = ft_split(pre_paths[1], ':');// wordt gefreed in attach_path
 		}
 		tmp++;
 	}
