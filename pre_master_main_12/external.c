@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/09 10:07:56 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/11 15:27:44 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ static void		attach_path(t_command cmd, char **env, pid_t process)
 		printf("command not found: %s\n", cmd.program);
 	ft_free(paths);
 }
-
 
 void			external(t_command *cmd, char **env, pid_t process)
 {
