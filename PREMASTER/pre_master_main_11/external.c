@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/09 10:07:56 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/10 11:07:51 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ static int		out_redirect(t_command *cmd)
 // 	return (stdin_fd);
 // }
 
-void			external(t_command *cmd, char **env, int process)
+void			external(t_command *cmd, char **env, int process) //geen pid_t?
 {
 	int		stdout_fd;
 	//int		stdin_fd;

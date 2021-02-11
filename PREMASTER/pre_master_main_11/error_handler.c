@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/25 11:04:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/09 14:28:06 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/10 13:17:21 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ void	error_handler(char *error, t_list *list, t_command *command)
 		list = NULL;
 	}
 	if (command)
-	{
 		command = ft_clear_linked_struct(command);
-		command = NULL;
-	}
 	exit(0); // of moeten we ook op vork letten?
 }

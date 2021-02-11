@@ -6,21 +6,25 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/09 15:34:11 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/10 12:34:20 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
  
-static void			start_program(t_list *list, char **env)
+static void			start_program(char **env)
 {
+	t_command	*command;
+	t_list		*list;
 	int			result;
 	char		*line;
-	t_list		**begin;
-	t_command	*command;
+	// t_list		**begin;
+
+
 	
 	command = NULL;
-	begin = &list;
+	list = NULL;
+	// begin = &list;
 	result = 1;
 	line = NULL;
 	while (result == 1)
@@ -33,13 +37,13 @@ static void			start_program(t_list *list, char **env)
 		if (line[0] == '\0')
 			continue ;
 		divide_input(&list, line, 0, 0);
-		parser(&list, env, command);
 		// while ((*begin))// loop om te lezen wat er gebeurt, later weghalen
 		// {
 		// 	printf("list item: [%s]\n", (char*)((*begin)->content));
 		// 	// printf("begin adress: %p\n", begin);
 		// 	begin = &(*begin)->next;
 		// }
+		parser(&list, env, command);
 		ft_lstclear(&list, free);
 		list = NULL;
 		free(line);
@@ -51,15 +55,15 @@ static void			start_program(t_list *list, char **env)
 
 int		main(int argc, char **argv, char **env)
 {
-	t_list	*list;
+	// t_list	*list;
 
-	list = NULL;
+	// list = NULL;
 	(void)argv;
 	if (argc != 1)
 	{
 		printf("no arguments needed");
 		return (0);
 	}
-	start_program(list, env);
+	start_program(env);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/10 10:57:34 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/10 11:32:28 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 
 typedef struct			s_command
 {
-	//struct s_command	*previous;
 	char				*program;
 	t_list				*args;
 	int					pipe_left;

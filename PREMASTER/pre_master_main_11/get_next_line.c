@@ -6,7 +6,7 @@
 /*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/02/20 09:06:41 by rde-vrie      #+#    #+#                 */
-/*   Updated: 2020/02/20 09:06:46 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/02/10 12:34:24 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	shift_buffer(char *buffer, int n)
 		i++;
 	}
 }
+#include <stdio.h>
 
 int		get_next_line(int fd, char **line)
 {
