@@ -14,16 +14,16 @@
 
 // static void    dup_func(t_command *command)
 // {
-//     if (dup2(command->fd_out, STDOUT_FILENO) < 0)
-//     {
-// 	    printf("Unable to duplicate file descriptor.");
-// 	    exit(EXIT_FAILURE);
-//     }
-//     if (dup2(command->fd_in, STDIN_FILENO) < 0)
-//     {
-// 	    printf("Unable to duplicate file descriptor.");
-// 	    exit(EXIT_FAILURE);
-//     }
+//		if (dup2(command->fd_out, STDOUT_FILENO) < 0)
+//		{
+//		printf("Unable to duplicate file descriptor.");
+//		exit(EXIT_FAILURE);
+//		}
+//		if (dup2(command->fd_in, STDIN_FILENO) < 0)
+//		{
+//		printf("Unable to duplicate file descriptor.");
+//		exit(EXIT_FAILURE);
+//		}
 // }
 
 void	check_type(char **env, t_command *command)
