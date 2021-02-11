@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/21 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/11 10:27:50 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/11 11:54:46 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,4 @@ void		echo(t_command *command)
 	if (write(command->fd_out, s, ft_strlen(s)) < 0)
 		printf("error\n");
 	free(s);
-	return;
 }
