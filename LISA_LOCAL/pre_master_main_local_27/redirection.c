@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:16:00 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/11 11:53:52 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/11 11:59:02 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void    in_red(t_command *command)
                 command->fd_in = open((const char *)(*cur_struct)->in_red->content, O_RDONLY, 0644);
         }
         if (command->fd_in < 0)
-            error_handler("open file failed\n", NULL, NULL); //checken
+            error_handler("open file failed\n", NULL, command); //checken
         (*cur_struct)->in_red = (*cur_struct)->in_red->next;
     }
 }
@@ -68,5 +68,4 @@ void    redirection(t_command *command)
     command->fd_out = 1;
     in_red(command);
     out_red(command);
-    return; //kan die weg?
 }
