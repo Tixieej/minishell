@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/21 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/11 11:54:46 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/15 12:21:40 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void		echo(t_command *command)
 	char        *s;
 	int         n_check;
 	
+	if (!command->args) // dubbelcheck later
+		return;
 	cur_args = command->args;
 	s = ft_strdup("");
 	n_check = !ft_strncmp(cur_args->content, "-n", 2);
