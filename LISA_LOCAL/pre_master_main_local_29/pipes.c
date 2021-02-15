@@ -6,11 +6,19 @@
 /*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 14:20:04 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/15 13:02:27 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/15 15:53:26 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// maaf dubbele array fd[2] aan //
+// *fd[0][1]
+// *fd[0][1]
+// etc ecv
+
+// pipe(fd)
+// maak voor elke pipe een childproces //
 
 
 // static void    dup_func(t_command *command)
@@ -27,60 +35,93 @@
 //     }
 // }
 
+static int	**ft_create_fd_array(t_command *command, int **fd_array)
+{
+	t_command	*cur_struct;
+	int			times;
+
+	cur_struct = command;
+	times = 0;
+	while (cur_struct)
+	{
+		if (cur_stuct->pipe_right == 1)
+			times++;
+	}
+	cur_struct = command;
+	
+
+}
+
 
 pid_t	pipes(t_command *cmd)
 {
-    int     fd[2]; //malloc?
-	int		fd_oldin;
-	int		fd_oldout;
+    // int     fd[2];
+	int		**fd_array;
+	pid_t   process;
+
+	process = 0;
+	fd_array = ft_create_fd_array(cmd, fd_array);
 	//fd[0] = read
 	//fd[1] = write
-    pid_t   process;
-	fd_oldin = cmd->fd_in;
-	fd_oldout = cmd->fd_in;
-	// printf("oldin%d\n", fd_oldin);
-	// printf("oldout%d\n", fd_oldout);
-    if (pipe(fd) == -1)
-		error_handler("pipe failed", NULL, cmd);
-	if ((process = fork()) == -1) // check of fork lukt
-    {
-		perror("fork");
-		error_handler("fork failed", NULL, cmd);
-    	exit(1);
-    }
-    if (process == 0)  //CHILD
-    {
-		if (cmd->pipe_right == 1)
-		{
-			printf("JA");
-			close(fd[1]);  // Close writing end of first pipe
-			// fd_in = open((const char *)cmd->args, O_RDONLY, 0644);
-			if (dup2(STDIN_FILENO, fd[0]) < 0) //if (dup2(fd_oldin, cmd->fd_in) < 0)
-    		{
-	    		error_handler("Unable to duplicate file descriptor.", NULL, cmd);
-	    		// exit(EXIT_FAILURE); // regelen
-    		}		
-			// read(fd[0], cmd->args->content, ft_strlen(cmd->args->content));
-			close(fd[0]);
+	while (cmd)
+	{
+    	if (pipe(*fd_array) == -1)
+			error_handler("pipe failed", NULL, cmd);
+		if ((process = fork()) == -1) // check of fork lukt
+    	{
+			perror("fork");
+			error_handler("fork failed", NULL, cmd);
+    		exit(1);
+    	}
+		if (process == 0)  //CHILD
+    	{
+			if (cmd->pipe_right == 1 && cmd->pipe_left == 1)
+			{
+				if (dup2(STDOUT_FILENO, *fd_array[1]) < 0) //if (dup2(fd_oldin, cmd->fd_in) < 0)
+    			{
+	    			error_handler("Unable to duplicate file descriptor.", NULL, cmd);
+	    			// exit(EXIT_FAILURE); // regelen
+    			}
+				if (dup2(STDIN_FILENO, *fd_array[0]) < 0) //if (dup2(fd_oldin, cmd->fd_in) < 0)
+    			{
+	    			error_handler("Unable to duplicate file descriptor.", NULL, cmd);
+	    			// exit(EXIT_FAILURE); // regelen
+    			}
+			}
+			}
+			if (cmd->pipe_right == 1)
+			{
+				close(*fd_array[0]);  // Close writing end of first pipe
+				if (dup2(STDOUT_FILENO, *fd_array[1]) < 0) //if (dup2(fd_oldin, cmd->fd_in) < 0)
+    			{
+	    			error_handler("Unable to duplicate file descriptor.", NULL, cmd);
+	    			// exit(EXIT_FAILURE); // regelen
+    			}		
+				close(*fd_array[1]);
+			}
+			if (cmd->pipe_left == 1)
+			{
+				close(*fd_array[1]);  // Close writing end of first pipe
+				if (dup2(STDIN_FILENO, *fd_array[0]) < 0) //if (dup2(fd_oldin, cmd->fd_in) < 0)
+    			{
+	    			error_handler("Unable to duplicate file descriptor.", NULL, cmd);
+	    			// exit(EXIT_FAILURE); // regelen
+    			}		
+				close(*fd_array[0]);
+			}
 		}
-		if (cmd->pipe_left == 1)
-		{
-			close(fd[0]); 
-			if (dup2(cmd->fd_out, fd[1]) < 0)
-				return (-1);
-        	// write(fd[1], cmd->args->content, ft_strlen(cmd->args->content)+1); 
-			close(fd[1]);
-		}
-		cmd = cmd->next;
-        /* Child process closes up input side of pipe */
-		
+		fd_array++;
+		cmd = cmd->next;	
     }
-    else   //PARENT
-    {
-
+    // else   //PARENT
+    // {
         /* Parent process closes up output side of pipe */
-        close(fd[1]);
-    }
+        close(fd[0]);
+		close(fd[1]);
+    // }
+	
+
+
 	return (process);
 }
 
