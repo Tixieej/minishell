@@ -6,7 +6,7 @@
 /*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 14:20:04 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/16 15:51:35 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/16 15:59:12 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,6 @@ static int	*ft_create_fd_array(t_command *cmd, int *fd_array)
 		}
 		count++;
 	}
-	// while (fd_array[i])
-	// {
-	// 	printf("%d\n", fd_array[i]);
-	// 	i++;
-	// }
 	return(fd_array);
 }
 

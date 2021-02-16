@@ -6,16 +6,11 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/16 15:54:34 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/16 16:00:59 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void		add_semicolon(t_list **cur_lst, t_command **cur_struct)
-{
-	ft_struct_push_back(&(*cur_struct), (char *)(*cur_lst)->content);
-}
 
 static void		add_pipe(t_list **cur_lst, t_command **cur_struct)
 {
@@ -63,10 +58,10 @@ void			parser(t_list **list, char **env, t_command *command)
 		if (*cur_lst->content == ';')
 		{
 			check_type(env, *cur_struct);
-			// clear struct
+			command = ft_clear_linked_struct(command);
+			cur_struct = &command;
 			cur_lst = cur_lst->next;
-			add_semicolon(&cur_lst, cur_struct);
-			cur_struct = &(*cur_struct)->next;
+			ft_struct_push_back(&command, (char *)cur_lst->content);
 		}
 		else if (*cur_lst->content == '|')
 		{
@@ -81,7 +76,7 @@ void			parser(t_list **list, char **env, t_command *command)
 		cur_lst = cur_lst->next;
 	}
 	cur_lst = *list; // weg?
-	// print_cur_struct(command); // weg !!
+	print_cur_struct(command); // weg !!
 	if (pipe_check > 0)
 		cur_struct = &command;
 	check_type(env, *cur_struct);
