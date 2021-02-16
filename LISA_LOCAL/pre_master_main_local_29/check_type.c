@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 17:53:20 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/15 15:53:26 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/16 11:34:18 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,13 @@
 void	check_type(char **env, t_command *command)
 {
 	t_command	*cur_struct;
-	int			process;
+	pid_t		process;
 
 	cur_struct = command;
 	process = -1;
 	redirection(cur_struct);
+	// printf("right %d\n", command->pipe_right);
+	// printf("left %d\n", command->pipe_left);
 	if (command->pipe_right == 1 || command->pipe_left == 1)
 		process = pipes(cur_struct);
 	if (ft_strncmp((const char *)cur_struct->program, "echo", 4) == 0)
