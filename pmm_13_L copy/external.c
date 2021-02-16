@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/15 16:44:12 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/16 13:47:30 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,21 @@ static void		ft_free(char **array)
 }
 
 void			ft_exec(char *path, t_command cmd, char **env, pid_t process)
-{// je moet alleen forken als je nog niet eerder bent geforked, dus check of je geen child process bent.
-	//pid_t	process;
+{
 	char	**args;
 	t_list	*arglist;
-
+	t_list	*new_elem;
+	
 	arglist = cmd.args;
+	new_elem = ft_create_elem(path);
+	if (!new_elem) //check of malloc gelukt is
+		error_handler("malloc failed", NULL, &cmd);
 	ft_lstadd_front(&arglist, ft_create_elem(path));
-	//in create_elem wordt gemalloct dus we moeten nog checken of dat gelukt is.
-	//dat kunnen we toevoegen in create_elem zelf, of hieronder..
 	args = list_to_array(&arglist);
-	if (process != 0)
+	printf("\tthe process id is now [%d]\n", process);
+	if (process > 0)
+		printf("\tparent processsss woeps\n");
+	if (process == -1)//wil je dat parent hier komt? nee
 	{
 		printf(" ft_exec: forken hieronder!\n");
 		process = fork();
@@ -44,12 +48,17 @@ void			ft_exec(char *path, t_command cmd, char **env, pid_t process)
 	if (process == 0)
 	{
 		if(execve(path, args, env) == -1)
+		{
 			ft_free(args);// moet ik path freeeen?
+			free(new_elem);
+			exit(1);
+		}
 	}
 	else
 	{
 		wait(NULL);
 		ft_free(args);
+		free(new_elem);
 	}
 }
 

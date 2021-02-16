@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 17:53:20 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/15 15:46:36 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/16 13:43:15 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,16 @@
 void	check_type(char **env, t_command *command, t_fds *backups)
 {
 	t_command	*cur_struct;
-	int			process;
+	pid_t		process;
 	
 
 	cur_struct = command;
 	redirection(cur_struct);
 	process = -1;
-	if (command->pipe_right == 1 || command->pipe_left == 1)
+	if (cur_struct->pipe_right == 1 || cur_struct->pipe_left == 1)
 		process = pipes(cur_struct, backups);
 	//printf("\tbackups: [%d, %d]\n", backups.stin, backups.stout);
-	if (ft_strncmp((const char *)cur_struct->program, "echo", 4) == 0)
+	else if (ft_strncmp((const char *)cur_struct->program, "echo", 4) == 0)
 		echo(command);
 	else if (ft_strncmp((const char *)cur_struct->program, "cd", 2) == 0)
 		cd(command, env, NULL);
@@ -53,8 +53,5 @@ void	check_type(char **env, t_command *command, t_fds *backups)
 	else if (ft_strncmp((const char *)cur_struct->program, "exit", 4) == 0)
 		exit_func(command);
 	else
-	{
-		// dup_func(command);
 		external(command, env, process);
-	}
 }
