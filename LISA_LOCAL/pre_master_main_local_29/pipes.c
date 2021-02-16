@@ -6,7 +6,7 @@
 /*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 14:20:04 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/16 15:23:10 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/16 15:51:35 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,27 +48,67 @@ static int	*ft_create_fd_array(t_command *cmd, int *fd_array)
 	{
 		if (cur_struct->pipe_right == 1)
 			times++;
+		cur_struct = cur_struct->next;
 	}
 	cur_struct = cmd;
 	fd_array = malloc(sizeof(int) * times * 2);
 	while (count < times)
 	{
-		if (pipe((fd_array) + count * 2) < 0)
+		if (pipe(&fd_array[(count * 2)]) < 0)
 		{
 			error_handler("pipe failed", NULL, cmd);
 			// free(pipe)
 		}
 		count++;
 	}
+	// while (fd_array[i])
+	// {
+	// 	printf("%d\n", fd_array[i]);
+	// 	i++;
+	// }
 	return(fd_array);
 }
+
+
+// static void	ft_create_fd_array(t_command *cmd, int **fd_array)
+// {
+// 	t_command	*cur_struct;
+// 	int			times;
+// 	int			count;
+
+// 	cur_struct = cmd;
+// 	times = 0;
+// 	count = 0;
+// 	while (cur_struct)
+// 	{
+// 		if (cur_struct->pipe_right == 1)
+// 			times++;
+// 		cur_struct = cur_struct->next;
+// 	}
+// 	cur_struct = cmd;
+// 	*fd_array = malloc(sizeof(int) * times * 2);
+// 	while (count < times)
+// 	{
+// 		if (pipe((*fd_array) + count * 2) < 0)
+// 		{
+// 			error_handler("pipe failed", NULL, cmd);
+// 			return;
+// 			// free((*fd_array));
+// 			// return (1);
+// 		}
+// 		count++;
+// 	}
+// 	// return (0);
+// 	return;
+// }
+
 
 // array = [0][1][0][1][0][1]
 // array2 = [0][1]
 
 pid_t	pipes(t_command *cmd)
 {
-	// print_cur_struct(cmd); // weg !!
+	print_cur_struct(cmd); // weg !!
 	// printf("PIPES");
 	// return (-1);
     // int     fd[2];
@@ -80,18 +120,18 @@ pid_t	pipes(t_command *cmd)
 	i = 0;
 	process = -1;
 	count = 0;
-	process = 0;
 	(void)cmd;
 	fd_array = NULL;
 	// printf("HALLO");
 	fd_array = ft_create_fd_array(cmd, fd_array);
-	// printf("%s\n", &fd_array);
-
-	// while (fd_array[i])
-	// {
-	// 	printf("%d\n", fd_array[i]);
-	// 	i++;
-	// }
+	// ft_create_fd_array(cmd, &(*fd_array));
+	// printf("%d\n", &fd_array);
+	while (fd_array[i])
+	{
+		printf("%d\n", fd_array[i]);
+		printf("i: %d\n", i);
+		i++;
+	}
 	//fd[0] = read
 	//fd[1] = write
 	// if (pipe(cmd->fd_pipe) == -1)
