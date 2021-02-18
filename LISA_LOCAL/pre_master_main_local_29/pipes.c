@@ -6,7 +6,7 @@
 /*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 14:20:04 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/18 14:47:33 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/18 15:15:44 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,10 @@ pid_t	pipes(char **env, t_command *cmd)
 		cmd = cmd->next;	
     }
 	 /* Parent process closes up output side of pipe */
-	close(fd_array[0]);
-	close(fd_array[1]);
+	close(fd_array[count]);
+	close(fd_array[count + 1]);
+	// close(fd_array[0]);
+	// close(fd_array[1]);
 	wait(NULL);
 	return (process);
 }

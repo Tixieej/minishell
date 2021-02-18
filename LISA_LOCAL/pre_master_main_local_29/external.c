@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/18 14:28:40 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/18 15:20:20 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,23 @@ void			ft_exec(char *path, t_command cmd, char **env, pid_t process)
 	ft_lstadd_front(&arglist, new_elem);
 	args = list_to_array(&arglist);
 	printf("\tthe process id is now [%d]\n", process);
-	if (process > 0)
-		printf("\tparent processsss woeps\n");
-	if (process == -1)//wil je dat parent hier komt? nee
-	{
-		printf(" ft_exec: forken hieronder!\n");
+	if (process > 0) ////later weg
+		printf("\tparent processsss woeps\n"); ////
+	if (process == -1)
 		process = fork();
-	}
 	if (process == 0)
 	{
+		int i = 0;
+		while (args[i])
+		{
+			printf("ARGUMENTS: %s\n", args[i]);
+			i++;
+		}
 		if (execve(path, args, env) == -1)
 		{
 			ft_free(args);// moet ik path freeeen?
 			free(new_elem);
-			exit(1);
+			// error_handler("argument", NULL, cmd); <- invullen
 		}
 	}
 	else
@@ -95,13 +98,13 @@ static void		attach_path(t_command cmd, char **env, pid_t process)
 		//cmd.args[0] = path;
 		if (stat(path, &buffer) == 0)
 		{
-			ft_exec(path, cmd, env, process);
 			ft_free(paths);
+			ft_exec(path, cmd, env, process);
 			return ;
 		}
 		i++;
 	}
-	if (stat(path, &buffer) != 0)
+	if (stat(path, &buffer) != 0) //weg?
 		printf("command not found: %s\n", cmd.program);
 	ft_free(paths);
 }
