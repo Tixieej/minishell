@@ -6,7 +6,7 @@
 /*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 14:20:04 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/18 12:41:56 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/18 14:47:33 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,13 @@ static int	*ft_create_fd_array(t_command *cmd, int *fd_array)
 
 pid_t	pipes(char **env, t_command *cmd)
 {
+	
 	int		*fd_array;
 	pid_t   process;
 	int count; //
 
 	count = 0; //
-	process = -1;
+	process = 1;
 	(void)cmd;
 	fd_array = NULL;
 	fd_array = ft_create_fd_array(cmd, fd_array);
@@ -90,17 +91,29 @@ pid_t	pipes(char **env, t_command *cmd)
 	// [0][1] [0][1]
 	while (cmd)
 	{
-		if ((process = fork()) == -1) // check of fork lukt
+		process = fork();
+		if (process == -1) // check of fork lukt
     	{
 			perror("fork");
 			error_handler("fork failed", NULL, cmd);
     		exit(1);
     	}
-		printf("%d", process);
+		printf("process %d\n", process);
+		
 		if (process == 0)  //CHILD
     	{
-			if (cmd->pipe_right == 1)
+			if (cmd->pipe_right == 1 && cmd->pipe_left == 1)
 			{
+				printf("pipe_left & pipe_right\n");
+				if (dup2(fd_array[count], STDIN_FILENO) < 0 || dup2(fd_array[count + 1], STDOUT_FILENO) < 0) //if (dup2(fd_oldin, cmd->fd_in) < 0)
+    			{
+	    			error_handler("Unable to duplicate file descriptor.", NULL, cmd);
+	    			// exit(EXIT_FAILURE); // regelen
+				}
+			}
+			else if (cmd->pipe_right == 1)
+			{
+				printf("pipe_right\n");
 				close(fd_array[count]);  // Close writing end of first pipe
 				if (dup2(fd_array[count + 1], STDOUT_FILENO) < 0) //if (dup2(fd_oldin, cmd->fd_in) < 0)
     			{
@@ -111,6 +124,7 @@ pid_t	pipes(char **env, t_command *cmd)
 			}
 			else if (cmd->pipe_left == 1)
 			{
+				printf("pipe_left\n");
 				close(fd_array[count + 1]);  // Close writing end of first pipe
 				if (dup2(fd_array[count], STDIN_FILENO) < 0) //if (dup2(fd_oldin, cmd->fd_in) < 0)
     			{

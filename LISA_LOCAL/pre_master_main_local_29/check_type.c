@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 17:53:20 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/18 12:50:18 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/18 14:33:32 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void 	check_type_two(char **env, t_command *command, pid_t process)
 	else if (ft_strncmp((const char *)cur_struct->program, "cd", 2) == 0)
 		cd(command, env, NULL);
 	else if (ft_strncmp((const char *)cur_struct->program, "pwd", 3) == 0)
-		pwd(command->fd_out);
+		pwd(command);
 	else if (ft_strncmp((const char *)cur_struct->program, "export", 6) == 0)
 		printf("export type\n");
 	else if (ft_strncmp((const char *)cur_struct->program, "unset", 5) == 0)
@@ -60,6 +60,7 @@ void	check_type(char **env, t_command *command)
 
 	cur_struct = command;
 	process = -1;
+	print_cur_struct(command); // weg !!
 	redirection(cur_struct);
 	if (command->pipe_right == 1 || command->pipe_left == 1)
 		process = pipes(env, cur_struct);

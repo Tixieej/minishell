@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/18 12:51:44 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/18 14:28:40 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void			ft_exec(char *path, t_command cmd, char **env, pid_t process)
 	}
 	if (process == 0)
 	{
-		if(execve(path, args, env) == -1)
+		if (execve(path, args, env) == -1)
 		{
 			ft_free(args);// moet ik path freeeen?
 			free(new_elem);
@@ -108,11 +108,11 @@ static void		attach_path(t_command cmd, char **env, pid_t process)
 
 void			external(t_command *cmd, char **env, pid_t process)
 {
-	int		stdout_fd;
+	// int		stdout_fd;
 	//int		stdin_fd;
 
 	/**/ //stukje lisa als je de dup aan zou willen houden /**/
-	stdout_fd = cmd->fd_out;     
+	// stdout_fd = cmd->fd_out;     
 	//(void)out_fd;
 
 	/**/ //stukje RIXT als je terug wilt naar de oude versie/**/

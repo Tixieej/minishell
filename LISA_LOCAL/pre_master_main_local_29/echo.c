@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/21 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/16 10:40:33 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/18 14:23:05 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ void		echo(t_command *command)
 			s = ft_strdup("\n");
 	if (ft_strlen(s) != 0 && n_check == 0)
 		s[ft_strlen(s) - 1] = '\n';
-	if (write(command->fd_out, s, ft_strlen(s)) < 0)
+	// if (write(command->fd_out, s, ft_strlen(s)) < 0)
+	// 	printf("error\n");
+	if (write(STDOUT_FILENO, s, ft_strlen(s)) < 0)
 		printf("error\n");
 	free(s);
 }
