@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 17:53:20 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/18 15:21:56 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/18 15:27:31 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void 	check_type_two(char **env, t_command *command, pid_t process)
 		exit_func(command);
 	else
 	{
-		printf("external!");
 		// dup_func(command);
 		external(command, env, process);
 	}
