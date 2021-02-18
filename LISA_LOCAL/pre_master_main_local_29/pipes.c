@@ -6,7 +6,7 @@
 /*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 14:20:04 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/16 15:59:12 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/18 12:07:27 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	*ft_create_fd_array(t_command *cmd, int *fd_array)
 	int			count;
 
 	cur_struct = cmd;
-	times = 0;
+	times = 1;
 	count = 0;
 	while (cur_struct)
 	{
@@ -51,10 +51,12 @@ static int	*ft_create_fd_array(t_command *cmd, int *fd_array)
 		cur_struct = cur_struct->next;
 	}
 	cur_struct = cmd;
-	fd_array = malloc(sizeof(int) * times * 2);
+	fd_array = malloc(sizeof(int) * (times * 2));
+	if (!fd_array)
+		error_handler("malloc failed in pipes", NULL, cmd);
 	while (count < times)
 	{
-		if (pipe(&fd_array[(count * 2)]) < 0)
+		if (pipe(fd_array + (count * 2)) < 0)
 		{
 			error_handler("pipe failed", NULL, cmd);
 			// free(pipe)
@@ -64,77 +66,80 @@ static int	*ft_create_fd_array(t_command *cmd, int *fd_array)
 	return(fd_array);
 }
 
-
-// static void	ft_create_fd_array(t_command *cmd, int **fd_array)
-// {
-// 	t_command	*cur_struct;
-// 	int			times;
-// 	int			count;
-
-// 	cur_struct = cmd;
-// 	times = 0;
-// 	count = 0;
-// 	while (cur_struct)
-// 	{
-// 		if (cur_struct->pipe_right == 1)
-// 			times++;
-// 		cur_struct = cur_struct->next;
-// 	}
-// 	cur_struct = cmd;
-// 	*fd_array = malloc(sizeof(int) * times * 2);
-// 	while (count < times)
-// 	{
-// 		if (pipe((*fd_array) + count * 2) < 0)
-// 		{
-// 			error_handler("pipe failed", NULL, cmd);
-// 			return;
-// 			// free((*fd_array));
-// 			// return (1);
-// 		}
-// 		count++;
-// 	}
-// 	// return (0);
-// 	return;
-// }
-
-
-// array = [0][1][0][1][0][1]
-// array2 = [0][1]
-
-pid_t	pipes(t_command *cmd)
+pid_t	pipes(char **env, t_command *cmd)
 {
-	print_cur_struct(cmd); // weg !!
-	// printf("PIPES");
-	// return (-1);
-    // int     fd[2];
 	int		*fd_array;
-	int		count;
 	pid_t   process;
-	int i;
+	int count; //
 
-	i = 0;
+	count = 0; //
 	process = -1;
-	count = 0;
 	(void)cmd;
 	fd_array = NULL;
-	// printf("HALLO");
 	fd_array = ft_create_fd_array(cmd, fd_array);
-	// ft_create_fd_array(cmd, &(*fd_array));
-	// printf("%d\n", &fd_array);
-	while (fd_array[i])
-	{
-		printf("%d\n", fd_array[i]);
-		printf("i: %d\n", i);
-		i++;
-	}
+	// while (fd_array[count]) //
+	// {
+	// 	printf("FD 0: [%d]\n", fd_array[count]);
+	// 	printf("FD 1: [%d]\n", fd_array[count + 1]);
+	// 	count += 2;
+	// }
 	//fd[0] = read
 	//fd[1] = write
 	// if (pipe(cmd->fd_pipe) == -1)
 	// 		error_handler("pipe failed", NULL, cmd);
+	while (cmd)
+	{
+		if ((process = fork()) == -1) // check of fork lukt
+    	{
+			perror("fork");
+			error_handler("fork failed", NULL, cmd);
+    		exit(1);
+    	}
+		printf("%d", process);
+		if (process == 0)  //CHILD
+    	{
+			if (cmd->pipe_right == 1)
+			{
+				printf("pipe right\n");
+				printf("FD 0: [%d]\n", fd_array[count]);
+				printf("FD 1: [%d]\n", fd_array[count + 1]);
+				close(fd_array[count]);  // Close writing end of first pipe
+				if (dup2(fd_array[count + 1], STDOUT_FILENO) < 0) //if (dup2(fd_oldin, cmd->fd_in) < 0)
+    			{
+	    			error_handler("Unable to duplicate file descriptor.", NULL, cmd);
+	    			// exit(EXIT_FAILURE); // regelen
+				}
+				close(fd_array[count + 1]);
+			}
+			if (cmd->pipe_left == 1)
+			{
+				printf("pipe left\n");
+				// printf("FD 0: [%d]\n", fd_array[count]);
+				// printf("FD 1: [%d]\n", fd_array[count + 1]);
+				close(fd_array[count + 1]);  // Close writing end of first pipe
+				if (dup2(fd_array[count], STDIN_FILENO) < 0) //if (dup2(fd_oldin, cmd->fd_in) < 0)
+    			{
+	    			error_handler("Unable to duplicate file descriptor.", NULL, cmd);
+	    			// exit(EXIT_FAILURE); // regelen
+    			}	
+				close(fd_array[count]);
+			}
+			// cmd->fd_in = fd_array[count];
+			// cmd->fd_out = fd_array[count + 1];
+			check_type_two(env, cmd, process);
+		}
+		count += 2;
+		cmd = cmd->next;	
+    }
+	 /* Parent process closes up output side of pipe */
+	close(fd_array[0]);
+	close(fd_array[1]);
+	wait(NULL);
+	return (-1);
+}
+
 	// while (cmd)
 	// {
-    // 	if (pipe(fd_array) == -1)
-	// 		error_handler("pipe failed", NULL, cmd);
 	// 	if ((process = fork()) == -1) // check of fork lukt
     // 	{
 	// 		perror("fork");
@@ -179,10 +184,6 @@ pid_t	pipes(t_command *cmd)
 	// 	wait(NULL);
         
     // }
-	return (process);
-}
-
-
 
 // pid_t	pipes(t_command *cmd)
 // {

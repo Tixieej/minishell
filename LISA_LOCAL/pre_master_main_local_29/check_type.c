@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 17:53:20 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/16 15:31:17 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/18 10:42:24 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,11 @@
 // }
 
 
-void	check_type(char **env, t_command *command)
+void 	check_type_two(char **env, t_command *command, pid_t process)
 {
 	t_command	*cur_struct;
-	pid_t		process;
 
 	cur_struct = command;
-	process = -1;
-	redirection(cur_struct);
-	// printf("right %d\n", command->pipe_right);
-	// printf("left %d\n", command->pipe_left);
-	if (command->pipe_right == 1 || command->pipe_left == 1)
-		process = pipes(cur_struct);
 	if (ft_strncmp((const char *)cur_struct->program, "echo", 4) == 0)
 		echo(command);
 	else if (ft_strncmp((const char *)cur_struct->program, "cd", 2) == 0)
@@ -58,4 +51,17 @@ void	check_type(char **env, t_command *command)
 		// dup_func(command);
 		external(command, env, process);
 	}
+}
+
+void	check_type(char **env, t_command *command)
+{
+	t_command	*cur_struct;
+	pid_t		process;
+
+	cur_struct = command;
+	process = -1;
+	redirection(cur_struct);
+	if (command->pipe_right == 1 || command->pipe_left == 1)
+		process = pipes(env, cur_struct);
+	check_type_two(env, command, process);
 }

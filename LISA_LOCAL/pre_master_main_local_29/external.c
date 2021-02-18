@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/09 10:07:56 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/18 11:39:01 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,64 +25,40 @@ static void		ft_free(char **array)
 	free(array);
 }
 
-char			**list_to_array(t_list **list)
-{
-	int		count;
-	char	**array;
-	int		i;
-	t_list	*current;
-
-	if (!(*list) || !((*list)->content))// klopt dit?
-	{
-		array = (char **)malloc(sizeof(char *));
-		array[0] = NULL;
-		return (array);
-	}
-	current = *list;
-	count = 0;
-	while (current)// misschien met list lopen maar dan met de kopie begin;
-	{
-		current = current->next; //
-		count++;
-	}
-	array = (char **)malloc(sizeof(char *) * (count + 1)); //wordt gefreed in ft_exec
-	i = 0;
-	current = *list;
-	while (i < count)
-	{
-		array[i] = (char *)current->content;
-		current = current->next;
-		i++;
-	}
-	array[i] = NULL;
-	return (array);
-}
-
 void			ft_exec(char *path, t_command cmd, char **env, pid_t process)
-{// je moet alleen forken als je nog niet eerder bent geforked, dus check of je geen child process bent.
-	//pid_t	process;
+{
 	char	**args;
 	t_list	*arglist;
-
+	t_list	*new_elem;
+	
 	arglist = cmd.args;
-	ft_lstadd_front(&arglist, ft_create_elem(path));
-	//in create_elem wordt gemalloct dus we moeten nog checken of dat gelukt is.
-	//dat kunnen we toevoegen in create_elem zelf, of hieronder..
+	new_elem = ft_create_elem(path);
+	if (!new_elem) //check of malloc gelukt is
+		error_handler("malloc failed", NULL, &cmd);
+	ft_lstadd_front(&arglist, new_elem);
 	args = list_to_array(&arglist);
-	if (process != 0)
+	printf("\tthe process id is now [%d]\n", process);
+	if (process > 0)
+		printf("\tparent processsss woeps\n");
+	if (process == -1)//wil je dat parent hier komt? nee
 	{
 		printf(" ft_exec: forken hieronder!\n");
 		process = fork();
 	}
 	if (process == 0)
 	{
-		execve(path, args, env);
-		ft_free(args);
+		if(execve(path, args, env) == -1)
+		{
+			ft_free(args);// moet ik path freeeen?
+			free(new_elem);
+			exit(1);
+		}
 	}
 	else
 	{
 		wait(NULL);
 		ft_free(args);
+		free(new_elem);
 	}
 }
 
@@ -120,7 +96,8 @@ static void		attach_path(t_command cmd, char **env, pid_t process)
 		if (stat(path, &buffer) == 0)
 		{
 			ft_exec(path, cmd, env, process);
-			break ;
+			ft_free(paths);
+			return ;
 		}
 		i++;
 	}
@@ -129,53 +106,17 @@ static void		attach_path(t_command cmd, char **env, pid_t process)
 	ft_free(paths);
 }
 
-static int		out_redirect(t_command *cmd)
-{
-	int		stdout_fd;
-
-	stdout_fd = dup(STDOUT_FILENO);
-	if (cmd->out_red)
-	{
-		if (stdout_fd < 0)
-			printf("bouw hier error in!\n");
-		if(dup2(STDOUT_FILENO, cmd->fd_out) < 0)
-		{
-			printf("Unable to duplicate file descriptor.");
-			exit(EXIT_FAILURE);
-		}
-	}
-	return (stdout_fd);
-}
-
-// static int		in_redirect(t_command *cmd, int in_fd)
-// {
-// 	int		stdin_fd;
-	
-// 	stdin_fd = dup(STDIN_FILENO);
-// 	if (cmd->in_red)
-// 	{
-// 		if (stdin_fd < 0)
-// 			printf("bouw hier error in!\n");
-// 		if (dup2(in_fd, STDIN_FILENO) < 0)
-// 		{
-// 			printf("Unable to duplicate file descriptor.");
-// 			exit(EXIT_FAILURE);
-// 		}
-// 	}
-// 	return (stdin_fd);
-// }
-
 void			external(t_command *cmd, char **env, pid_t process)
 {
 	int		stdout_fd;
 	//int		stdin_fd;
 
 	/**/ //stukje lisa als je de dup aan zou willen houden /**/
-	//stdout_fd = cmd->fd_out;     
+	stdout_fd = cmd->fd_out;     
 	//(void)out_fd;
 
 	/**/ //stukje RIXT als je terug wilt naar de oude versie/**/
-	stdout_fd = out_redirect(cmd); // deze had jij ungecomment;
+	// stdout_fd = out_redirect(cmd); // deze had jij ungecomment;
 	//stdin_fd = in_redirect(cmd, cmd->fd_in);
 	if (ft_strchr(cmd->program, '/') != 0)
 	{
@@ -185,11 +126,11 @@ void			external(t_command *cmd, char **env, pid_t process)
 	{
 		attach_path(*cmd, env, process);
 	}
-	if (dup2(STDOUT_FILENO, stdout_fd) < 0)// dit alleen uitvoeren als er redirections zijn?
-	{//dit zet stdout backup weer terug
-		printf("Unable to duplicate file descriptor.");
+	//if (dup2(STDOUT_FILENO, stdout_fd) < 0)// dit alleen uitvoeren als er redirections zijn?
+	//{//dit zet stdout backup weer terug
+	//	printf("Unable to duplicate file descriptor.");
 		//exit(EXIT_FAILURE); exiten stopt heel minishell, dus hier komt iets anders
-	}
+	//}
 	// if (dup2( stdin_fd, STDIN_FILENO) < 0)
 	// {
 	// 	printf("Unable to duplicate file descriptor.");

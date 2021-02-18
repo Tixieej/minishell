@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/16 10:11:40 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/18 12:09:44 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,10 @@ void					redirection(t_command *command);
 ** exec
 */
 void					check_type(char **env, t_command *cmd);
-pid_t					pipes(t_command *cmd);
+void					check_type_two(char **env, t_command *command, pid_t process); //andere naam
+pid_t					pipes(char **env, t_command *cmd);
 // void					external(t_command *cmd, char **env, int out_fd, pid_t process); //oud mag wef straks?
-void					external(t_command *cmd, char **env, int process); //klopt het dat de proces geen pid_t is?
+void					external(t_command *cmd, char **env, pid_t process); //klopt het dat de proces geen pid_t is?
 char					*ft_append_path(char *str);
 void					ft_exec(char *path, t_command command, char **env, pid_t process);
 
