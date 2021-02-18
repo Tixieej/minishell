@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/18 11:39:01 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/18 12:51:44 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void			ft_exec(char *path, t_command cmd, char **env, pid_t process)
 	else
 	{
 		wait(NULL);
-		ft_free(args);
+		// ft_free(args); // wat dan?
 		free(new_elem);
 	}
 }

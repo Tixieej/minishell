@@ -6,7 +6,7 @@
 /*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 14:20:04 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/18 12:07:27 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/18 12:41:56 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ pid_t	pipes(char **env, t_command *cmd)
 	//fd[1] = write
 	// if (pipe(cmd->fd_pipe) == -1)
 	// 		error_handler("pipe failed", NULL, cmd);
+	// [0][1] [0][1]
 	while (cmd)
 	{
 		if ((process = fork()) == -1) // check of fork lukt
@@ -100,9 +101,6 @@ pid_t	pipes(char **env, t_command *cmd)
     	{
 			if (cmd->pipe_right == 1)
 			{
-				printf("pipe right\n");
-				printf("FD 0: [%d]\n", fd_array[count]);
-				printf("FD 1: [%d]\n", fd_array[count + 1]);
 				close(fd_array[count]);  // Close writing end of first pipe
 				if (dup2(fd_array[count + 1], STDOUT_FILENO) < 0) //if (dup2(fd_oldin, cmd->fd_in) < 0)
     			{
@@ -111,11 +109,8 @@ pid_t	pipes(char **env, t_command *cmd)
 				}
 				close(fd_array[count + 1]);
 			}
-			if (cmd->pipe_left == 1)
+			else if (cmd->pipe_left == 1)
 			{
-				printf("pipe left\n");
-				// printf("FD 0: [%d]\n", fd_array[count]);
-				// printf("FD 1: [%d]\n", fd_array[count + 1]);
 				close(fd_array[count + 1]);  // Close writing end of first pipe
 				if (dup2(fd_array[count], STDIN_FILENO) < 0) //if (dup2(fd_oldin, cmd->fd_in) < 0)
     			{
@@ -124,8 +119,6 @@ pid_t	pipes(char **env, t_command *cmd)
     			}	
 				close(fd_array[count]);
 			}
-			// cmd->fd_in = fd_array[count];
-			// cmd->fd_out = fd_array[count + 1];
 			check_type_two(env, cmd, process);
 		}
 		count += 2;
@@ -135,7 +128,7 @@ pid_t	pipes(char **env, t_command *cmd)
 	close(fd_array[0]);
 	close(fd_array[1]);
 	wait(NULL);
-	return (-1);
+	return (process);
 }
 
 	// while (cmd)
