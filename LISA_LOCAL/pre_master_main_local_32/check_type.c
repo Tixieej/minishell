@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 17:53:20 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/18 15:27:31 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/22 15:03:38 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	check_type(char **env, t_command *command)
 
 	cur_struct = command;
 	process = -1;
-	print_cur_struct(command); // weg !!
+	// print_cur_struct(command); // weg !!
 	redirection(cur_struct);
 	if (command->pipe_right == 1 || command->pipe_left == 1)
 		process = pipes(env, cur_struct);
