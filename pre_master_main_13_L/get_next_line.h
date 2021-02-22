@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/03 11:43:19 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/11 09:27:21 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/22 14:49:01 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef	struct		s_data
 	char			buf[BUFFER_SIZE + 1];
 	ssize_t			bytes_read;
 	int				i;
-	int				line_start;
+	ssize_t			line_start;
 	char			*temp;
 }					t_data;
 

@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/11 15:43:32 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/22 09:12:24 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,6 @@ void					exit_func(t_command *command);
 /*
 ** signals
 */
-void					handle_sigint(int sig);
-void					handle_sigkill(int sig);
-void					signal_handler(t_command *command);
+void					signal_handler(int sig);
 
 #endif

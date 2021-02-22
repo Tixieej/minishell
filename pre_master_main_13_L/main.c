@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/11 11:13:39 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/22 11:37:51 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,19 @@ static void			start_program(char **env)
 	// begin = &list;
 	result = 1;
 	line = NULL;
+	//signal_handler(command);
 	while (result == 1)
 	{
-		signal_handler(command);
 		prompt();
+		signal(SIGQUIT, signal_handler);
+		signal(SIGINT, signal_handler);
 		result = get_next_line(0, &line);
+		printf("\tresult = [%d]\n", result);
+		if (result == 0)
+		{
+			exit_func(command);
+		//	result = get_next_line(0, &line);
+		}
 		if (result == -1)
 		 	error_handler("get next line failed", list, NULL);
 		if (line[0] == '\0')
