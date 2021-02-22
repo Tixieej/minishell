@@ -6,16 +6,11 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/04 17:20:58 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/22 15:40:34 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/22 19:49:09 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void handle_sigkill(int sig) // ctrl + d; niet quitten als je iets hebt geschreven, wel quitten als je niks hebt geschreven
-{
-	printf("exit %d\n", sig);
-}
 
 void	signal_handler(int sig)
 {

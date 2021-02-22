@@ -6,13 +6,13 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/03 11:42:44 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/22 16:22:46 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/22 19:35:47 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static int		ft_newline(t_data *data)
+static int	ft_newline(t_data *data)
 {
 	int		temp_len;
 	char	*str;
@@ -39,7 +39,7 @@ static int		ft_newline(t_data *data)
 	return (1);
 }
 
-static int		ft_make_struct(t_data **data)
+static int	ft_make_struct(t_data **data)
 {
 	*data = (t_data *)malloc(sizeof(t_data));
 	if (!(*data))
@@ -51,7 +51,7 @@ static int		ft_make_struct(t_data **data)
 	return (0);
 }
 
-static int		ft_read(t_data *data, int fd)
+static int	ft_read(t_data *data, int fd)
 {
 	if ((ssize_t)data->line_start == data->bytes_read)
 	{
@@ -79,7 +79,7 @@ static int		ft_read(t_data *data, int fd)
 	return (1);
 }
 
-static int		ft_scan_data(t_data *data, int fd)
+static int	ft_scan_data(t_data *data, int fd)
 {
 	if (ft_read(data, fd) != 1)
 		return (ft_read(data, fd));
@@ -96,7 +96,7 @@ static int		ft_scan_data(t_data *data, int fd)
 	return (ft_scan_data(data, fd));
 }
 
-int				get_next_line(int fd, char **line)
+int	get_next_line(int fd, char **line)
 {
 	int				return_value;
 	static t_data	*data[FD_SETSIZE];

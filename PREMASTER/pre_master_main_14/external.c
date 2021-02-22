@@ -6,13 +6,13 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/11 15:04:28 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/22 19:35:10 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void		ft_free(char **array)
+static void	ft_free(char **array)
 {
 	int i;
 
@@ -25,35 +25,41 @@ static void		ft_free(char **array)
 	free(array);
 }
 
-void			ft_exec(char *path, t_command cmd, char **env, pid_t process)
-{// je moet alleen forken als je nog niet eerder bent geforked, dus check of je geen child process bent.
-	//pid_t	process;
+void	ft_exec(char *path, t_command cmd, char **env, pid_t process)
+{
 	char	**args;
 	t_list	*arglist;
+	t_list	*new_elem;
 
 	arglist = cmd.args;
-	ft_lstadd_front(&arglist, ft_create_elem(path));
-	//in create_elem wordt gemalloct dus we moeten nog checken of dat gelukt is.
-	//dat kunnen we toevoegen in create_elem zelf, of hieronder..
+	new_elem = ft_create_elem(path);
+	if (!new_elem) // check malloc
+		error_handler("malloc failed", NULL, &cmd);
+	ft_lstadd_front(&arglist, new_elem);
 	args = list_to_array(&arglist);
-	if (process != 0)
+	if (process == -1)
 	{
 		printf(" ft_exec: forken hieronder!\n");
 		process = fork();
 	}
 	if (process == 0)
 	{
-		execve(path, args, env);
-		ft_free(args);
+		if (execve(path, args, env) == -1)
+		{
+			ft_free(args);
+			free(new_elem);
+			exit(1);
+		}
 	}
 	else
 	{
 		wait(NULL);
 		ft_free(args);
+		free(new_elem);
 	}
 }
 
-static void		with_path(t_command cmd, char **env, pid_t process)
+static void	with_path(t_command cmd, char **env, pid_t process)
 {
 	struct stat		buffer;
 	char			*path;
@@ -65,14 +71,14 @@ static void		with_path(t_command cmd, char **env, pid_t process)
 		printf("no such file or directory: %s\n", cmd.program);
 }
 
-static void		attach_path(t_command cmd, char **env, pid_t process)
+static void	attach_path(t_command cmd, char **env, pid_t process)
 {
 	char		**paths;
 	char		*path;
 	struct stat	buffer;
 	int			i;
 
-	paths = make_path_array(env);// check_env aanroepen? dan is het een string en geen array.
+	paths = make_path_array(env);
 	i = 0;
 	if (paths == NULL) // dit kan mooier. misschien naar de errorfunctie sluizen?
 	{
@@ -87,7 +93,8 @@ static void		attach_path(t_command cmd, char **env, pid_t process)
 		if (stat(path, &buffer) == 0)
 		{
 			ft_exec(path, cmd, env, process);
-			break ;
+			ft_free(paths);
+			return ;
 		}
 		i++;
 	}
@@ -96,11 +103,10 @@ static void		attach_path(t_command cmd, char **env, pid_t process)
 	ft_free(paths);
 }
 
-void			external(t_command *cmd, char **env, pid_t process)
+void	external(t_command *cmd, char **env, pid_t process)
 {
 	int		stdout_fd;
 	//int		stdin_fd;
-
 	/**/ //stukje lisa als je de dup aan zou willen houden /**/
 	//stdout_fd = cmd->fd_out;     
 	//(void)out_fd;
