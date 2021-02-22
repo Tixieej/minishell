@@ -6,7 +6,7 @@
 /*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 14:20:04 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/22 16:31:16 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/22 16:33:50 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ pid_t	pipes(char **env, t_command *cmd)
 			exit(0); //belangrijk voor non buildins aangezien er geen process wordt aangemaakt moet die wel gestops worden
 		}
 		if (process == -1)
-			printf("error");
+			printf("error"); //uitbreiden!
 		cur_cmd = cur_cmd->next;
 		count += 2;
 	}
