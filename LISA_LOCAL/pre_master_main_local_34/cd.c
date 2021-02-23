@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:12:48 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/23 11:19:44 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/23 14:17:12 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void        cd(t_command *command, char **env, char *path)
 	file = NULL;
 	path = getcwd(NULL, 0);
     if (path == NULL)
-        error_handler("pwd failure", NULL, NULL); //veranderen met geheugen;
+        error_handler("getcwd failure", NULL, command); //veranderen met geheugen?
 	if (command->args == NULL)
 	{
 		path = check_env(env, "HOME=");
@@ -82,22 +82,24 @@ void        cd(t_command *command, char **env, char *path)
 				else
 				{
 					free(file);
-					error_handler("file non-existing", NULL, NULL);
+					error_handler("file non-existing", NULL, command);
 				}	
 			}
+				if (path)
+		printf("path: %s", path);
+			free(file);
 			file = NULL;
 		}
-
-		if (command->args->content[len] == '.')
-		{
-			if (command->args->content[len + 1] == '.')
-			{
-				path = move_backwards(path);
-				start++;
-			}
-			if (command->args->content[len + 1] == '/')
-				command->args->content = ft_substr(command->args->content, 2, (ft_strlen(path) - 2));
-		}
+		// if (command->args->content[len] == '.')
+		// {
+		// 	if (command->args->content[len + 1] == '.')
+		// 	{
+		// 		path = move_backwards(path);
+		// 		start++;
+		// 	}
+		// 	if (command->args->content[len + 1] == '/')
+		// 		command->args->content = ft_substr(command->args->content, 2, (ft_strlen(path) - 2));
+		// }
 		len++;
 	}
 	// if (command->args->content[0] == '.' && command->args->content[1] == '.')
@@ -119,7 +121,8 @@ void        cd(t_command *command, char **env, char *path)
 	// }
 	// else 
 	// 	error_handler("file non-existing", NULL, NULL);
-
+	// if (path)
+	// 	printf("path: %s", path);
 	if (chdir(path) != 0)
 		error_handler("path non-existing", NULL, NULL);
 
