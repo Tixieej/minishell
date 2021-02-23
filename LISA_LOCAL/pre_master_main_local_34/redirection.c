@@ -6,15 +6,13 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:16:00 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/23 09:34:58 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/23 12:58:25 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//LET OP CLOSEN!!
-
-void    in_red(t_command *command)
+int    in_red(t_command *command)
 {
     t_command	**cur_struct;
 
@@ -28,13 +26,19 @@ void    in_red(t_command *command)
                 command->fd_in = open((const char *)(*cur_struct)->in_red->content, O_RDONLY, 0644);
         }
         if (command->fd_in < 0)
-            error_handler("open file failed\n", NULL, command); //checken
-            //hier moet hij eigenlijk error printen en terug naar begin
+        {
+            printf("minishell: %s: No such file or directory\n", (const char *)(*cur_struct)->in_red->content);
+            return (-1);
+        }
+            // error_handler("open file failed\n", NULL, command);
+        if ((*cur_struct)->in_red->next)
+            close((int)(*cur_struct)->in_red);
         (*cur_struct)->in_red = (*cur_struct)->in_red->next;
     }
+    return (0);
 }
 
-void    out_red(t_command *command)
+int    out_red(t_command *command)
 {
     t_command	**cur_struct;
 
@@ -45,7 +49,7 @@ void    out_red(t_command *command)
         {
             (*cur_struct)->out_red = (*cur_struct)->out_red->next;
             if ((*cur_struct)->out_red)
-                command->fd_out = open((const char *)(*cur_struct)->out_red->content, O_CREAT | O_RDWR | O_APPEND, 0644);
+                command->fd_out = open((const char *)(*cur_struct)->out_red->content,O_CREAT | O_RDWR | O_APPEND, 0644);
         }
         else if (!(ft_strncmp((const char *)(*cur_struct)->out_red->content, ">", 1)))
         {
@@ -54,19 +58,27 @@ void    out_red(t_command *command)
                 command->fd_out = open((const char *)(*cur_struct)->out_red->content, O_CREAT | O_RDWR | O_TRUNC, 0644);
         }
         if (command->fd_out < 0)
-            error_handler("open file failed\n", NULL, (*cur_struct));
+        {
+            printf("minishell: %s: No such file or directory\n", (const char *)(*cur_struct)->out_red->content);
+            return (-1);
+        }
+        if ((*cur_struct)->out_red->next)
+            close((int)(*cur_struct)->out_red);
         (*cur_struct)->out_red = (*cur_struct)->out_red->next;
     }
+    return (0);
 }
 
-
-void    redirection(t_command *command)
+int    redirection(t_command *command)
 {
     t_command	**cur_struct;
 
     cur_struct = &command;
     command->fd_in = 1; //klopt dit?
     command->fd_out = 1;
-    in_red(command);
-    out_red(command);
+    if (in_red(command) == -1)
+        return (-1);
+    if (out_red(command) == -1)
+        return (-1);
+    return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:12:48 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/11 14:44:32 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/23 11:19:44 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,10 @@ void        cd(t_command *command, char **env, char *path)
 	// }
 	// else 
 	// 	error_handler("file non-existing", NULL, NULL);
+
 	if (chdir(path) != 0)
 		error_handler("path non-existing", NULL, NULL);
+
 	// printf("path: %s", path);
 	// printf("PWD 1: %s\n", get_pointer_env(env, "PATH=")); 
 	// printf("PWD: %s\n", getcwd(NULL, 0));

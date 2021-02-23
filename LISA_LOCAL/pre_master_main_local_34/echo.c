@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/21 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/23 10:01:48 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/23 11:19:35 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ void		echo(t_command *command)
 	if (ft_strlen(s) != 0 && n_check == 0)
 		s[ft_strlen(s) - 1] = '\n';
     if (write(command->fd_out, s, ft_strlen(s)) < 0)
-        printf("error\n");
+        error_handler("write function failed", NULL, command);
 	free(s);
 }
