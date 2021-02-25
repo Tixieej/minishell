@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:12:48 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/23 14:17:12 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/25 11:13:46 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,52 +54,59 @@ void        cd(t_command *command, char **env, char *path)
 	start = 0;
 	file = NULL;
 	path = getcwd(NULL, 0);
+	printf("path1: %s\n", path);
     if (path == NULL)
         error_handler("getcwd failure", NULL, command); //veranderen met geheugen?
 	if (command->args == NULL)
 	{
 		path = check_env(env, "HOME=");
 		if (path == NULL)
-			error_handler("HOME= non-existing", NULL, NULL);
+			printf("minishell: HOME= non-existing\n");
 		if (chdir(path) != 0)
-			error_handler("path non-existing", NULL, NULL);
+			printf("minishell: %s: path non-existing\n", path);
 		return;
 	}
+	printf("content %s\n", command->args->content);
 	while (command->args->content[start + len] != '\0')
 	{
-		while (command->args->content[start + len] != '.' && command->args->content[start + len] != '/')
+		while (command->args->content[start + len] != '.' && command->args->content[start + len] != '/' && command->args->content[start + len] != '\0')
 			len++;
 		if (len > 0)
 		{
+			printf("content %s\n", command->args->content);
 			file = ft_substr(command->args->content, start, len);
+			printf("file %s\n", file);
 			{
 				if (stat(file, &buffer) == 0)
 				{
 					alter_env(&(*env), "PWD=", file);
 					path = ft_strjoin(path, "/");
 					path = ft_strjoin(path, file);
+					start += len;
+					len = 0;
+					// return;
 				}
 				else
 				{
+					printf("minishell: %s: Not a directory\n", file);
 					free(file);
-					error_handler("file non-existing", NULL, command);
+					return;
 				}	
 			}
-				if (path)
-		printf("path: %s", path);
 			free(file);
 			file = NULL;
 		}
-		// if (command->args->content[len] == '.')
-		// {
-		// 	if (command->args->content[len + 1] == '.')
-		// 	{
-		// 		path = move_backwards(path);
-		// 		start++;
-		// 	}
-		// 	if (command->args->content[len + 1] == '/')
-		// 		command->args->content = ft_substr(command->args->content, 2, (ft_strlen(path) - 2));
-		// }
+		if (command->args->content[len] == '.')
+		{
+			if (command->args->content[len + 1] == '.')
+			{
+				path = move_backwards(path);
+				start++;
+			}
+			if (command->args->content[len + 1] == '/')
+				command->args->content = ft_substr(command->args->content, 2, (ft_strlen(path) - 2));
+		}
+		// printf("content: %s", command->args->content);
 		len++;
 	}
 	// if (command->args->content[0] == '.' && command->args->content[1] == '.')
@@ -124,7 +131,12 @@ void        cd(t_command *command, char **env, char *path)
 	// if (path)
 	// 	printf("path: %s", path);
 	if (chdir(path) != 0)
-		error_handler("path non-existing", NULL, NULL);
+	{
+		printf("minishell: %s: Not a directory\n", path);
+		return;
+	}
+		
+		// error_handler("path non-existing", NULL, NULL);
 
 	// printf("path: %s", path);
 	// printf("PWD 1: %s\n", get_pointer_env(env, "PATH=")); 
