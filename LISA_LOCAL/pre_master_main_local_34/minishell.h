@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/23 12:56:40 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/02/26 13:31:21 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char					*get_pointer_env(char **env, char *var);
 /*
 ** builtins
 */
-void					cd(t_command *command, char **env, char *path);
+void					cd(t_command *command, char **env, char *path, int start);
 void					echo(t_command *command);
 void					pwd(t_command *command);
 void					exit_func(t_command *command);
