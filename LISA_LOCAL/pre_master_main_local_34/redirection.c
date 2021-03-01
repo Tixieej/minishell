@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:16:00 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/23 12:58:25 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/01 10:14:53 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int    in_red(t_command *command)
             printf("minishell: %s: No such file or directory\n", (const char *)(*cur_struct)->in_red->content);
             return (-1);
         }
-            // error_handler("open file failed\n", NULL, command);
         if ((*cur_struct)->in_red->next)
             close((int)(*cur_struct)->in_red);
         (*cur_struct)->in_red = (*cur_struct)->in_red->next;
@@ -74,7 +73,7 @@ int    redirection(t_command *command)
     t_command	**cur_struct;
 
     cur_struct = &command;
-    command->fd_in = 1; //klopt dit?
+    command->fd_in = 0;
     command->fd_out = 1;
     if (in_red(command) == -1)
         return (-1);
