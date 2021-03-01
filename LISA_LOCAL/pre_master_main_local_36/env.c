@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 11:38:21 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/01 14:47:05 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/01 15:10:44 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,34 @@
 
 void        env_check(t_command *command, char **env)
 {
-    printf("ha");
     (void)command;
-    (void)env;
-    // int times;
-    // int check;
+    char    *result;
+    int     times;
+    int     check;
+    int     len;
 
-    // check = 0;
-    // times = 0;
-    // if (command->args->content != NULL)
-    // {
-    //     while (*env[times] != '_')
-    //     {
-    //         if (ft_strncmp(env[times], command->args->content, ft_strlen(command->args->content)) != 0)
-    //             check++;
-    //         times++;
-    //         printf("ha");
-    //     }
-    //     if (check > 0)
-    //     {
-    //         printf("env: %s: No such file or directory", command->args->content);
-    //         return ;
-    //     }
-    //     times = 0;
-    // }
-    // while (*env[times] != '_') //check bij rixt?
-    // {
-    //     printf("%s\n", env[times]);
-    //     times++;
-    // }
+    
+    len = 0;
+    result = ft_strdup("");
+    check = 0;
+    times = 0;
+    if (command->args)
+        len = ft_strlen(command->args->content);
+    while (env[times] != '\0')//(*env[times] != '_') //check bij rixt?
+    {
+        result = ft_strjoin(result, env[times]);
+        result = ft_strjoin(result, "\n");
+        if (len > 0)
+            if (ft_strncmp(env[times], command->args->content, len) != 0)
+                check++;
+        times++;
+    }
+    if (check > 0)
+    {
+        printf("env: %s: No such file or directory", command->args->content);
+        return ;
+    }
+    else
+        printf("%s\n", result);
+    free(result);
 }
