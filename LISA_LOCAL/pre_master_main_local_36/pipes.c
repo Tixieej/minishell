@@ -6,7 +6,7 @@
 /*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 14:20:04 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/22 16:31:16 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/02 11:15:42 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static int count_pipes(t_command *cmd)
 
 pid_t	pipes(char **env, t_command *cmd)
 {
+	printf("pipe");
 	t_command	*cur_cmd;
 	int			times;
 	int			*fd_array;

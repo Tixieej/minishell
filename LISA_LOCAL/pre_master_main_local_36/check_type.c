@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 17:53:20 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/01 14:52:11 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/02 11:53:53 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void 	check_type_two(char **env, t_command *command, pid_t process)
 {
+	printf("check type 2\n");
 	t_command	*cur_struct;
 
 	cur_struct = command;
@@ -36,6 +37,7 @@ void 	check_type_two(char **env, t_command *command, pid_t process)
 		// dup_func(command);
 		external(command, env, process);
 	}
+	return ;
 }
 
 void	check_type(char **env, t_command *command)

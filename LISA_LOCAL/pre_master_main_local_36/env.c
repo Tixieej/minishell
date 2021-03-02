@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 11:38:21 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/01 15:10:44 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/02 12:28:44 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void        env_check(t_command *command, char **env)
 {
+    // = teken af
     (void)command;
     char    *result;
     int     times;

@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/23 09:25:31 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/02 11:34:57 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static int		handle_quotation_marks(t_list **list, char *line,
 void			divide_input(t_list **list, char *line,
 							size_t len, unsigned int start)
 {
+	printf("divide input");
 	while (line[start + len] != '\0')
 	{
 		while (line[start + len] == ' ' && line[start + len] != '\0')
