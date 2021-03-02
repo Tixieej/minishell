@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/01 16:55:41 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/03/02 09:37:12 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void					echo(t_command *command);
 void					pwd(t_command *command);
 void					exit_func(t_command *command);
 void					export_func(t_command *command, char **env);
+void					unset(t_command *command, char ***env);
 
 /*
 ** signals

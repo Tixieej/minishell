@@ -6,7 +6,7 @@
 #    By: rde-vrie <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/02/13 10:40:20 by rde-vrie      #+#    #+#                  #
-#    Updated: 2021/03/01 16:55:55 by rde-vrie      ########   odam.nl          #
+#    Updated: 2021/03/02 09:29:02 by rixt          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRC = main.c \
 		cd.c \
 		exit.c \
 		export.c \
+		unset.c \
 		error_handler.c \
 		linked_struct.c \
 		redirection.c \

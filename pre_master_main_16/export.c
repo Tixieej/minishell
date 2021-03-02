@@ -6,23 +6,63 @@
 /*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 14:03:48 by rde-vrie      #+#    #+#                 */
-/*   Updated: 2021/03/01 17:17:57 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/03/02 17:05:45 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-//export = laat "declare -x env[i]" zien voor elke i
-//export "iets=bla" zet precies dat in de env.
-//als je dan env intypt, komt ie erbij te staan.
-//als er geen = teken in de argumenten staat: niet in env zetten
-//zodra er 1 = teken in voorkomt, precies zoals ingetypt het erin zetten
-//meerdere argumenten kan, elk arg heeft een = teken nodig. splits op spaties.
-//alleen een = zonder andere dingen is invalid
-//param mag niet met getal beginnen, getal mag wel als waarde (na de =)
-//param mag wel met _ beginnen
-
 #include "minishell.h"
 
+static void	add_var(char *new_arg, char **env)
+{
+	int exist = -1;
+	int i = 0;
 
+	while (env[i])
+	{
+
+		char *var_old = ft_split(env[i], '=')[0];
+		char *var_new = ft_split(new_arg, '=')[0];
+		size_t max_len = ft_strlen(var_old);
+		if (ft_strlen(var_new) > max_len)
+			max_len = ft_strlen(var_new);
+		if (ft_strncmp(env[i], new_arg, max_len) == 0)
+		{
+			printf("\tstaat erin\n");
+			exist = i;
+			break ;
+		}
+		i++;
+	}
+	if (exist == -1)
+		printf("\tzet new arg erin\n");
+		count = array_length(env) + 1;
+	else
+	{
+		printf("\t%s staat op plek %i\n", new_arg, i);
+		if (ft_strchr(new_arg, '='))
+		{
+			printf("\t= teken in [%s], overschrijf var\n", new_arg);
+		}
+	}
+}
+
+static void	print_envs(char **env)
+{
+	//char *var;
+	//char *value;
+	int i = 0;
+
+	while (env[i])
+	{
+		char *var = ft_split(env[i], '=')[0];
+		char *is_sign = ft_strchr(env[i], '=');
+		char *value = ft_substr(is_sign, 1, ft_strlen(is_sign) - 1);
+		printf("declare -x ");
+		printf("%s=", var);
+		printf("\"%s\"\n", value);
+		i++;
+	}
+}
 
 void	export_func(t_command *command, char **env)
 {
@@ -32,25 +72,24 @@ void	export_func(t_command *command, char **env)
 	i = 0;
 	if (command->args == NULL)
 	{
-		printf("\tprint alle envs uit\n");
-		(void)env;
+		print_envs(env);
 		return ;
 	}
 	begin_arg = command->args;
 	while (command->args)
 	{
-		if (ft_isalpha(*(command->args->content)) == 1 || *(command->args->content) == '_') //check of het begin _ of letter is
+		if (ft_isalpha(*(command->args->content)) == 1 || *(command->args->content) == '_')
 		{
-			printf("\tgoed begin");
-			if (ft_strchr(command->args->content, '=') == 0)// als er geen = in zit
-			{
-				printf("\tgeen =\n");
-				break ;
-			}
-			printf("\tkomt erin\n");
+			printf("\t[%s] komt erin\n", command->args->content);
+			add_var(command->args->content, env);
 		}
 		else
-			printf("export: `%s': not a valid identifier\n", command->args->content);
+			printf("minishell: export: `%s': not a valid identifier\n", command->args->content);
 		command->args = command->args->next;
 	}
 }
+
+//bash: syntax error near unexpected token `)'
+// na export -bla=5: (maar dit is undef behaviour, want wij hoeven niet met opties)
+//bash: export: -b: invalid option
+//export: usage: export [-nf] [name[=value] ...] or export -p
