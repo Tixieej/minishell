@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/25 13:47:08 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/01 11:03:53 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ void	ft_exec(char *path, t_command cmd, char **env, pid_t process)
 		error_handler("malloc failed", NULL, &cmd);
 	ft_lstadd_front(&arglist, new_elem);
 	args = list_to_array(&arglist);
-	printf("\tthe process id is now [%d]\n", process);
+//	printf("\tthe process id is now [%d]\n", process);
 	if (process == -1)
 		process = fork();
 	if (process == 0)
 	{
-		printf("\tchild process\n");
+//		printf("\tchild process\n");
 		int i = 0;
 		while (args[i])
 		{
-			printf("\tARGUMENTS: %s\n", args[i]);
+		//	printf("\tARGUMENTS: %s\n", args[i]);
 			i++;
 		}
 		if (execve(path, args, env) == -1)
