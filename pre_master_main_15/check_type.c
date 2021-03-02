@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 17:53:20 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/23 11:58:35 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/25 17:04:21 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void 	check_type_two(char **env, t_command *command, pid_t process)
 	else if (ft_strncmp((const char *)cur_struct->program, "export", 6) == 0)
 		printf("export type\n");
 	else if (ft_strncmp((const char *)cur_struct->program, "unset", 5) == 0)
-		printf("unset type\n");
+		unset(command, &env);
 	else if (ft_strncmp((const char *)cur_struct->program, "env", 3) == 0)
 		printf("env type\n");
 	else if (ft_strncmp((const char *)cur_struct->program, "exit", 4) == 0)
