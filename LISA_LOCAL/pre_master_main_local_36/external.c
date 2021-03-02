@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/25 13:47:08 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/02 15:51:33 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	external(t_command *cmd, char **env, pid_t process)
 		attach_path(*cmd, env, process);
 	if (cmd->out_red)// dit kan niet fd_out != 1 zijn
 	{
-		if (dup2(stdout_fd, STDOUT_FILENO) < 0)
+		if (dup2(stdout_fd, STDOUT_FILENO) < 0) //terugzetten?
 		{
 			printf("Unable to duplicate file descriptor.");
 			//exit(EXIT_FAILURE); exiten stopt heel minishell, dus hier komt iets anders
@@ -133,7 +133,7 @@ void	external(t_command *cmd, char **env, pid_t process)
 	}
 	if (cmd->in_red)
 	{
-		if (dup2(stdin_fd, STDIN_FILENO) < 0)
+		if (dup2(stdin_fd, STDIN_FILENO) < 0) // terugzetten
 		{
 			printf("Unable to duplicate file descriptor.");
 		//	exit(EXIT_FAILURE);

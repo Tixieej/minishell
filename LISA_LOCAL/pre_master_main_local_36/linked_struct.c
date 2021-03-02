@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/02 11:28:02 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/02 16:50:02 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ t_command		*ft_clear_linked_struct(t_command *command)
 		if ((command)->program)
 			free(command->program);
 		if (cur_args)
+		{
 			ft_lstclear(&cur_args, free);
+		}
 		if (cur_in_red != NULL)
 			ft_lstclear(&cur_in_red, free);
 		if (cur_out_red)

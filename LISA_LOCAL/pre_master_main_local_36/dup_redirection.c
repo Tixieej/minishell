@@ -6,7 +6,7 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/11 12:01:23 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/25 13:43:10 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/02 15:51:33 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int		out_redirect(t_command *cmd)
 {
-	int		stdout_fd;
+	int		stdout_fd; 
 
-	stdout_fd = dup(STDOUT_FILENO);
+	stdout_fd = dup(STDOUT_FILENO); 
 	if (cmd->fd_out != 1)
 	{
 		if (stdout_fd < 0)
@@ -33,9 +33,9 @@ int		out_redirect(t_command *cmd)
 
 int		in_redirect(t_command *cmd)
 {
-	int		stdin_fd;
+	int		stdin_fd; 
 	
-	stdin_fd = dup(STDIN_FILENO);
+	stdin_fd = dup(STDIN_FILENO); 
 	if (cmd->fd_in != 0)
 	{
 		if (stdin_fd < 0)

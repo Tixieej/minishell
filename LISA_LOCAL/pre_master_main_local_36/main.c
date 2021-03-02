@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/02 11:52:14 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/02 16:01:24 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ static void			start_program(char **env)
 	signal(SIGINT, signal_handler);
 	while (result == 1)
 	{
-		printf("loop");
 		prompt();
 		result = get_next_line(0, &line);
 		if (result == -1)
