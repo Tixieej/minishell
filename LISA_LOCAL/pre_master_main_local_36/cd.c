@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:12:48 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/01 10:38:58 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/03 11:20:34 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,51 +14,73 @@
 
 static char		*move_backwards(char *path, int *start)
 {
-	int len;
+	struct stat		buffer;
+	int				len;
+	char			*temp;
 
 	len = ft_strlen(path);
+	temp = NULL;
 	while (path[len] != '/')
 	{
 		len--;
 	}
 	*start += 2;
-	return (ft_substr(path, 0, len));
+	temp = ft_substr(path, 0, len);
+	free(path);
+	path = NULL;
+	path = ft_strdup(temp);
+	free(temp);
+	if (stat(path, &buffer) == -1)
+	{
+		free(path);
+		path = ft_strdup("/");
+	}
+	return (path);
 }
 
-static void		*alter_env(char **env, char *var, char *file)
+static void		alter_env(char **env, char *var, char *file)
 {
-	int count;
-	int	len_var;
+	int		count;
+	int		len_var;
+	char	*temp;
 
+	temp = NULL;
 	len_var = ft_strlen(var);
 	count = 0;
 	while (env[count])
 	{
 		if (!ft_strncmp(env[count], var, len_var))
 		{
+			// temp = strdup(env[count]);
 			env[count] = ft_strjoin(env[count], "/");
 			env[count] = ft_strjoin(env[count], file);
+			printf("%p", env[count]);
+			// free(temp);
+			// temp = NULL;
 		}
 		count++;
 	}
-	return (NULL);
+	// free(temp);
 }
 
 static int		move_forward(char **env, char **path, char *file)
 {
 	struct stat		buffer;
+	char			*temp;
 
 	alter_env(&(*env), "PWD=", file);
-	*path = ft_strjoin(*path, "/");
-	*path = ft_strjoin(*path, file);
+	temp = ft_strjoin(*path, "/");
+	free(*path);
+	*path = ft_strjoin(temp, file);
+	// free(temp);
 	if (stat(*path, &buffer) == -1)
 	{
 		printf("minishell: %s: Not a directory\n", file);
-		free(file);
+		// free(file);
+		// free(*path);
 		return (-1);
 	}
-	free(file);
-	file = NULL;
+	// free(file);
 	return (0);
 }
 
@@ -81,12 +103,15 @@ static char		*create_new_path(t_command *command, char **env,
 			file = ft_substr(command->args->content, start, len);
 			if (move_forward(env, &path, file) == -1)
 				return (NULL);
+			// free(file);
 		}
 		if (command->args->content[start + len] == '.' &&
 				command->args->content[start + len + 1] == '.')
 			path = move_backwards(path, &start);
 		len++;
 	}
+	// if (file)
+	// 	free(file);
 	return (path);
 }
 
@@ -95,9 +120,6 @@ void			cd(t_command *command, char **env)
 	char *path;
 
 	path = NULL;
-	path = getcwd(NULL, 0);
-	if (path == NULL)
-		error_handler("getcwd failure", NULL, command);
 	if (command->args == NULL)
 	{
 		path = check_env(env, "HOME=");
@@ -105,8 +127,12 @@ void			cd(t_command *command, char **env)
 			printf("minishell: HOME= non-existing\n");
 		if (chdir(path) != 0)
 			printf("minishell: %s: path non-existing\n", path);
+		free(path);
 		return ;
 	}
+	path = getcwd(NULL, 0);
+	if (path == NULL)
+		error_handler("getcwd failure", NULL, command);
 	path = create_new_path(command, env, path, 0);
 	if (!path)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/21 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/02 16:50:00 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/03 09:39:38 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ void		echo(t_command *command)
 	t_list      *cur_args;
 	char        *s;
 	int         n_check;
+	char		*temp;
 	
+	temp = NULL;
 	cur_args = command->args;
 	s = NULL;
 	n_check = 0;
@@ -33,8 +35,11 @@ void		echo(t_command *command)
 		cur_args = cur_args->next;
 	while (cur_args)
 	{
-		s = ft_strjoin(s, (const char *)cur_args->content); //
-		s = ft_strjoin(s, " "); //
+		temp = ft_strjoin(s, (const char *)cur_args->content);
+		free(s);
+		s = ft_strjoin(temp, " ");
+		free(temp);
+		temp = NULL;
 		cur_args = cur_args->next;
 	}
 	cur_args = command->args;
