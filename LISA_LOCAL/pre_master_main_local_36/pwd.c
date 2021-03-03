@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: Invalid date        by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/23 09:43:03 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/03 11:24:16 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 void        pwd(t_command *command)
 {
-    char *path;
+    char    *path;
+    char    *old_path;
 
-    path = getcwd(NULL, 0);
-    if (path == NULL)
+    path = NULL;
+    old_path = getcwd(NULL, 0);
+    if (old_path == NULL)
         error_handler("pwd failure", NULL, NULL); //veranderen met geheugen;
-    path = ft_strjoin(path, "\n");
+    path = ft_strjoin(old_path, "\n");
     if (write(STDOUT_FILENO, path, ft_strlen(path)) < 0)
         error_handler("pwd write error", NULL, command);
+    free(old_path);
     free(path);
     path = NULL;
 }
