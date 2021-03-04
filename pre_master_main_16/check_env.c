@@ -6,12 +6,15 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/04 14:10:50 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/05 15:01:31 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/04 16:12:13 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+** if var is in env, return the value??
+*/
 char        *check_env(char **env, char *var)
 {
     int count;

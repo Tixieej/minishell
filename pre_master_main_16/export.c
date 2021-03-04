@@ -6,57 +6,81 @@
 /*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 14:03:48 by rde-vrie      #+#    #+#                 */
-/*   Updated: 2021/03/02 17:05:45 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/04 17:30:31 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+//MALLOC PROTECTIONS
 
-static void	add_var(char *new_arg, char **env)
+static char	**add_to_array(char **old_array, char *new_arg)
 {
-	int exist = -1;
-	int i = 0;
+	char	**new_array;
+	int		count = array_length(old_array) + 2;
+	int		i;
 
-	while (env[i])
+	new_array = (char **)malloc(sizeof(char *) * count);
+	if (!new_array)
+		return (NULL);
+	i = 0;
+	while (old_array[i])
 	{
+		new_array[i] = ft_strdup(old_array[i]);
+		i++;
+	}
+	new_array[i] = ft_strdup(new_arg);
+	new_array[i + 1] = NULL;
+	//free(old_array);
+	return (new_array);
+}
 
-		char *var_old = ft_split(env[i], '=')[0];
-		char *var_new = ft_split(new_arg, '=')[0];
-		size_t max_len = ft_strlen(var_old);
+static void	add_var(char *new_arg, char ***env)
+{
+	int		exist = -1;
+	int		i = 0;
+	char	*var_old;
+	char	*var_new;
+	size_t	max_len;
+
+	while ((*env)[i])
+	{
+		var_old = ft_split((*env)[i], '=')[0];
+		var_new = ft_split(new_arg, '=')[0];
+		max_len = ft_strlen(var_old);
 		if (ft_strlen(var_new) > max_len)
 			max_len = ft_strlen(var_new);
-		if (ft_strncmp(env[i], new_arg, max_len) == 0)
+		if (ft_strncmp((*env)[i], new_arg, max_len) == 0)
 		{
-			printf("\tstaat erin\n");
 			exist = i;
 			break ;
 		}
 		i++;
 	}
 	if (exist == -1)
-		printf("\tzet new arg erin\n");
-		count = array_length(env) + 1;
+		*env = add_to_array(*env, new_arg);
 	else
 	{
-		printf("\t%s staat op plek %i\n", new_arg, i);
 		if (ft_strchr(new_arg, '='))
 		{
-			printf("\t= teken in [%s], overschrijf var\n", new_arg);
+			//free(env[i]);
+			(*env)[i] = ft_strdup(new_arg);
 		}
 	}
 }
 
 static void	print_envs(char **env)
 {
-	//char *var;
-	//char *value;
-	int i = 0;
+	char	*var;
+	char	*value;
+	char	*is_sign;
+	int		i;
 
+	i = 0;
 	while (env[i])
 	{
-		char *var = ft_split(env[i], '=')[0];
-		char *is_sign = ft_strchr(env[i], '=');
-		char *value = ft_substr(is_sign, 1, ft_strlen(is_sign) - 1);
+		var = ft_split(env[i], '=')[0];
+		is_sign = ft_strchr(env[i], '=');
+		value = ft_substr(is_sign, 1, ft_strlen(is_sign) - 1);
 		printf("declare -x ");
 		printf("%s=", var);
 		printf("\"%s\"\n", value);
@@ -64,32 +88,25 @@ static void	print_envs(char **env)
 	}
 }
 
-void	export_func(t_command *command, char **env)
+void	export_func(t_command *command, char ***env)
 {
-	int	i;
-	t_list *begin_arg;
+	int		i;
+	t_list	*begin_arg;
 
 	i = 0;
 	if (command->args == NULL)
 	{
-		print_envs(env);
+		print_envs(*env);
 		return ;
 	}
 	begin_arg = command->args;
 	while (command->args)
 	{
 		if (ft_isalpha(*(command->args->content)) == 1 || *(command->args->content) == '_')
-		{
-			printf("\t[%s] komt erin\n", command->args->content);
 			add_var(command->args->content, env);
-		}
 		else
 			printf("minishell: export: `%s': not a valid identifier\n", command->args->content);
 		command->args = command->args->next;
+	//	begin_arg = command->args;
 	}
 }
-
-//bash: syntax error near unexpected token `)'
-// na export -bla=5: (maar dit is undef behaviour, want wij hoeven niet met opties)
-//bash: export: -b: invalid option
-//export: usage: export [-nf] [name[=value] ...] or export -p
