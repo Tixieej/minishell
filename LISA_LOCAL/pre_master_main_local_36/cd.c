@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:12:48 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/04 12:43:50 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/04 16:55:03 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,10 @@ static int		alter_env(char **env, char *var, char *path)
 		{
 			printf("len: %d", len_var);
 			printf("env %s\n", env[count]);
+			free(env[count]);
 			env[count] = NULL;
-			env[count] = ft_strdup(path);
+			temp = ft_strdup("PWD=");
+			env[count] = ft_strjoin(temp, path);
 			return (count);
 		}
 		count++;
@@ -134,6 +136,7 @@ void			cd(t_command *command, char **env)
 	path = create_new_path(command, path, 0);
 	if (!path)
 		return ;
+	printf("path1 [%s]\n", path);
 	count = alter_env(&(*env), "PWD=", path);
 	printf("%d", count);
 	printf("path [%s]\n", path);
