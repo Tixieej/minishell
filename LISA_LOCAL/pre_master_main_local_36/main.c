@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/02 16:01:24 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/04 11:50:10 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,44 @@ static void			start_program(char **env)
 	exit(0);
 }
 
+static char		**copy_env(char **env)
+{
+	char	**copy;
+	int		count;
+	int		path;
+
+	path = 0;
+	count = 0;
+	copy = NULL;
+	while (env[count])
+		count++;
+	copy = malloc(sizeof(char *) * count + 1);
+	if (!copy)
+		return (NULL);
+	copy[count] = NULL;
+	while (count > path)
+	{
+		copy[path] = ft_strdup(env[path]);
+		path++;
+	}
+	return (copy);
+}
+
 int		main(int argc, char **argv, char **env)
 {
 	(void)argv;
+	char **cpy_env;
+
+	// if ((cpy_env = copy_env(env)) == NULL)
+	// 	return (-1);
+	cpy_env = copy_env(env);
+	if (cpy_env == NULL)
+		return (-1);
 	if (argc != 1)
 	{
 		printf("no arguments needed");
 		return (0);
 	}
-	start_program(env);
+	start_program(cpy_env);
 	return (0);
 }

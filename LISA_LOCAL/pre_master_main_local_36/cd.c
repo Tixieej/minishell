@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:12:48 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/04 10:17:33 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/04 11:49:29 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,17 @@ static void		alter_env(char **env, char *var, char *file)
 	{
 		if (!ft_strncmp(env[count], var, len_var))
 		{
-			temp = ft_strjoin("/", file);
-			printf("temp1: %p\n", temp);
-			env[count] = ft_strjoin(env[count], temp);
-			printf("env: %p\n", env[count]);
+			temp = ft_strjoin(env[count], "/");
+			printf("temp: %p\n", temp);
+			free(env[count]);
+			env[count] = NULL;
+			env[count] = ft_strjoin(temp, file);
+			
+			// printf("path: %p\n", path);
+			// temp = ft_strjoin("/", file);
+			// printf("temp1: %p\n", temp);
+			// env[count] = ft_strjoin(env[count], temp);
+			// printf("env: %p\n", env[count]);
 			free(temp);
 			temp = NULL;
 		}
