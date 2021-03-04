@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:12:48 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/03 11:20:34 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/04 10:17:33 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,37 +51,37 @@ static void		alter_env(char **env, char *var, char *file)
 	{
 		if (!ft_strncmp(env[count], var, len_var))
 		{
-			// temp = strdup(env[count]);
-			env[count] = ft_strjoin(env[count], "/");
-			env[count] = ft_strjoin(env[count], file);
-			printf("%p", env[count]);
-			// free(temp);
-			// temp = NULL;
+			temp = ft_strjoin("/", file);
+			printf("temp1: %p\n", temp);
+			env[count] = ft_strjoin(env[count], temp);
+			printf("env: %p\n", env[count]);
+			free(temp);
+			temp = NULL;
 		}
 		count++;
 	}
-	// free(temp);
 }
 
-static int		move_forward(char **env, char **path, char *file)
+static char		*move_forward(char **env, char *path, char *file)
 {
 	struct stat		buffer;
 	char			*temp;
 
 	alter_env(&(*env), "PWD=", file);
-	temp = ft_strjoin(*path, "/");
-	free(*path);
-	*path = ft_strjoin(temp, file);
-	// free(temp);
-	if (stat(*path, &buffer) == -1)
+	temp = ft_strjoin(path, "/");
+	printf("temp: %p\n", temp);
+	free(path);
+	path = ft_strjoin(temp, file);
+	printf("path: %p\n", path);
+	if (stat(path, &buffer) == -1)
 	{
 		printf("minishell: %s: Not a directory\n", file);
-		// free(file);
-		// free(*path);
-		return (-1);
+		free(file);
+		free(path);
+		return (NULL);
 	}
-	// free(file);
-	return (0);
+	free(temp);
+	return (path);
 }
 
 static char		*create_new_path(t_command *command, char **env,
@@ -101,17 +101,16 @@ static char		*create_new_path(t_command *command, char **env,
 		if (len > 0)
 		{
 			file = ft_substr(command->args->content, start, len);
-			if (move_forward(env, &path, file) == -1)
+			if ((path = move_forward(env, path, file)) == NULL)
 				return (NULL);
-			// free(file);
+			free(file);
+			file = NULL;
 		}
 		if (command->args->content[start + len] == '.' &&
 				command->args->content[start + len + 1] == '.')
 			path = move_backwards(path, &start);
 		len++;
 	}
-	// if (file)
-	// 	free(file);
 	return (path);
 }
 
