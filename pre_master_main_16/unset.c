@@ -6,7 +6,7 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/25 14:05:53 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/08 17:35:59 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/03/08 18:34:17 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	unset(t_command *command, char ***env)
 	if (!(command->args))
 		return ;
 	var_name = command->args->content;
-	printf("\targ = [%s], var = [%s]\n", command->args->content, var_name);
+	//printf("\targ = [%s], var = [%s]\n", command->args->content, var_name);
 	env_var = check_env(*env, var_name);//get the right env variable
-	printf("\tenv_var = [%s]\n", env_var);
+	//printf("\tenv_var = [%s]\n", env_var);
 	// check of var in env lijst staat, zonee, ga uit de functie.
 	if (!env_var)
 	{
@@ -47,6 +47,7 @@ void	unset(t_command *command, char ***env)
 	new_env = malloc(sizeof(char *) * (count));//null aan einde
 	if (!new_env)//free hier ook dingen?
 		printf("ERROR\n");
+	printf("\tnew_env = %p\n", new_env);
 	new_env[count] = NULL;
 	int i = 0;
 	len_var = ft_strlen(var_name);
@@ -57,16 +58,19 @@ void	unset(t_command *command, char ***env)
 		//2 while loops maken en tussendoor een keer env plussen
 		if (ft_strncmp(var_name, (*env)[i + j], len_var) != 0)//als het niet gelijk is
 		{
-			new_env[i] = ft_strdup((*env)[i + j]);
+			//if (j != 0)
+			free(new_env[i]);
+			new_env[i] = ft_strdup((*env)[i + j]);//
+		//	printf("\tnew_env = %p, new_env[i] = %p\n", new_env, new_env[i]);
 			i++;
 		}
 		else
 			j++;
 	}
-	*env = new_env;
-	// printf("\tnew_env = \t%p\n", new_env);
-	// printf("\tunset env = \t%p (wil je hetzelfde)\n", *env);
-	// printf("\tenv = \t%p (hoort anders)\n", env);
+	*env = new_env;//waar gaat de vorige *env heen?
+	printf("\tnew_env = \t%p\n", new_env);// het is iets wat vlak hiervoor is gemalloct?
+	printf("\tunset env = \t%p (wil je hetzelfde)\n", *env);
+	printf("\tenv = \t%p (hoort anders)\n", env);
 	i = 0;
 	//dit zijn checks, mogen weg als het klopt.
 	while (new_env[i])
