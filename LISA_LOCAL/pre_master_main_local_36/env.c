@@ -6,42 +6,56 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 11:38:21 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/02 15:29:35 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/08 13:52:34 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void        env_check(t_command *command, char **env, int len, int times)
+static char	*create_result(t_command *command, char **env, int *check, int len)
 {
-    char    *result;
-    int     check;
+	int		times;
+	char	*temp;
+	char	*result;
 
-    check = 0;
-    result = ft_strdup("");
-    if (command->args)
-        len = ft_strlen(command->args->content);
-    while (*env[times] != '_' && *env[times] != '\0') //'_' weg?
-    {
-        result = ft_strjoin(result, env[times]);
-        result = ft_strjoin(result, "\n");
-        if (len > 0)
-        {
-            if (ft_strncmp(env[times], command->args->content, len) == 0)
-            {
-                if (command->args->content[len - 1] == '=')
-                    check++;
-            }
-        }
-        times++;
-    }
-    if (env[times]) //klopt dit??
-        result = ft_strjoin(result, env[times]);
-    if (check == 1 || (check == 0 && len == 0))
-        printf("%s\n", result);
-    else
-        printf("env: %s: No such file or directory", (char *)command->args->content);      
-    free(result);
-    result = NULL;
-    return ;
+	temp = NULL;
+	times = 0;
+	result = ft_strdup("");
+	while (env[times] != NULL)
+	{
+		temp = ft_strjoin(result, env[times]);
+		free(result);
+		result = ft_strjoin(temp, "\n");
+		free(temp);
+		temp = NULL;
+		if (len > 0)
+		{
+			if (ft_strncmp(env[times], command->args->content, len) == 0)
+			{
+				if (command->args->content[len - 1] == '=')
+					(*check)++;
+			}
+		}
+		times++;
+	}
+	return (result);
+}
+
+void	env_check(t_command *command, char **env, int len)
+{
+	char	*result;
+	int		check;
+
+	check = 0;
+	result = NULL;
+	if (command->args)
+		len = ft_strlen(command->args->content);
+	result = create_result(command, env, &check, len);
+	if (check == 1 || (check == 0 && len == 0))
+		printf("%s", result);
+	else
+		printf("env: %s: No such file or directory\n", (char *)command->args->content);      
+	free (result);
+	result = NULL;
+	return ;
 }
