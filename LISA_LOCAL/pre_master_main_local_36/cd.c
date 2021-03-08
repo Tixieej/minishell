@@ -6,13 +6,13 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:12:48 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/08 09:46:14 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/08 11:43:43 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char		*move_backwards(char *path, int *start)
+static char	*move_backwards(char *path, int *start)
 {
 	struct stat		buffer;
 	int				len;
@@ -24,7 +24,7 @@ static char		*move_backwards(char *path, int *start)
 	{
 		len--;
 	}
-	*start += 2;
+	*start += 1;
 	temp = ft_substr(path, 0, len);
 	free(path);
 	path = NULL;
@@ -38,7 +38,7 @@ static char		*move_backwards(char *path, int *start)
 	return (path);
 }
 
-static int		alter_env(char **env, char *var, char *path)
+static int	alter_env(char **env, char *var, char *path)
 {
 	int		count;
 	int		len_var;
@@ -51,8 +51,6 @@ static int		alter_env(char **env, char *var, char *path)
 	{
 		if (!ft_strncmp(env[count], var, len_var))
 		{
-			printf("len: %d", len_var);
-			printf("env %s\n", env[count]);
 			free(env[count]);
 			env[count] = NULL;
 			temp = ft_strdup("PWD=");
@@ -65,7 +63,7 @@ static int		alter_env(char **env, char *var, char *path)
 	return (0);
 }
 
-static char		*move_forward(char *path, char *file)
+static char	*move_forward(char *path, char *file)
 {
 	struct stat		buffer;
 	char			*temp;
@@ -85,14 +83,12 @@ static char		*move_forward(char *path, char *file)
 	return (path);
 }
 
-static char		*create_new_path(t_command *command,
-									char *path, int start)
+static char	*create_new_path(t_command *command,
+									char *path, int start, int len)
 {
-	char	*file;
-	int		len;
-
+	char		*file;
+	
 	file = NULL;
-	len = 0;
 	while (command->args->content[start + len] != '\0')
 	{
 		start += len;
@@ -102,26 +98,32 @@ static char		*create_new_path(t_command *command,
 		if (len > 0)
 		{
 			file = ft_substr(command->args->content, start, len);
-			if ((path = move_forward(path, file)) == NULL)
+			path = move_forward(path, file);
+			if (path == NULL)
 				return (NULL);
 			free(file);
 			file = NULL;
 		}
-		if (command->args->content[start + len] == '.' &&
-				command->args->content[start + len + 1] == '.')
-			path = move_backwards(path, &start);
+		if (command->args->content[start + len] == '.'
+			&& command->args->content[start + len + 1] == '.')
+		{
+			if (command->args->content[start + len + 2] == '.')
+				start += 2;
+			else
+				path = move_backwards(path, &start);
+		}
 		len++;
 	}
 	return (path);
 }
 
-void			cd(t_command *command, char **env)
+void	cd(t_command *command, char **env, int count)
 {
-	char *path;
-	int count;
+	char	*path;
+	char	*old_path;
 
-	count = 0;
 	path = NULL;
+	old_path = NULL;
 	if (command->args == NULL)
 	{
 		path = check_env(env, "HOME=");
@@ -135,20 +137,15 @@ void			cd(t_command *command, char **env)
 	path = getcwd(NULL, 0);
 	if (path == NULL)
 		error_handler("getcwd failure", NULL, command);
-	path = create_new_path(command, path, 0);
+	old_path = ft_strdup(path);
+	path = create_new_path(command, path, 0, 0);
 	if (!path)
 		return ;
-	printf("path1 [%s]\n", path);
 	count = alter_env(&(*env), "PWD=", path);
-	printf("%d", count);
-	printf("path [%s]\n", path);
-	printf("pointer path: %p", path);
-	printf("env [%s]\n", env[count]);
-	if (chdir(path) != 0) //met env count werkt niet?
-	{
-		free(path); //?
-		printf("minishell: %s: Not a directory\n", path);
-		return ;
-	}
+	if (ft_strncmp(old_path, path, ft_strlen(old_path)) == 0)
+		printf("minshell: %s: No such file or directory\n", command->args->content);
+	if (chdir(path) != 0)
+		printf("minshell: %s: No such file or directory\n", path);
 	free (path);
+	free (old_path);
 }

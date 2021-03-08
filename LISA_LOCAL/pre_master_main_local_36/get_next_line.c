@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/03 11:42:44 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/25 12:04:17 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/08 11:48:15 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	ft_read(t_data *data, int fd)
 	}
 	if (data->bytes_read == 0)
 	{
-		write(1, "  \b\b", 4);
+		write(1, "  \b\bexit\n", 9);
 		if (data->temp)
 			return (1);
 		if (data->temp == '\0')

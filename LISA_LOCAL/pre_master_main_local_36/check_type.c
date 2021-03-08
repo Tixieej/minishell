@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 17:53:20 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/02 16:04:43 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/08 09:54:20 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void 	check_type_two(char **env, t_command *command, pid_t process)
 	if (ft_strncmp((const char *)cur_struct->program, "echo", 5) == 0)
 		echo(command);
 	else if (ft_strncmp((const char *)cur_struct->program, "cd", 3) == 0)
-		cd(command, env);
+		cd(command, env, 0);
 	else if (ft_strncmp((const char *)cur_struct->program, "pwd", 4) == 0)
 		pwd(command);
 	else if (ft_strncmp((const char *)cur_struct->program, "env", 4) == 0)
