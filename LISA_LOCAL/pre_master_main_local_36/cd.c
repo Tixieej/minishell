@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:12:48 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/08 11:43:43 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/08 11:55:22 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ static char	*move_forward(char *path, char *file)
 static char	*create_new_path(t_command *command,
 									char *path, int start, int len)
 {
-	char		*file;
-	
+	char	*file;
+
 	file = NULL;
 	while (command->args->content[start + len] != '\0')
 	{
