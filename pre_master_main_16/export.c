@@ -6,7 +6,7 @@
 /*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 14:03:48 by rde-vrie      #+#    #+#                 */
-/*   Updated: 2021/03/08 09:34:51 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/03/08 09:37:31 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static char	**add_to_array(char **old_array, char *new_arg)
 	int		count = array_length(old_array) + 2;
 	int		i;
 
-	//printf("\tnew_arg=[%s]\n", new_arg);
 	new_array = (char **)malloc(sizeof(char *) * count);
 	if (!new_array)
 		return (NULL);
@@ -47,7 +46,6 @@ static void	add_var(char *new_arg, char ***env)
 	{
 		var_old = ft_split((*env)[i], '=')[0];
 		var_new = ft_split(new_arg, '=')[0];
-	//	printf("\tvar_new=[%s], hopelijjk geen =\n", var_new);
 		max_len = ft_strlen(var_old);
 		if (ft_strlen(var_new) > max_len)
 			max_len = ft_strlen(var_new);
@@ -84,15 +82,12 @@ static void	print_envs(char **env)
 		is_sign = ft_strchr(env[i], '=');
 		value = ft_substr(is_sign, 1, ft_strlen(is_sign) - 1);
 		write(1, "declare -x ", 11);
-		//printf("declare -x ");
 		write(1, var, ft_strlen(var));
-		//printf("%s", var);
 		if (is_sign)
 		{
-		//	printf("=\"%s\"\n", value);
 			write(1, "=\"", 2);
 			write(1, value, ft_strlen(value));
-		write(1, "\"", 1);
+			write(1, "\"", 1);
 		}
 		write(1, "\n", 1);
 		i++;
