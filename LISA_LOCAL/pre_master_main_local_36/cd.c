@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:12:48 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/04 16:55:03 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/08 09:46:14 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static char		*move_backwards(char *path, int *start)
 	int				len;
 	char			*temp;
 
-	len = ft_strlen(path);
 	temp = NULL;
+	len = ft_strlen(path);
 	while (path[len] != '/')
 	{
 		len--;
@@ -57,6 +57,7 @@ static int		alter_env(char **env, char *var, char *path)
 			env[count] = NULL;
 			temp = ft_strdup("PWD=");
 			env[count] = ft_strjoin(temp, path);
+			free(temp);
 			return (count);
 		}
 		count++;
@@ -77,6 +78,7 @@ static char		*move_forward(char *path, char *file)
 		printf("minishell: %s: Not a directory\n", file);
 		free(file);
 		free(path);
+		free(temp);
 		return (NULL);
 	}
 	free(temp);
@@ -140,9 +142,11 @@ void			cd(t_command *command, char **env)
 	count = alter_env(&(*env), "PWD=", path);
 	printf("%d", count);
 	printf("path [%s]\n", path);
+	printf("pointer path: %p", path);
 	printf("env [%s]\n", env[count]);
 	if (chdir(path) != 0) //met env count werkt niet?
 	{
+		free(path); //?
 		printf("minishell: %s: Not a directory\n", path);
 		return ;
 	}
