@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/04 18:06:17 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/08 11:44:33 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static void	start_program(char **env)
 {
-	t_command   *command;
-	t_list	  *list;
-	int		 result;
+	t_command	*command;
+	t_list		*list;
+	int			result;
 	char		*line;
 
 	command = NULL;

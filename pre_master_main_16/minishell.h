@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/04 17:26:23 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/08 11:27:49 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int						in_redirect(t_command *cmd);
 int						out_redirect(t_command *cmd);
 pid_t					pipes(char ***env, t_command *cmd);
 void					external(t_command *cmd, char **env, pid_t process);
+void					free_array(char **array);
 char					*ft_append_path(char *str);
 void					ft_exec(char *path, t_command command, char **env, pid_t process);
 

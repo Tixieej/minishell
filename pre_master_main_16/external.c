@@ -6,13 +6,13 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/01 11:37:35 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/03/08 11:26:49 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_free(char **array)
+void	free_array(char **array)
 {
 	int i;
 
@@ -52,7 +52,7 @@ void	ft_exec(char *path, t_command cmd, char **env, pid_t process)
 		if (execve(path, args, env) == -1)
 		{
 			printf("\thoi execve mislukt\n");
-			ft_free(args);
+			free_array(args);
 			free(new_elem);
 			// error_handler("argument", NULL, cmd); <- invullen
 			exit(1);
@@ -61,7 +61,7 @@ void	ft_exec(char *path, t_command cmd, char **env, pid_t process)
 	else
 	{
 		wait(NULL);
-		//ft_free(args); // wat dan?
+		//free_array(args); // wat dan?
 		free(new_elem);
 		// sluit fd's af.
 	}
@@ -100,7 +100,7 @@ static void	attach_path(t_command cmd, char **env, pid_t process)
 		//cmd.args[0] = path;
 		if (stat(path, &buffer) == 0)
 		{
-			ft_free(paths);
+			free_array(paths);
 			ft_exec(path, cmd, env, process);
 			return ;
 		}
@@ -108,7 +108,7 @@ static void	attach_path(t_command cmd, char **env, pid_t process)
 	}
 	if (stat(path, &buffer) != 0)
 		printf("%s: command not found\n", cmd.program);
-	ft_free(paths);
+	free_array(paths);
 }
 
 void	external(t_command *cmd, char **env, pid_t process)
