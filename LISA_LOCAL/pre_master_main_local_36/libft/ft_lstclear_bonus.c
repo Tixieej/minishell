@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/21 16:45:08 by livlamin      #+#    #+#                 */
-/*   Updated: 2019/11/26 10:12:59 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/08 14:28:29 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	t_list *temp;
+	t_list	*temp;
 
 	temp = *lst;
 	while (temp)

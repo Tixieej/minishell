@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/29 13:03:55 by livlamin      #+#    #+#                 */
-/*   Updated: 2019/11/27 13:52:49 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/08 14:30:52 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	char *str;
+	char	*str;
 
 	str = (char *)s;
 	while (*str != '\0')

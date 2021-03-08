@@ -6,13 +6,13 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/21 14:21:33 by livlamin      #+#    #+#                 */
-/*   Updated: 2019/12/05 08:42:24 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/08 14:23:57 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_lstadd_front(t_list **lst, t_list *new)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
 	if (*lst)
 	{

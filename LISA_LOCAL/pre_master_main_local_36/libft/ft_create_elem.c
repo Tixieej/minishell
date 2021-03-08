@@ -6,15 +6,15 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/08/20 12:23:04 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/09 14:55:52 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/08 14:27:08 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list		*ft_create_elem(void *data)
+t_list	*ft_create_elem(void *data)
 {
-	t_list *list;
+	t_list	*list;
 
 	list = malloc(sizeof(t_list));
 	if (list)

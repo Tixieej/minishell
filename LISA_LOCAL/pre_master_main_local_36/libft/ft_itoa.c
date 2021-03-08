@@ -6,15 +6,15 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/22 17:55:43 by livlamin      #+#    #+#                 */
-/*   Updated: 2019/11/27 09:18:56 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/08 14:27:55 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_times(int length)
+static int	ft_times(int length)
 {
-	int result;
+	int	result;
 
 	result = 1;
 	while (length > 1)
@@ -25,10 +25,10 @@ static int		ft_times(int length)
 	return (result);
 }
 
-static int		ft_length(int n)
+static int	ft_length(int n)
 {
-	int i;
-	int temp;
+	int	i;
+	int	temp;
 
 	i = 0;
 	temp = n;
@@ -42,7 +42,7 @@ static int		ft_length(int n)
 	return (i);
 }
 
-static char		*ft_convert(int length, char *str, int n)
+static char	*ft_convert(int length, char *str, int n)
 {
 	int		x;
 	long	temp;
@@ -61,7 +61,7 @@ static char		*ft_convert(int length, char *str, int n)
 	return (str);
 }
 
-char			*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char	*str;
 	int		length;
