@@ -6,7 +6,7 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/25 14:05:53 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/04 18:25:03 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/08 17:35:59 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,32 +29,28 @@ void	unset(t_command *command, char ***env)
 	int		len_var;
 	int		count;
 	char	**new_env;
-	int j = 0;
+	int		j = 0;
 
-	//printf("*env = %p, env = %p\n", *env, env);
-	//printf("%c \n", ***env);
-	//printf("%s, %p\n", **env, **env);
-	//(void)command;
-	//printf("%s\n", *env[0]);
 	if (!(command->args))
 		return ;
-	var_name = ft_strjoin(command->args->content, "=");
+	var_name = command->args->content;
 	printf("\targ = [%s], var = [%s]\n", command->args->content, var_name);
 	env_var = check_env(*env, var_name);//get the right env variable
 	printf("\tenv_var = [%s]\n", env_var);
 	// check of var in env lijst staat, zonee, ga uit de functie.
 	if (!env_var)
 	{
-		printf("komt niet voor in env\n");
+		printf("\tkomt niet voor in env\n");
 		return ;
 	}
 	count = array_length(*env);
 	new_env = malloc(sizeof(char *) * (count));//null aan einde
-	if (!new_env)
+	if (!new_env)//free hier ook dingen?
 		printf("ERROR\n");
 	new_env[count] = NULL;
 	int i = 0;
 	len_var = ft_strlen(var_name);
+	//while(1);//hierboven zitten geen leaks meer
 	while ((*env)[i+j])
 	{
 		//printf("env %i = %s\n", i+j, (*env)[i + j]);
