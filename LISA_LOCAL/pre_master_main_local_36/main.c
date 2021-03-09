@@ -6,42 +6,11 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/09 11:58:21 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/09 12:41:19 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	start_program(char **env)
-{
-	t_command	*command;
-	t_list		*list;
-	int			result;
-	char		*line;
-
-	command = NULL;
-	list = NULL;
-	result = 1;
-	line = NULL;
-	signal(SIGQUIT, signal_handler);
-	signal(SIGINT, signal_handler);
-	while (result == 1)
-	{
-		prompt();
-		result = get_next_line(0, &line);
-		if (result == -1)
-			error_handler("get next line failed", list, NULL);
-		if (line[0] == '\0')
-			continue ;
-		divide_input(&list, line, 0, 0);
-		parser(&list, env, command);
-		ft_lstclear(&list, free);
-		list = NULL;
-		free(line);
-		line = NULL;
-	}
-	exit(0);
-}
 
 static char	**copy_env(char **env)
 {
@@ -66,13 +35,40 @@ static char	**copy_env(char **env)
 	return (copy);
 }
 
+static void	start_program(char **env, char *line)
+{
+	t_command	*command;
+	t_list		*list;
+	int			result;
+
+	command = NULL;
+	list = NULL;
+	result = 1;
+	signal(SIGQUIT, signal_handler);
+	signal(SIGINT, signal_handler);
+	while (result == 1)
+	{
+		prompt();
+		result = get_next_line(0, &line);
+		if (result == -1)
+			error_handler("get next line failed", list, NULL);
+		if (line[0] == '\0')
+			continue ;
+		divide_input(&list, line, 0, 0);
+		parser(&list, env, command);
+		ft_lstclear(&list, free);
+		list = NULL;
+		free(line);
+		line = NULL;
+	}
+	exit(0);
+}
+
 int	main(int argc, char **argv, char **env)
 {
-	(void)argv; // argv weg?
-	char **cpy_env;
+	char	**cpy_env;
 
-	// if ((cpy_env = copy_env(env)) == NULL)
-	// 	return (-1);
+	(void)argv; //
 	cpy_env = copy_env(env);
 	if (cpy_env == NULL)
 		return (-1);
@@ -81,6 +77,6 @@ int	main(int argc, char **argv, char **env)
 		printf("no arguments needed");
 		return (0);
 	}
-	start_program(cpy_env);
+	start_program(cpy_env, line);
 	return (0);
 }
