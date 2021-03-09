@@ -6,23 +6,21 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/21 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/08 14:14:53 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/09 11:49:44 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	echo(t_command *command, char *temp, char *s, int n_check)
+static char	*create_string(t_command *command, char *s)
 {
 	t_list	*cur_args;
+	char	*temp;
+	int		n_check;
 
 	cur_args = command->args;
-	if (!command->args)
-	{
-		if (write(command->fd_out, "\n", 1) < 0)
-			error_handler("write function failed", NULL, command);
-		return ;
-	}
+	n_check = 0;
+	temp = NULL;
 	s = ft_strdup("");
 	n_check = !ft_strncmp(cur_args->content, "-n", 2);
 	if (n_check == 1)
@@ -39,6 +37,18 @@ void	echo(t_command *command, char *temp, char *s, int n_check)
 	cur_args = command->args;
 	if (ft_strlen(s) != 0 && n_check == 0)
 		s[ft_strlen(s) - 1] = '\n';
+	return (s);
+}
+
+void	echo(t_command *command, char *s)
+{
+	if (!command->args)
+	{
+		if (write(command->fd_out, "\n", 1) < 0)
+			error_handler("write function failed", NULL, command);
+		return ;
+	}
+	s = create_string(command, s);
 	if (write(command->fd_out, s, ft_strlen(s)) < 0)
 		error_handler("write function failed", NULL, command);
 	free(s);
