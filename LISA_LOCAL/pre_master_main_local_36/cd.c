@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:12:48 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/08 11:55:22 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/09 11:37:51 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,31 +38,6 @@ static char	*move_backwards(char *path, int *start)
 	return (path);
 }
 
-static int	alter_env(char **env, char *var, char *path)
-{
-	int		count;
-	int		len_var;
-	char	*temp;
-
-	temp = NULL;
-	len_var = ft_strlen(var);
-	count = 0;
-	while (env[count])
-	{
-		if (!ft_strncmp(env[count], var, len_var))
-		{
-			free(env[count]);
-			env[count] = NULL;
-			temp = ft_strdup("PWD=");
-			env[count] = ft_strjoin(temp, path);
-			free(temp);
-			return (count);
-		}
-		count++;
-	}
-	return (0);
-}
-
 static char	*move_forward(char *path, char *file)
 {
 	struct stat		buffer;
@@ -79,7 +54,22 @@ static char	*move_forward(char *path, char *file)
 		free(temp);
 		return (NULL);
 	}
+	free(file);
+	file = NULL;
 	free(temp);
+	return (path);
+}
+
+char	*backward_check(t_command *command, int len, int *start, char *path)
+{
+	if (command->args->content[*start + len] == '.'
+		&& command->args->content[*start + len + 1] == '.')
+	{
+		if (command->args->content[*start + len + 2] == '.')
+			*start += 2;
+		else
+			path = move_backwards(path, start);
+	}
 	return (path);
 }
 
@@ -101,39 +91,20 @@ static char	*create_new_path(t_command *command,
 			path = move_forward(path, file);
 			if (path == NULL)
 				return (NULL);
-			free(file);
-			file = NULL;
 		}
-		if (command->args->content[start + len] == '.'
-			&& command->args->content[start + len + 1] == '.')
-		{
-			if (command->args->content[start + len + 2] == '.')
-				start += 2;
-			else
-				path = move_backwards(path, &start);
-		}
+		path = backward_check(command, len, &start, path);
 		len++;
 	}
 	return (path);
 }
 
-void	cd(t_command *command, char **env, int count)
+void	cd(t_command *command, char **env, int count, char *path)
 {
-	char	*path;
 	char	*old_path;
 
-	path = NULL;
 	old_path = NULL;
-	if (command->args == NULL)
-	{
-		path = check_env(env, "HOME=");
-		if (path == NULL)
-			printf("minishell: HOME= non-existing\n");
-		if (chdir(path) != 0)
-			printf("minishell: %s: path non-existing\n", path);
-		free(path);
+	if (cd_no_args(command, env, path) == -1)
 		return ;
-	}
 	path = getcwd(NULL, 0);
 	if (path == NULL)
 		error_handler("getcwd failure", NULL, command);
@@ -142,8 +113,10 @@ void	cd(t_command *command, char **env, int count)
 	if (!path)
 		return ;
 	count = alter_env(&(*env), "PWD=", path);
-	if (ft_strncmp(old_path, path, ft_strlen(old_path)) == 0)
-		printf("minshell: %s: No such file or directory\n", command->args->content);
+	if (ft_strncmp(old_path, path, ft_strlen(old_path)) == 0
+		&& ft_strncmp(old_path, path, ft_strlen(path)) == 0)
+		printf("minshell: %s: No such file or directory poep\n",
+			command->args->content);
 	if (chdir(path) != 0)
 		printf("minshell: %s: No such file or directory\n", path);
 	free (path);

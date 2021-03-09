@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/02 16:04:08 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/09 11:05:59 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static void		add_redirection(t_list **cur_lst, t_command **cur_struct)
 
 void			parser(t_list **list, char **env, t_command *command)
 {
-	printf("parser");
 	t_list		*cur_lst;
 	t_command	**cur_struct;
 	int			pipe_check;
