@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/09 12:41:19 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/09 13:09:53 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,6 @@ int	main(int argc, char **argv, char **env)
 		printf("no arguments needed");
 		return (0);
 	}
-	start_program(cpy_env, line);
+	start_program(cpy_env, NULL);
 	return (0);
 }
