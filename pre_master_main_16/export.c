@@ -6,19 +6,19 @@
 /*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 14:03:48 by rde-vrie      #+#    #+#                 */
-/*   Updated: 2021/03/08 14:06:51 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/03/09 12:14:42 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//MALLOC PROTECTIONS
 
 static char	**add_to_array(char **old_array, char *new_arg)
 {
 	char	**new_array;
-	int		count = array_length(old_array) + 2;
+	int		count;
 	int		i;
 
+	count = array_length(old_array) + 2;
 	new_array = (char **)malloc(sizeof(char *) * count);
 	if (!new_array)
 		return (NULL);
@@ -37,14 +37,16 @@ static char	**add_to_array(char **old_array, char *new_arg)
 
 static void	add_var(char *new_arg, char ***env)
 {
-	int		exist = -1;
-	int		i = 0;
+	int		exist;
+	int		i;
 	char	**env_old;
 	char	**env_new;
 	char	*var_old;
 	char	*var_new;
 	size_t	max_len;
 
+	exist = -1;
+	i = 0;
 	while ((*env)[i])
 	{
 		env_old = ft_split((*env)[i], '=');
@@ -121,10 +123,12 @@ void	export_func(t_command *command, char ***env)
 	begin_arg = command->args;
 	while (command->args)
 	{
-		if (ft_isalpha(*(command->args->content)) == 1 || *(command->args->content) == '_')
+		if (ft_isalpha(*(command->args->content)) == 1 || \
+			*(command->args->content) == '_')
 			add_var(command->args->content, env);
 		else
-			printf("minishell: export: `%s': not a valid identifier\n", command->args->content);
+			printf("minishell: export: `%s': not a valid identifier\n", \
+			command->args->content);
 		command->args = command->args->next;
 	}
 	command->args = begin_arg;

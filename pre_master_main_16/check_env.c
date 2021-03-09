@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/04 14:10:50 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/08 17:41:03 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/03/09 16:49:37 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ char        *check_env(char **env, char *var)
 		if (ft_strlen(env[count]) > max_len)
 			max_len = ft_strlen(cur_env[0]);
         if (!ft_strncmp(env[count], var, max_len))
-			return (ft_strdup(&env[count][max_len]));     
+		{
+			free_array(cur_env);
+			return (ft_strdup(&env[count][max_len]));
+		}
         count++;
 		free_array(cur_env);
     }
