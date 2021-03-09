@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/03 11:43:19 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/11 09:27:21 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/09 11:55:14 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <stdlib.h>
 # include "libft/libft.h"
 
-typedef	struct		s_data
+typedef struct s_data
 {
 	char			buf[BUFFER_SIZE + 1];
 	ssize_t			bytes_read;

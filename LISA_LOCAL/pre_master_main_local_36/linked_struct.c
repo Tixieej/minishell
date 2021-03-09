@@ -6,20 +6,20 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/02 16:50:02 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/09 11:56:44 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_command		*ft_clear_linked_struct(t_command *command)
+t_command	*ft_clear_linked_struct(t_command *command)
 {
 	t_list		*cur_args;
 	t_list		*cur_in_red;
 	t_list		*cur_out_red;
 	t_command	*temp;
-	
-	while(command)
+
+	while (command)
 	{
 		cur_args = command->args;
 		cur_in_red = command->in_red;
@@ -41,19 +41,19 @@ t_command		*ft_clear_linked_struct(t_command *command)
 	return (NULL);
 }
 
-t_command		*ft_create_linked_struct(char *data)
+t_command	*ft_create_linked_struct(char *data)
 {
-	t_command *command;
+	t_command	*command;
 
 	command = malloc(sizeof(t_command));
 	if (!command)
 		return (NULL);
 	if (command)
 	{
-        command->program = ft_strdup(data);
+		command->program = ft_strdup(data);
 		command->args = NULL;
-        command->pipe_left = 0;
-        command->pipe_right = 0;
+		command->pipe_left = 0;
+		command->pipe_right = 0;
 		command->fd_in = 0;
 		command->fd_out = 0;
 		command->in_red = NULL;
@@ -63,9 +63,10 @@ t_command		*ft_create_linked_struct(char *data)
 	return (command);
 }
 
-void		ft_struct_push_back(t_command **begin_list, char *data)
+void	ft_struct_push_back(t_command **begin_list, char *data)
 {
 	t_command	*temp;
+
 	temp = *begin_list;
 	if (*begin_list)
 	{

@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/03 11:43:03 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/11 09:27:51 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/09 11:53:46 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t	ft_strlen(const char *str)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (!str)
@@ -40,8 +40,8 @@ void	ft_bzero(void *s, size_t n)
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	unsigned char *dst2;
-	unsigned char *src2;
+	unsigned char	*dst2;
+	unsigned char	*src2;
 
 	dst2 = (unsigned char *)dst;
 	src2 = (unsigned char *)src;
@@ -76,7 +76,7 @@ char	*ft_strdup_gnl(char *line)
 	return (result);
 }
 
-int		ft_strjoin_gnl(t_data *data)
+int	ft_strjoin_gnl(t_data *data)
 {
 	char	*str;
 	size_t	len_temp;

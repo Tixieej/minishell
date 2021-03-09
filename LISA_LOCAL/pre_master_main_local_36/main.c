@@ -6,13 +6,13 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/04 11:50:10 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/09 11:58:21 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
- 
-static void			start_program(char **env)
+
+static void	start_program(char **env)
 {
 	t_command	*command;
 	t_list		*list;
@@ -30,7 +30,7 @@ static void			start_program(char **env)
 		prompt();
 		result = get_next_line(0, &line);
 		if (result == -1)
-		 	error_handler("get next line failed", list, NULL);
+			error_handler("get next line failed", list, NULL);
 		if (line[0] == '\0')
 			continue ;
 		divide_input(&list, line, 0, 0);
@@ -43,7 +43,7 @@ static void			start_program(char **env)
 	exit(0);
 }
 
-static char		**copy_env(char **env)
+static char	**copy_env(char **env)
 {
 	char	**copy;
 	int		count;
@@ -66,9 +66,9 @@ static char		**copy_env(char **env)
 	return (copy);
 }
 
-int		main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
-	(void)argv;
+	(void)argv; // argv weg?
 	char **cpy_env;
 
 	// if ((cpy_env = copy_env(env)) == NULL)
