@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:16:00 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/09 13:51:09 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/10 12:25:07 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,28 @@ int	in_red(t_command *command, t_list *begin)
 	return (0);
 }
 
+void	set_fd(t_command **cur_struct, t_command *command)
+{
+	if (!(ft_strncmp((const char *)
+				(*cur_struct)->out_red->content, ">>", 2)))
+	{
+		(*cur_struct)->out_red = (*cur_struct)->out_red->next;
+		if ((*cur_struct)->out_red)
+			command->fd_out = open((const char *)
+					(*cur_struct)->out_red->content,
+					O_CREAT | O_RDWR | O_APPEND, 0644);
+	}
+	else if (!(ft_strncmp((const char *)
+				(*cur_struct)->out_red->content, ">", 1)))
+	{
+		(*cur_struct)->out_red = (*cur_struct)->out_red->next;
+		if ((*cur_struct)->out_red)
+			command->fd_out = open((const char *)
+					(*cur_struct)->out_red->content,
+					O_CREAT | O_RDWR | O_TRUNC, 0644);
+	}
+}
+
 int	out_red(t_command *command)
 {
 	t_command	**cur_struct;
@@ -50,24 +72,7 @@ int	out_red(t_command *command)
 	cur_struct = &command;
 	while ((*cur_struct)->out_red)
 	{
-		if (!(ft_strncmp((const char *)
-					(*cur_struct)->out_red->content, ">>", 2)))
-		{
-			(*cur_struct)->out_red = (*cur_struct)->out_red->next;
-			if ((*cur_struct)->out_red)
-				command->fd_out = open((const char *)
-						(*cur_struct)->out_red->content,
-						O_CREAT | O_RDWR | O_APPEND, 0644);
-		}
-		else if (!(ft_strncmp((const char *)
-					(*cur_struct)->out_red->content, ">", 1)))
-		{
-			(*cur_struct)->out_red = (*cur_struct)->out_red->next;
-			if ((*cur_struct)->out_red)
-				command->fd_out = open((const char *)
-						(*cur_struct)->out_red->content,
-						O_CREAT | O_RDWR | O_TRUNC, 0644);
-		}
+		set_fd(cur_struct, command);
 		if (command->fd_out < 0)
 		{
 			printf("minishell: %s: No such file or directory\n",
