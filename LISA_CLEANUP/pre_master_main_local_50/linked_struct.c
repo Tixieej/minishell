@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/09 11:56:44 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/10 11:31:46 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_command	*ft_create_linked_struct(char *data)
 		command->pipe_left = 0;
 		command->pipe_right = 0;
 		command->fd_in = 0;
-		command->fd_out = 0;
+		command->fd_out = 1;
 		command->in_red = NULL;
 		command->out_red = NULL;
 		command->next = NULL;
