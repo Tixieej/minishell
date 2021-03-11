@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/06 08:08:06 by livlamin      #+#    #+#                 */
-/*   Updated: 2019/11/27 09:18:56 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/08 14:21:30 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	*ft_calloc(size_t count, size_t size)
 {
-	unsigned char *temp;
+	unsigned char	*temp;
 
 	temp = (unsigned char *)malloc(size * count);
 	if (!temp)

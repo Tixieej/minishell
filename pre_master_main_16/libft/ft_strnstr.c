@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/29 15:43:53 by livlamin      #+#    #+#                 */
-/*   Updated: 2019/11/29 14:42:54 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/08 14:33:51 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	size_t mem;
-	size_t i;
-	size_t j;
+	size_t	mem;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	j = 0;
 	if (needle[0] == '\0')
 		return ((char *)haystack);
-	if (len == 0 || ft_strlen((char *)haystack) < ft_strlen((char*)needle))
+	if (len == 0 || ft_strlen((char *)haystack) < ft_strlen((char *)needle))
 		return (NULL);
 	while (haystack[i] != '\0' && needle[j] != '\0' && len > i)
 	{

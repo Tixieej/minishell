@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/21 13:02:23 by livlamin      #+#    #+#                 */
-/*   Updated: 2019/12/05 08:44:32 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/08 14:35:47 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include <stdlib.h>
 
-typedef struct		s_list
+typedef struct s_list
 {
 	struct s_list	*next;
 	char			*content;
@@ -33,7 +33,7 @@ size_t				ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t				ft_strlcat(char *dst, const char *src, size_t destsize);
 char				*ft_strchr(const char *s, int c);
 char				*ft_strrchr(const char *s, int c);
-char				*ft_strnstr(const char *haystack, const char *needle,\
+char				*ft_strnstr(const char *haystack, const char *needle, \
 								size_t len);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 int					ft_atoi(const char *str);

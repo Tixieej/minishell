@@ -6,21 +6,21 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/23 09:25:31 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/11 12:54:30 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void			prompt(void)
+void	prompt(void)
 {
 	write(1, "\033[38;5;105mminishell: \e[0m", 27);
 }
 
-static int		create_list_item(t_list **list, char *line,
+static int	create_list_item(t_list **list, char *line,
 								size_t *len, unsigned int start)
 {
-	char *temp;
+	char	*temp;
 
 	temp = ft_substr((char const *)line, start, *len);
 	ft_list_push_back(list, temp);
@@ -29,7 +29,7 @@ static int		create_list_item(t_list **list, char *line,
 	return (start);
 }
 
-static int		handle_quotation_marks(t_list **list, char *line,
+static int	handle_quotation_marks(t_list **list, char *line,
 									size_t *len, unsigned int start)
 {
 	if (line[start + *len] == '\'')
@@ -55,7 +55,7 @@ static int		handle_quotation_marks(t_list **list, char *line,
 	return (start);
 }
 
-void			divide_input(t_list **list, char *line,
+void	divide_input(t_list **list, char *line,
 							size_t len, unsigned int start)
 {
 	while (line[start + len] != '\0')
@@ -84,4 +84,3 @@ void			divide_input(t_list **list, char *line,
 		len++;
 	}
 }
-

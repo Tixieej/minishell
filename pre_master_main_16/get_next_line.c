@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/03 11:42:44 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/08 11:51:34 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/03/11 11:11:42 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static int	ft_read(t_data *data, int fd)
 		if (data->temp == '\0')
 		{
 			write(1, "exit\n", 5);
-			exit(3); //exit code moet nog meegegeven worden
+			exit(0);
 		}
 		if (!data->temp)
 		{

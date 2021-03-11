@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/03 11:42:44 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 09:54:42 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/11 13:00:03 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,14 @@ static int	ft_read(t_data *data, int fd)
 	}
 	if (data->bytes_read == 0)
 	{
-		write(1, "  \b\bexit\n", 9);
+		write(1, "  \b\b", 4);
 		if (data->temp)
 			return (1);
 		if (data->temp == '\0')
-			exit(3); //exit code moet nog meegegeven worden
+		{
+			write(1, "exit\n", 5);
+			exit(0);
+		}
 		if (!data->temp)
 		{
 			data->temp = (char *)malloc(sizeof(char) * 1);

@@ -6,14 +6,14 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 16:29:08 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/23 09:34:58 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/11 12:57:03 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h> //
 
-char			**list_to_array(t_list **list)
+char	**list_to_array(t_list **list)
 {
 	int		count;
 	char	**array;
@@ -46,7 +46,7 @@ char			**list_to_array(t_list **list)
 	return (array);
 }
 
-char		**make_path_array(char **envp)
+char	**make_path_array(char **envp)
 {
 	char	**pre_paths;
 	char	**paths;
@@ -59,6 +59,7 @@ char		**make_path_array(char **envp)
 		{
 			pre_paths = ft_split(*tmp, '=');//later misschien de hele env splitten op var en values, dan daaruit de PATH lezen?
 			paths = ft_split(pre_paths[1], ':');
+			free_array(pre_paths);
 		}
 		tmp++;
 	}

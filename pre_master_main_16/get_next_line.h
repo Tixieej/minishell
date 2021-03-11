@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/03 11:43:19 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/02/11 09:27:21 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/11 09:54:26 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # include <stdlib.h>
 # include "libft/libft.h"
 
-typedef	struct		s_data
+typedef struct s_data
 {
 	char			buf[BUFFER_SIZE + 1];
 	ssize_t			bytes_read;
@@ -33,7 +33,6 @@ int					get_next_line(int fd, char **line);
 size_t				ft_strlen(const char *str);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
-// char				*ft_strdup(char *line);
 int					ft_strjoin_gnl(t_data *data);
 
 #endif

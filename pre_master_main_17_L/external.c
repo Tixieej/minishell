@@ -6,13 +6,13 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/25 13:47:08 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/11 12:05:53 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_free(char **array)
+void	free_array(char **array)
 {
 	int i;
 
@@ -42,17 +42,10 @@ void	ft_exec(char *path, t_command cmd, char **env, pid_t process)
 		process = fork();
 	if (process == 0)
 	{
-		printf("\tchild process\n");
-		int i = 0;
-		while (args[i])
-		{
-			printf("\tARGUMENTS: %s\n", args[i]);
-			i++;
-		}
 		if (execve(path, args, env) == -1)
 		{
 			printf("\thoi execve mislukt\n");
-			ft_free(args);
+			free_array(args);
 			free(new_elem);
 			// error_handler("argument", NULL, cmd); <- invullen
 			exit(1);
@@ -61,7 +54,6 @@ void	ft_exec(char *path, t_command cmd, char **env, pid_t process)
 	else
 	{
 		wait(NULL);
-		//ft_free(args); // wat dan?
 		free(new_elem);
 		// sluit fd's af.
 	}
@@ -83,6 +75,7 @@ static void	attach_path(t_command cmd, char **env, pid_t process)
 {
 	char		**paths;
 	char		*path;
+	char		*semi_path;
 	struct stat	buffer;
 	int			i;
 
@@ -95,20 +88,23 @@ static void	attach_path(t_command cmd, char **env, pid_t process)
 	}
 	while (paths[i])
 	{
-		path = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(path, cmd.program);
+		semi_path = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(semi_path, cmd.program);
+		free(semi_path);
 		//cmd.args[0] = path;
 		if (stat(path, &buffer) == 0)
 		{
-			ft_free(paths);
+			free_array(paths);
 			ft_exec(path, cmd, env, process);
+			free(path);
 			return ;
 		}
+		free(path);
 		i++;
 	}
 	if (stat(path, &buffer) != 0)
 		printf("%s: command not found\n", cmd.program);
-	ft_free(paths);
+	free_array(paths);
 }
 
 void	external(t_command *cmd, char **env, pid_t process)

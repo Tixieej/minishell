@@ -6,13 +6,13 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/21 16:45:44 by livlamin      #+#    #+#                 */
-/*   Updated: 2019/12/02 08:55:33 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/08 14:24:10 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
 	t_list	*temp;
 	t_list	*head;

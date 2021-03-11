@@ -6,16 +6,16 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/06 11:00:29 by livlamin      #+#    #+#                 */
-/*   Updated: 2019/12/03 12:44:39 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/08 14:34:28 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_begin(char *s1, char *set)
+static int	ft_begin(char *s1, char *set)
 {
-	int i;
-	int len;
+	int	i;
+	int	len;
 
 	i = 0;
 	len = (int)ft_strlen(set);
@@ -26,9 +26,9 @@ static int		ft_begin(char *s1, char *set)
 	return (i);
 }
 
-static int		ft_end(char *s1, char *set)
+static int	ft_end(char *s1, char *set)
 {
-	int len;
+	int	len;
 	int	i;
 
 	len = (int)ft_strlen(s1);
@@ -41,7 +41,7 @@ static int		ft_end(char *s1, char *set)
 	return (i);
 }
 
-char			*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(char const *s1, char const *set)
 {
 	char	*temp;
 	int		begin;

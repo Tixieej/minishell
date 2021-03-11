@@ -6,16 +6,16 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/19 10:02:17 by livlamin      #+#    #+#                 */
-/*   Updated: 2019/11/28 12:34:15 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/08 14:30:34 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_times(char const *s, char c)
+static int	ft_times(char const *s, char c)
 {
-	int i;
-	int times;
+	int	i;
+	int	times;
 
 	times = 0;
 	i = 0;
@@ -30,7 +30,7 @@ static int		ft_times(char const *s, char c)
 	return (times);
 }
 
-static char		**ft_free(char **result, int x)
+static char	**ft_free(char **result, int x)
 {
 	x--;
 	while (x >= 0)
@@ -42,11 +42,11 @@ static char		**ft_free(char **result, int x)
 	return (NULL);
 }
 
-static char		**ft_to_fill(char **result, char const *s, char c)
+static char	**ft_to_fill(char **result, char const *s, char c)
 {
-	int index;
-	int words;
-	int mem;
+	int	index;
+	int	words;
+	int	mem;
 
 	words = 0;
 	index = 0;
@@ -70,7 +70,7 @@ static char		**ft_to_fill(char **result, char const *s, char c)
 	return (result);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**result;
 	int		times;

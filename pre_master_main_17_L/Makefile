@@ -6,7 +6,7 @@
 #    By: rde-vrie <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/02/13 10:40:20 by rde-vrie      #+#    #+#                  #
-#    Updated: 2021/03/11 09:48:49 by livlamin      ########   odam.nl          #
+#    Updated: 2021/03/11 12:13:19 by rixt          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,8 @@ SRC = main.c \
 		echo.c \
 		cd.c \
 		exit.c \
+		export.c \
+		unset.c \
 		error_handler.c \
 		linked_struct.c \
 		redirection.c \
@@ -38,11 +40,14 @@ OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 CC = gcc
 INC = minishell.h get_next_line.h
+ifdef DEBUG
+CFLAGS += -g -fsanitize=address
+endif
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) -L. -lft -o $(NAME) $(OBJ)
+	$(CC) $(CFLAGS) -L. -lft -o $(NAME) $(OBJ)
 
 $(LIBFT):
 	cd libft && make bonus

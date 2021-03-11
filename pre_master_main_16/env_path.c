@@ -6,7 +6,7 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 16:29:08 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/09 11:30:04 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/11 12:55:07 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**list_to_array(t_list **list)
 	return (array);
 }
 
-char		**make_path_array(char **envp)
+char	**make_path_array(char **envp)
 {
 	char	**pre_paths;
 	char	**paths;

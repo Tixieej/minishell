@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/04 15:11:46 by livlamin      #+#    #+#                 */
-/*   Updated: 2019/11/29 12:46:02 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/08 14:29:00 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {
-	unsigned char *us;
-	unsigned char uc;
+	unsigned char	*us;
+	unsigned char	uc;
 
 	us = (unsigned char *)s;
 	uc = (unsigned char)c;

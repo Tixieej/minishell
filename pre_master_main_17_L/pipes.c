@@ -6,7 +6,7 @@
 /*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 14:20:04 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/11 09:55:09 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/11 12:47:50 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void	link_fd_array(t_command *cur_cmd, int *fd_array, int count)
 	}
 }
 
-pid_t	pipes(char **env, t_command *cmd, pid_t process, int count)
+pid_t	pipes(char ***env, t_command *cmd, pid_t process, int count)
 {
 	t_command	*cur_cmd;
 	int			*fd_array;
