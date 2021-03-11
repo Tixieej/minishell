@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/09 18:52:06 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/11 16:44:42 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_array(char **array)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (array[i] != NULL)
@@ -30,10 +30,10 @@ void	ft_exec(char *path, t_command cmd, char **env, pid_t process)
 	char	**args;
 	t_list	*arglist;
 	t_list	*new_elem;
-	
+
 	arglist = cmd.args;
 	new_elem = ft_create_elem(path);
-	if (!new_elem) //check of malloc gelukt is
+	if (!new_elem)
 		error_handler("malloc failed", NULL, &cmd);
 	ft_lstadd_front(&arglist, new_elem);//list malloct dingen
 	args = list_to_array(&arglist);//args is gemalloct
@@ -82,18 +82,17 @@ static void	attach_path(t_command cmd, char **env, pid_t process)
 	int			i;
 
 	paths = make_path_array(env);
-	i = 0;
-	if (paths == NULL) // dit kan mooier. misschien naar de errorfunctie sluizen?
+	if (paths == NULL)
 	{
-		printf("%s: command not found\n", cmd.program);
+		printf("%s: No such file or directory\n", cmd.program);
 		return ;
 	}
+	i = 0;
 	while (paths[i])
 	{
 		semi_path = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(semi_path, cmd.program);
 		free(semi_path);
-		//cmd.args[0] = path;
 		if (stat(path, &buffer) == 0)
 		{
 			free_array(paths);
@@ -108,7 +107,8 @@ static void	attach_path(t_command cmd, char **env, pid_t process)
 	}
 	if (stat(path, &buffer) != 0)
 		printf("%s: command not found\n", cmd.program);
-	free_array(paths);
+	if (paths)
+		free_array(paths);
 }
 
 void	external(t_command *cmd, char **env, pid_t process)

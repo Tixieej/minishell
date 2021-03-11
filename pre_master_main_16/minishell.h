@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 13:30:24 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/11 17:55:44 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void			exit_func(t_command *command);
 void			env_check(t_command *command, char **env, int len);
 int				cd_no_args(t_command *command, char **env, char *path);
 void			export_func(t_command *command, char ***env);
+int				locate_var(char *cur_env, char *new_arg);
 void			unset(t_command *command, char ***env);
 
 /*

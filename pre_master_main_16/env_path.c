@@ -6,7 +6,7 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 16:29:08 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/11 12:55:07 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/11 16:38:56 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,14 @@ char	**make_path_array(char **envp)
 	char	**paths;
 	char	**tmp;
 
+	paths = NULL;
 	tmp = envp;
 	while (*tmp)
 	{
 		if (ft_strncmp("PATH=", *tmp, 5) == 0)
 		{
-			pre_paths = ft_split(*tmp, '=');//later misschien de hele env splitten op var en values, dan daaruit de PATH lezen?
-			paths = ft_split(pre_paths[1], ':');//free deze twee ook weeer ergens!
+			pre_paths = ft_split(*tmp, '=');
+			paths = ft_split(pre_paths[1], ':');
 			free_array(pre_paths);
 		}
 		tmp++;

@@ -6,7 +6,7 @@
 /*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 14:03:48 by rde-vrie      #+#    #+#                 */
-/*   Updated: 2021/03/09 12:14:42 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/11 17:55:38 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,34 +39,15 @@ static void	add_var(char *new_arg, char ***env)
 {
 	int		exist;
 	int		i;
-	char	**env_old;
-	char	**env_new;
-	char	*var_old;
-	char	*var_new;
-	size_t	max_len;
 
 	exist = -1;
 	i = 0;
-	while ((*env)[i])
+	while ((*env)[i] && exist == -1)
 	{
-		env_old = ft_split((*env)[i], '=');
-		var_old = env_old[0];
-		env_new = ft_split(new_arg, '=');
-		var_new = env_new[0];
-		max_len = ft_strlen(var_old);
-		if (ft_strlen(var_new) > max_len)
-			max_len = ft_strlen(var_new);
-		if (ft_strncmp((*env)[i], new_arg, max_len) == 0)
-		{
-			exist = i;
-			free_array(env_old);
-			free_array(env_new);
-			break ;
-		}
-		free_array(env_old);
-		free_array(env_new);
+		exist = locate_var((*env)[i], new_arg);
 		i++;
 	}
+	i--;
 	if (exist == -1)
 		*env = add_to_array(*env, new_arg);
 	else
@@ -77,6 +58,19 @@ static void	add_var(char *new_arg, char ***env)
 			(*env)[i] = ft_strdup(new_arg);
 		}
 	}
+}
+
+static void	write_one_env(char *var, char *value, char *is_sign)
+{
+	write(1, "declare -x ", 11);
+	write(1, var, ft_strlen(var));
+	if (is_sign)
+	{
+		write(1, "=\"", 2);
+		write(1, value, ft_strlen(value));
+		write(1, "\"", 1);
+	}
+	write(1, "\n", 1);
 }
 
 static void	print_envs(char **env)
@@ -94,15 +88,7 @@ static void	print_envs(char **env)
 		var = cur_env[0];
 		is_sign = ft_strchr(env[i], '=');
 		value = ft_substr(is_sign, 1, ft_strlen(is_sign) - 1);
-		write(1, "declare -x ", 11);
-		write(1, var, ft_strlen(var));
-		if (is_sign)
-		{
-			write(1, "=\"", 2);
-			write(1, value, ft_strlen(value));
-			write(1, "\"", 1);
-		}
-		write(1, "\n", 1);
+		write_one_env(var, value, is_sign);
 		i++;
 		free_array(cur_env);
 		free(value);

@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/25 11:04:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 13:29:45 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/11 14:53:11 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,4 @@ void	error_handler(char *error, t_list *list, t_command *command)
 	if (command)
 		command = ft_clear_linked_struct(command);
 	exit(1);
-}
-
-void	command_not_found(t_command *command, char *error)
-{
-    command->not_found = 127;
-    printf("minishell: %s: command not found\n", error);
 }

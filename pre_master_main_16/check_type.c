@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 17:53:20 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 12:54:09 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/11 15:54:10 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ void 	check_type_two(char ***env, t_command *command, pid_t process)
 		export_func(command, env);
 	else if (ft_strncmp((const char *)cur_struct->program, "unset", 6) == 0)
 		unset(command, env);
-
 	else if (ft_strncmp((const char *)cur_struct->program, "exit", 5) == 0)
 		exit_func(command);
 	else
+	{
 		external(command, *env, process);
+	}
 }
 
 void	check_type(char ***env, t_command *command)
