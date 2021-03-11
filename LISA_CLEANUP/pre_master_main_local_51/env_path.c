@@ -6,12 +6,11 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 16:29:08 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/23 09:34:58 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/11 13:24:06 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h> //
 
 char			**list_to_array(t_list **list)
 {

@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/11 11:30:41 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/11 13:28:04 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,7 @@ static void	attach_path(t_command *cmd, char **env, pid_t process)
 	i = 0;
 	if (paths == NULL) // dit kan mooier. misschien naar de errorfunctie sluizen?
 	{
-		command_not_found(cmd, cmd->program, 127);
-		// printf("%s: command not found\n", cmd->program);
+		command_not_found(cmd, cmd->program, "command not found", 127);
 		return ;
 	}
 	while (paths[i])
@@ -108,8 +107,7 @@ static void	attach_path(t_command *cmd, char **env, pid_t process)
 		i++;
 	}
 	if (stat(path, &buffer) != 0)
-		command_not_found(cmd, cmd->program, 127);
-		// printf("%s: command not found\n", cmd->program);
+		command_not_found(cmd, cmd->program, "command not found", 127);
 	ft_free(paths);
 }
 

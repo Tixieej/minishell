@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:12:48 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 09:38:34 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/11 13:22:41 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*move_backwards(char *path, int *start)
 	return (path);
 }
 
-static char	*move_forward(char *path, char *file)
+static char	*move_forward(t_command *command, char *path, char *file)
 {
 	struct stat		buffer;
 	char			*temp;
@@ -48,7 +48,7 @@ static char	*move_forward(char *path, char *file)
 	path = ft_strjoin(temp, file);
 	if (stat(path, &buffer) == -1)
 	{
-		printf("minishell: %s: Not a directory\n", file);
+		command_not_found(command, file, "No such file or directory", 1);
 		free(file);
 		free(path);
 		free(temp);
@@ -88,7 +88,7 @@ static char	*create_new_path(t_command *command,
 		if (len > 0)
 		{
 			file = ft_substr(command->args->content, start, len);
-			path = move_forward(path, file);
+			path = move_forward(command, path, file);
 			if (path == NULL)
 				return (NULL);
 		}
@@ -115,10 +115,10 @@ void	cd(t_command *command, char **env, int count, char *path)
 	count = alter_env(&(*env), "PWD=", path);
 	if (ft_strncmp(old_path, path, ft_strlen(old_path)) == 0
 		&& ft_strncmp(old_path, path, ft_strlen(path)) == 0)
-		printf("minshell: %s: No such file or directory poep\n",
-			command->args->content);
+		command_not_found(command, command->args->content,
+			"No such file or directory", 1);
 	if (chdir(path) != 0)
-		printf("minshell: %s: No such file or directory\n", path);
+		command_not_found(command, path, "No such file or directory", 1);
 	free (path);
 	free (old_path);
 }

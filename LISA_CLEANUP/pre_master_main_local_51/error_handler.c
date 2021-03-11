@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/25 11:04:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 11:29:43 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/11 13:12:14 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	error_handler(char *error, t_list *list, t_command *command)
 	exit(1);
 }
 
-void	command_not_found(t_command *command, char *error, int value)
+void	command_not_found(t_command *command, char *message, char *error, int value)
 {
 	command->not_found = value;
-	printf("minishell: %s: command not found\n", error);
+	printf("minishell: %s: %s\n", message, error);
 }

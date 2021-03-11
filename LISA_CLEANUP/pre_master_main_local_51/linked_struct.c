@@ -6,11 +6,42 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 11:17:44 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/11 13:01:09 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// t_command	*ft_clear_linked_struct(t_command *command)
+// {
+// 	t_command	*first;
+// 	t_list		*cur_args;
+// 	t_list		*cur_in_red;
+// 	t_list		*cur_out_red;
+// 	t_command	*temp;
+
+// 	first = &command;
+// 	if (command->next)
+// 		command = command->next;
+// 	while (command)
+// 	{
+// 		cur_args = command->args;
+// 		cur_in_red = command->in_red;
+// 		cur_out_red = command->out_red;
+// 		if ((command)->program)
+// 			free(command->program);
+// 		if (cur_args)
+// 			ft_lstclear(&cur_args, free);
+// 		if (cur_in_red != NULL)
+// 			ft_lstclear(&cur_in_red, free);
+// 		if (cur_out_red)
+// 			ft_lstclear(&cur_out_red, free);
+// 		temp = command;
+// 		command = command->next;
+// 		free(temp);
+// 	}
+// 	return (NULL);
+// }
 
 t_command	*ft_clear_linked_struct(t_command *command)
 {
