@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/11 10:02:56 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/09 18:52:06 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,38 +30,34 @@ void	ft_exec(char *path, t_command cmd, char **env, pid_t process)
 	char	**args;
 	t_list	*arglist;
 	t_list	*new_elem;
-
+	
 	arglist = cmd.args;
 	new_elem = ft_create_elem(path);
 	if (!new_elem) //check of malloc gelukt is
 		error_handler("malloc failed", NULL, &cmd);
-	ft_lstadd_front(&arglist, new_elem);
-	args = list_to_array(&arglist);
-	printf("\tthe process id is now [%d]\n", process);
-	if (process > 0) ////later weg
-		printf("\tparent processsss woeps\n"); ////
+	ft_lstadd_front(&arglist, new_elem);//list malloct dingen
+	args = list_to_array(&arglist);//args is gemalloct
+//	printf("\tthe process id is now [%d]\n", process);
 	if (process == -1)
 		process = fork();
 	if (process == 0)
 	{
-		int i = 0;
-		while (args[i])
-		{
-			printf("ARGUMENTS: %s\n", args[i]);
-			i++;
-		}
 		if (execve(path, args, env) == -1)
 		{
-			free_array(args);// moet ik path freeeen?
+			printf("\thoi execve mislukt\n");
+			free_array(args);
 			free(new_elem);
 			// error_handler("argument", NULL, cmd); <- invullen
+			exit(1);
 		}
 	}
 	else
 	{
 		wait(NULL);
-		// ft_free(args); // wat dan?
 		free(new_elem);
+		//if (args != NULL)
+		//	free_array(args);
+		// sluit fd's af.
 	}
 }
 
@@ -81,59 +77,68 @@ static void	attach_path(t_command cmd, char **env, pid_t process)
 {
 	char		**paths;
 	char		*path;
+	char		*semi_path;
 	struct stat	buffer;
 	int			i;
 
-	paths = make_path_array(env);// check_env aanroepen? dan is het een string en geen array.
+	paths = make_path_array(env);
 	i = 0;
 	if (paths == NULL) // dit kan mooier. misschien naar de errorfunctie sluizen?
 	{
-		printf("command not found: %s\n", cmd.program);
+		printf("%s: command not found\n", cmd.program);
 		return ;
 	}
 	while (paths[i])
 	{
-	   path = ft_strjoin(paths[i], "/");
-	   path = ft_strjoin(path, cmd.program);
-	   //cmd.args[0] = path;
-	   if (stat(path, &buffer) == 0)
-	   {
+		semi_path = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(semi_path, cmd.program);
+		free(semi_path);
+		//cmd.args[0] = path;
+		if (stat(path, &buffer) == 0)
+		{
 			free_array(paths);
 			ft_exec(path, cmd, env, process);
+			free(path);
+		//	if (paths != NULL)
+		//		free_array(paths);
 			return ;
-	   }
-	   i++;
+		}
+		free(path);
+		i++;
 	}
-	if (stat(path, &buffer) != 0) //weg?
-	   printf("command not found: %s\n", cmd.program);
+	if (stat(path, &buffer) != 0)
+		printf("%s: command not found\n", cmd.program);
 	free_array(paths);
 }
+
 void	external(t_command *cmd, char **env, pid_t process)
 {
 	int		stdout_fd;
 	int		stdin_fd;
-	
-	/**/ //stukje lisa als je de dup aan zou willen houden /**/
-	// stdout_fd = cmd->fd_out;	
-	//(void)out_fd;
 
-	/**/ //stukje RIXT als je terug wilt naar de oude versie/**/
-	stdout_fd = out_redirect(cmd); // deze had jij ungecomment;
+	stdout_fd = out_redirect(cmd);
 	stdin_fd = in_redirect(cmd);
-
 	if (ft_strchr(cmd->program, '/') != 0)
 		with_path(*cmd, env, process);
 	else
 		attach_path(*cmd, env, process);
-	
-	//if (dup2(STDOUT_FILENO, stdout_fd) < 0)// dit alleen uitvoeren als er redirections zijn?
-	//{//dit zet stdout backup weer terug
-	//  printf("Unable to duplicate file descriptor.");
-		//exit(EXIT_FAILURE); exiten stopt heel minishell, dus hier komt iets anders
-	//}
-	// if (dup2( stdin_fd, STDIN_FILENO) < 0)
-	// {
-	//  printf("Unable to duplicate file descriptor.");
-	//  exit(EXIT_FAILURE);
-	// }
+	//while(1); leaks zitten hiervoor	
+	if (cmd->out_red)// dit kan niet fd_out != 1 zijn
+	{
+		if (dup2(stdout_fd, STDOUT_FILENO) < 0)
+		{
+			printf("Unable to duplicate file descriptor.");
+			//exit(EXIT_FAILURE); exiten stopt heel minishell, dus hier komt iets anders
+		}
+		close(cmd->fd_out);
+	}
+	if (cmd->in_red)
+	{
+		if (dup2(stdin_fd, STDIN_FILENO) < 0)
+		{
+			printf("Unable to duplicate file descriptor.");
+		//	exit(EXIT_FAILURE);
+		}
+		close(cmd->fd_in);
+	}
 }
