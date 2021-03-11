@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:16:00 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 09:50:56 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/11 14:14:40 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	in_red(t_command *command, t_list *begin)
 		}
 		if (command->fd_in < 0)
 		{
-			printf("minishell: %s: No such file or directory\n",
-				(const char *)(*cur_struct)->in_red->content);
+			command_not_found(command, (char *)(*cur_struct)->in_red->content,
+				"No such file or directory", 127);
 			return (-1);
 		}
 		if ((*cur_struct)->in_red->next)
@@ -75,8 +75,8 @@ int	out_red(t_command *command)
 		set_fd(cur_struct, command);
 		if (command->fd_out < 0)
 		{
-			printf("minishell: %s: No such file or directory\n",
-				(const char *)(*cur_struct)->out_red->content);
+			command_not_found(command, (char *)(*cur_struct)->out_red->content,
+			"No such file or directory", 127);
 			return (-1);
 		}
 		if ((*cur_struct)->out_red->next)
