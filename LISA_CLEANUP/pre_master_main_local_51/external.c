@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/25 13:47:08 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/11 11:30:41 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ static void	ft_free(char **array)
 	free(array);
 }
 
-void	ft_exec(char *path, t_command cmd, char **env, pid_t process)
+void	ft_exec(char *path, t_command *cmd, char **env, pid_t process)
 {
 	char	**args;
 	t_list	*arglist;
 	t_list	*new_elem;
 	
-	arglist = cmd.args;
+	arglist = cmd->args;
 	new_elem = ft_create_elem(path);
 	if (!new_elem) //check of malloc gelukt is
-		error_handler("malloc failed", NULL, &cmd);
+		error_handler("malloc failed", NULL, cmd);
 	ft_lstadd_front(&arglist, new_elem);
 	args = list_to_array(&arglist);
 	printf("\tthe process id is now [%d]\n", process);
@@ -67,19 +67,19 @@ void	ft_exec(char *path, t_command cmd, char **env, pid_t process)
 	}
 }
 
-static void	with_path(t_command cmd, char **env, pid_t process)
+static void	with_path(t_command *cmd, char **env, pid_t process)
 {
 	struct stat		buffer;
 	char			*path;
 
-	path = cmd.program;
+	path = cmd->program;
 	if (stat(path, &buffer) == 0)
 		ft_exec(path, cmd, env, process);
 	else
-		printf("no such file or directory: %s\n", cmd.program);
+		printf("no such file or directory: %s\n", cmd->program);
 }
 
-static void	attach_path(t_command cmd, char **env, pid_t process)
+static void	attach_path(t_command *cmd, char **env, pid_t process)
 {
 	char		**paths;
 	char		*path;
@@ -90,14 +90,15 @@ static void	attach_path(t_command cmd, char **env, pid_t process)
 	i = 0;
 	if (paths == NULL) // dit kan mooier. misschien naar de errorfunctie sluizen?
 	{
-		printf("%s: command not found\n", cmd.program);
+		command_not_found(cmd, cmd->program, 127);
+		// printf("%s: command not found\n", cmd->program);
 		return ;
 	}
 	while (paths[i])
 	{
 		path = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(path, cmd.program);
-		//cmd.args[0] = path;
+		path = ft_strjoin(path, cmd->program);
+		//cmd->args[0] = path;
 		if (stat(path, &buffer) == 0)
 		{
 			ft_free(paths);
@@ -107,7 +108,8 @@ static void	attach_path(t_command cmd, char **env, pid_t process)
 		i++;
 	}
 	if (stat(path, &buffer) != 0)
-		printf("%s: command not found\n", cmd.program);
+		command_not_found(cmd, cmd->program, 127);
+		// printf("%s: command not found\n", cmd->program);
 	ft_free(paths);
 }
 
@@ -119,9 +121,9 @@ void	external(t_command *cmd, char **env, pid_t process)
 	stdout_fd = out_redirect(cmd);
 	stdin_fd = in_redirect(cmd);
 	if (ft_strchr(cmd->program, '/') != 0)
-		with_path(*cmd, env, process);
+		with_path(cmd, env, process);
 	else
-		attach_path(*cmd, env, process);
+		attach_path(cmd, env, process);
 	if (cmd->out_red)// dit kan niet fd_out != 1 zijn
 	{
 		if (dup2(stdout_fd, STDOUT_FILENO) < 0)

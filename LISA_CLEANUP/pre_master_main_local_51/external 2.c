@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   external.c                                         :+:    :+:            */
+/*   external 2.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/18 15:20:20 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/11 11:04:47 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ static void		attach_path(t_command cmd, char **env, pid_t process)
 	i = 0;
 	if (paths == NULL) // dit kan mooier. misschien naar de errorfunctie sluizen?
 	{
-		printf("command not found: %s\n", cmd.program);
+		command_not_fount(&cmd, cmd.program);
+		// printf("command not found: %s\n", cmd.program);
 		return ;
 	}
 	while (paths[i])
@@ -105,7 +106,8 @@ static void		attach_path(t_command cmd, char **env, pid_t process)
 		i++;
 	}
 	if (stat(path, &buffer) != 0) //weg?
-		printf("command not found: %s\n", cmd.program);
+		command_not_fount(&cmd, cmd.program);
+		// printf("command not found: %s\n", cmd.program);
 	ft_free(paths);
 }
 

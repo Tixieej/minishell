@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 09:55:40 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/11 11:30:01 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct s_command
 	int					fd_in;
 	int					fd_out;
 	int					pipe_check;
+	int					not_found;
 	t_list				*in_red;
 	t_list				*out_red;
 	struct s_command	*next;
@@ -108,5 +109,10 @@ int				cd_no_args(t_command *command, char **env, char *path);
 ** signals
 */
 void			signal_handler(int sig);
+
+/*
+** error
+*/
+void	command_not_found(t_command *command, char *error, int value);
 
 #endif
