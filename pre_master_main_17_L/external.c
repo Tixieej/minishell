@@ -6,13 +6,13 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/09 18:52:06 by rixt          ########   odam.nl         */
+/*   Updated: 2021/02/25 13:47:08 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_array(char **array)
+static void	ft_free(char **array)
 {
 	int i;
 
@@ -35,17 +35,24 @@ void	ft_exec(char *path, t_command cmd, char **env, pid_t process)
 	new_elem = ft_create_elem(path);
 	if (!new_elem) //check of malloc gelukt is
 		error_handler("malloc failed", NULL, &cmd);
-	ft_lstadd_front(&arglist, new_elem);//list malloct dingen
-	args = list_to_array(&arglist);//args is gemalloct
-//	printf("\tthe process id is now [%d]\n", process);
+	ft_lstadd_front(&arglist, new_elem);
+	args = list_to_array(&arglist);
+	printf("\tthe process id is now [%d]\n", process);
 	if (process == -1)
 		process = fork();
 	if (process == 0)
 	{
+		printf("\tchild process\n");
+		int i = 0;
+		while (args[i])
+		{
+			printf("\tARGUMENTS: %s\n", args[i]);
+			i++;
+		}
 		if (execve(path, args, env) == -1)
 		{
 			printf("\thoi execve mislukt\n");
-			free_array(args);
+			ft_free(args);
 			free(new_elem);
 			// error_handler("argument", NULL, cmd); <- invullen
 			exit(1);
@@ -54,9 +61,8 @@ void	ft_exec(char *path, t_command cmd, char **env, pid_t process)
 	else
 	{
 		wait(NULL);
+		//ft_free(args); // wat dan?
 		free(new_elem);
-		//if (args != NULL)
-		//	free_array(args);
 		// sluit fd's af.
 	}
 }
@@ -77,7 +83,6 @@ static void	attach_path(t_command cmd, char **env, pid_t process)
 {
 	char		**paths;
 	char		*path;
-	char		*semi_path;
 	struct stat	buffer;
 	int			i;
 
@@ -90,25 +95,20 @@ static void	attach_path(t_command cmd, char **env, pid_t process)
 	}
 	while (paths[i])
 	{
-		semi_path = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(semi_path, cmd.program);
-		free(semi_path);
+		path = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(path, cmd.program);
 		//cmd.args[0] = path;
 		if (stat(path, &buffer) == 0)
 		{
-			free_array(paths);
+			ft_free(paths);
 			ft_exec(path, cmd, env, process);
-			free(path);
-		//	if (paths != NULL)
-		//		free_array(paths);
 			return ;
 		}
-		free(path);
 		i++;
 	}
 	if (stat(path, &buffer) != 0)
 		printf("%s: command not found\n", cmd.program);
-	free_array(paths);
+	ft_free(paths);
 }
 
 void	external(t_command *cmd, char **env, pid_t process)
@@ -122,7 +122,6 @@ void	external(t_command *cmd, char **env, pid_t process)
 		with_path(*cmd, env, process);
 	else
 		attach_path(*cmd, env, process);
-	//while(1); leaks zitten hiervoor	
 	if (cmd->out_red)// dit kan niet fd_out != 1 zijn
 	{
 		if (dup2(stdout_fd, STDOUT_FILENO) < 0)
