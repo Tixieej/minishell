@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/15 11:18:02 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/15 13:22:54 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_command
 	int					fd_out;
 	int					pipe_check;
 	int					not_found;
-	// char				*old_pwd;
 	t_list				*in_red;
 	t_list				*out_red;
 	struct s_command	*next;
@@ -52,6 +51,7 @@ t_command		*ft_clear_linked_struct(t_command *command);
 t_command		*ft_clear_linked_struct_deep_shadow(t_command *command); //WEG?
 void			ft_struct_push_back(t_command **begin_list, char *data);
 void			prompt(void);
+void			expansions(t_command *command, char **env);
 
 /*
 ** tokenize functions?
