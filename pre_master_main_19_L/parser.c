@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 13:07:56 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/15 11:02:10 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	add_redirection(t_list **cur_lst, t_command **cur_struct)
 }
 
 void	parser_part_two(t_command **cur_struct, t_list *cur_lst,
-			char **env, t_command *command)
+			char ***env, t_command *command)
 {
 	cur_lst = cur_lst->next;
 	while (cur_lst)
@@ -75,7 +75,7 @@ void	parser_part_two(t_command **cur_struct, t_list *cur_lst,
 	}
 }
 
-int	parser(t_list **list, char **env, t_command *command, int error)
+int	parser(t_list **list, char ***env, t_command *command, int error)
 {
 	t_list		*cur_lst;
 	t_command	**cur_struct;

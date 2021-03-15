@@ -6,15 +6,15 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/11 14:21:57 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/15 09:57:23 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ft_free(char **array)
+void	free_array(char **array)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (array[i] != NULL)
@@ -33,7 +33,7 @@ void	ft_exec(char *path, t_command *cmd, char **env, pid_t process)
 	
 	arglist = cmd->args;
 	new_elem = ft_create_elem(path);
-	if (!new_elem) //check of malloc gelukt is
+	if (!new_elem)
 		error_handler("malloc failed", NULL, cmd);
 	ft_lstadd_front(&arglist, new_elem);
 	args = list_to_array(&arglist);
@@ -42,17 +42,10 @@ void	ft_exec(char *path, t_command *cmd, char **env, pid_t process)
 		process = fork();
 	if (process == 0)
 	{
-		printf("\tchild process\n");
-		int i = 0;
-		while (args[i])
-		{
-			printf("\tARGUMENTS: %s\n", args[i]);
-			i++;
-		}
 		if (execve(path, args, env) == -1)
 		{
 			printf("\thoi execve mislukt\n");
-			ft_free(args);
+			free_array(args);
 			free(new_elem);
 			// error_handler("argument", NULL, cmd); <- invullen
 			exit(1);
@@ -61,8 +54,9 @@ void	ft_exec(char *path, t_command *cmd, char **env, pid_t process)
 	else
 	{
 		wait(NULL);
-		//ft_free(args); // wat dan?
 		free(new_elem);
+		//if (args != NULL)
+		//	free_array(args);
 		// sluit fd's af.
 	}
 }
@@ -83,32 +77,38 @@ static void	attach_path(t_command *cmd, char **env, pid_t process)
 {
 	char		**paths;
 	char		*path;
+	char		*semi_path;
 	struct stat	buffer;
 	int			i;
 
 	paths = make_path_array(env);
 	i = 0;
-	if (paths == NULL) // dit kan mooier. misschien naar de errorfunctie sluizen?
+	if (paths == NULL)
 	{
 		command_not_found(cmd, cmd->program, "command not found", 127);
 		return ;
 	}
 	while (paths[i])
 	{
-		path = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(path, cmd->program);
-		//cmd->args[0] = path;
+		semi_path = ft_strjoin(paths[i], "/");
+		path = ft_strjoin(semi_path, cmd->program);
+		free(semi_path);
 		if (stat(path, &buffer) == 0)
 		{
-			ft_free(paths);
+			free_array(paths);
 			ft_exec(path, cmd, env, process);
+			free(path);
+			//	if (paths != NULL)
+			//		free_array(path);
 			return ;
 		}
+		free(path);
 		i++;
 	}
 	if (stat(path, &buffer) != 0)
 		command_not_found(cmd, cmd->program, "command not found", 127);
-	ft_free(paths);
+	if (paths)
+		free_array(paths);
 }
 
 void	external(t_command *cmd, char **env, pid_t process)

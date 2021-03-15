@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 14:06:53 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/15 11:17:45 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	start_program(char **env, char *line, int error)
 		if (line[0] == '\0')
 			continue ;
 		divide_input(&list, line, 0, 0);
-		error = parser(&list, env, command, error);
+		error = parser(&list, &env, command, error);
 		ft_lstclear(&list, free);
 		list = NULL;
 		free(line);

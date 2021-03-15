@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/04 14:10:50 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 09:58:53 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/15 09:31:51 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,23 @@
 char	*check_env(char **env, char *var)
 {
 	int		count;
-	int		len_var;
+	size_t	max_len;
+	char	**cur_env;
 
-	len_var = ft_strlen(var);
+	max_len = ft_strlen(var);
 	count = 0;
 	while (env[count])
 	{
-		if (!ft_strncmp(env[count], var, len_var))
-			return (ft_strdup(&env[count][len_var]));
+		cur_env = ft_split(env[count], '=');
+		if (ft_strlen(env[count]) > max_len)
+			max_len = ft_strlen(cur_env[0]);
+		if (!ft_strncmp(env[count], var, max_len))
+		{
+			free_array(cur_env);
+			return (ft_strdup(&env[count][max_len]));
+		}
 		count++;
+		free_array(cur_env);
 	}
 	return (NULL);
 }

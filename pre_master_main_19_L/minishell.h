@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 13:13:23 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/15 11:22:15 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <stdio.h>
 # include <signal.h>
 
-typedef struct s_command
+typedef struct	s_command
 {
 	char				*program;
 	t_list				*args;
@@ -63,7 +63,7 @@ void			ft_list_push_back(t_list **begin_list, void *data);
 /*
 ** parse functions
 */
-int			parser(t_list **list, char **env, t_command *command, int error);
+int			parser(t_list **list, char ***env, t_command *command, int error);
 //t_command				*make_command(t_list **list); //
 //void            		non_builtin(t_list *list, char **env);
 char			**list_to_array(t_list **list);
@@ -73,20 +73,22 @@ int				redirection(t_command *command);
 /*
 ** exec
 */
-void			check_type(char **env, t_command *cmd);
-void			check_type_two(char **env, t_command *command, pid_t process);
+void			check_type(char ***env, t_command *cmd);
+void			check_type_two(char ***env, t_command *command, pid_t process);
 int				in_redirect(t_command *cmd);
 int				out_redirect(t_command *cmd);
-pid_t			pipes(char **env, t_command *cmd, pid_t process, int count);
+pid_t			pipes(char ***env, t_command *cmd, pid_t process, int count);
 void			external(t_command *cmd, char **env, pid_t process);
+void			free_array(char **array);
 char			*ft_append_path(char *str);
-void			t_exec(char *path, t_command command, char **env,
+void			ft_exec(char *path, t_command *command, char **env,
 					pid_t process);
 
 /*
 ** env_path.c
 */
 char			**make_path_array(char **envp);
+int				array_length(char **array); //zie unset.c
 
 /*
 ** env_pointers
@@ -104,6 +106,9 @@ void			pwd(t_command *command);
 void			exit_func(t_command *command);
 void			env_check(t_command *command, char **env, int len);
 int				cd_no_args(t_command *command, char **env, char *path);
+void			export_func(t_command *command, char ***env);
+int				locate_var(char *cur_env, char *new_arg);
+void			unset(t_command *command, char ***env);
 
 /*
 ** signals

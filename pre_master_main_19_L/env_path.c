@@ -6,13 +6,13 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/07 16:29:08 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/11 13:24:06 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/15 09:38:49 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char			**list_to_array(t_list **list)
+char	**list_to_array(t_list **list)
 {
 	int		count;
 	char	**array;
@@ -45,19 +45,21 @@ char			**list_to_array(t_list **list)
 	return (array);
 }
 
-char		**make_path_array(char **envp)
+char	**make_path_array(char **envp)
 {
 	char	**pre_paths;
 	char	**paths;
 	char	**tmp;
 
+	paths = NULL;
 	tmp = envp;
 	while (*tmp)
 	{
 		if (ft_strncmp("PATH=", *tmp, 5) == 0)
 		{
-			pre_paths = ft_split(*tmp, '=');//later misschien de hele env splitten op var en values, dan daaruit de PATH lezen?
+			pre_paths = ft_split(*tmp, '=');
 			paths = ft_split(pre_paths[1], ':');
+			free_array(pre_paths);
 		}
 		tmp++;
 	}

@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:16:00 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 14:23:22 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/15 11:14:00 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	set_fd(t_command **cur_struct, t_command *command)
 		if ((*cur_struct)->out_red)
 			command->fd_out = open((const char *)
 					(*cur_struct)->out_red->content,
-					O_CREAT | O_RDWR | O_APPEND, 0644);
+					O_CREAT | O_WRONLY | O_APPEND, 0644);
 	}
 	else if (!(ft_strncmp((const char *)
 				(*cur_struct)->out_red->content, ">", 1)))
@@ -59,7 +59,7 @@ void	set_fd(t_command **cur_struct, t_command *command)
 		if ((*cur_struct)->out_red)
 			command->fd_out = open((const char *)
 					(*cur_struct)->out_red->content,
-					O_CREAT | O_RDWR | O_TRUNC, 0644);
+					O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	}
 }
 
