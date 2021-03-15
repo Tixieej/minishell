@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:12:48 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/15 10:55:51 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/15 11:16:01 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,36 +98,6 @@ static char	*create_new_path(t_command *command,
 	return (path);
 }
 
-// static char	**add_env_to_array(char **old_env, char *old_path)
-// {
-// 	char	**new_env;
-// 	int		count;
-// 	int		path;
-// 	char	*temp;
-
-// 	temp = ft_strdup("OLDPWD=");
-// 	count = 0;
-// 	path = 0;
-// 	while (old_env[count])
-// 		count++;
-// 	new_env = malloc(sizeof(char *) * count + 2);
-// 	if (!new_env)
-// 		return (NULL);
-// 	new_env[count + 1] = NULL;
-// 	while (path < count - 1)
-// 	{
-// 		new_env[path] = ft_strdup(old_env[path]);
-// 		free(old_env[path]);
-// 		path++;
-// 	}
-// 	new_env[path] = ft_strdup(temp);
-// 	free(temp);
-// 	new_env[path] = ft_strjoin(new_env[path], old_path);
-// 	free(old_env[path]);
-// 	// free(temp);
-// 	return (new_env);
-// }
-
 void	set_oldpath(char **env, char *old_path)
 {
 	int		count;
@@ -176,8 +146,6 @@ void	cd(t_command *command, char ***env, int count, char *path)
 	if (chdir(path) != 0)
 		command_not_found(command, path, "No such file or directory\n", 1);
 	set_oldpath(*env, old_path);
-	// set_oldpath(*env, old_path);
-	// *env = add_env_to_array(*env, old_path);
 	free (path);
 	free (old_path);
 }
