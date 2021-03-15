@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/02/23 13:41:53 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/15 17:10:55 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	with_path(t_command cmd, char **env, pid_t process)
 	if (stat(path, &buffer) == 0)
 		ft_exec(path, cmd, env, process);
 	else
-		printf("no such file or directory: %s\n", cmd.program);
+		printf("No such file or directory: %s\n", cmd.program);
 }
 
 static void	attach_path(t_command cmd, char **env, pid_t process)

@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/15 14:45:52 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/03/15 17:18:32 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	ft_exec(char *path, t_command *cmd, char **env, pid_t process)
 	{
 		wait(NULL);
 		free(new_elem);
-		// sluit fd's af.
 	}
 }
 
@@ -67,7 +66,10 @@ static void	with_path(t_command *cmd, char **env, pid_t process)
 	if (stat(path, &buffer) == 0)
 		ft_exec(path, cmd, env, process);
 	else
-		command_not_found(cmd, cmd->program, "No such file or directory", 1);
+	{
+		printf("\twith_path\n");
+		command_not_found(cmd, cmd->program, "No such file or directory", 127);
+	}
 }
 
 static void	attach_path(t_command *cmd, char **env, pid_t process)
@@ -82,7 +84,8 @@ static void	attach_path(t_command *cmd, char **env, pid_t process)
 	i = 0;
 	if (paths == NULL)
 	{
-		command_not_found(cmd, cmd->program, "command not found", 127);
+		printf("\thai attach_path\n");
+		command_not_found(cmd, cmd->program, "No such file or directory", 127);
 		return ;
 	}
 	while (paths[i])
@@ -119,10 +122,12 @@ void	external(t_command *cmd, char **env, pid_t process)
 		attach_path(cmd, env, process);
 	if (cmd->out_red)
 	{
-		if (dup2(stdout_fd, STDOUT_FILENO) < 0)
+		if (dup2(stdout_fd, STDOUT_FILENO) < 0)//
+	//	if (dup2(stdout_fd, -2) < 0)
 		{
-			printf("Unable to duplicate file descriptor.");
-			//exit(EXIT_FAILURE); exiten stopt heel minishell, dus hier komt iets anders
+			dprintf(2, "Unable to duplicate file descriptor.\n");
+			exit(9);
+		//	exit(EXIT_FAILURE); exiten stopt heel minishell, dus hier komt iets anders
 		}
 		close(cmd->fd_out);
 	}
@@ -130,8 +135,8 @@ void	external(t_command *cmd, char **env, pid_t process)
 	{
 		if (dup2(stdin_fd, STDIN_FILENO) < 0)
 		{
-			printf("Unable to duplicate file descriptor.");
-		//	exit(EXIT_FAILURE);
+			dprintf(2, "Unable to duplicate file descriptor.\n");
+			exit(9);
 		}
 		close(cmd->fd_in);
 	}

@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:16:00 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/15 11:14:00 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/03/15 17:08:14 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	in_red(t_command *command, t_list *begin)
 		}
 		if (command->fd_in < 0)
 		{
+			printf("\tdeze dan?\n");
 			command_not_found(command, (char *)(*cur_struct)->in_red->content,
 				"No such file or directory", 1);
 			return (-1);
@@ -75,6 +76,7 @@ int	out_red(t_command *command)
 		set_fd(cur_struct, command);
 		if (command->fd_out < 0)
 		{
+			printf("\tout_red\n");
 			command_not_found(command, (char *)(*cur_struct)->out_red->content,
 				"No such file or directory", 1);
 			return (-1);
