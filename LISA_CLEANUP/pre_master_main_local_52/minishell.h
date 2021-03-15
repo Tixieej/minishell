@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/15 09:50:35 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/15 11:18:02 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ char			**make_path_array(char **envp);
 char			*check_env(char **env, char *var);
 char			*get_pointer_env(char **env, char *var);
 int				alter_env(char **env, char *var, char *path);
+void			set_oldpath(char **env, char *old_path);
 
 /*
 ** builtins

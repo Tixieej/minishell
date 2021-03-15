@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:12:48 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/15 11:16:01 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/15 11:17:35 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,32 +96,6 @@ static char	*create_new_path(t_command *command,
 		len++;
 	}
 	return (path);
-}
-
-void	set_oldpath(char **env, char *old_path)
-{
-	int		count;
-	int		len_var;
-	char	*temp;
-	
-
-	temp = ft_strdup("OLDPWD=");
-	len_var = ft_strlen(old_path);
-	count = 0;
-	while (env[count])
-	{
-		if (!ft_strncmp(env[count], "OLDPWD=", 7))
-		{
-			printf("1: %s\n", env[count]);
-			free(env[count]);
-			env[count] = ft_strjoin(temp, old_path);
-			printf("2: %s\n", env[count]);
-			free(temp);
-			break;
-		}
-		count++;
-	}
-
 }
 
 void	cd(t_command *command, char ***env, int count, char *path)

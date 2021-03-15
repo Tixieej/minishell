@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/04 14:10:50 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 15:13:15 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/15 11:18:51 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,26 @@ int	cd_no_args(t_command *command, char **env, char *path)
 		return (-1);
 	}
 	return (0);
+}
+
+void	set_oldpath(char **env, char *old_path)
+{
+	int		count;
+	int		len_var;
+	char	*temp;
+
+	temp = ft_strdup("OLDPWD=");
+	len_var = ft_strlen(old_path);
+	count = 0;
+	while (env[count])
+	{
+		if (!ft_strncmp(env[count], "OLDPWD=", 7))
+		{
+			free(env[count]);
+			env[count] = ft_strjoin(temp, old_path);
+			free(temp);
+			break ;
+		}
+		count++;
+	}
 }
