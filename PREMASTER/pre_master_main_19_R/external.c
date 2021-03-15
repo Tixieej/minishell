@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/15 09:57:23 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/03/15 11:45:29 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_exec(char *path, t_command *cmd, char **env, pid_t process)
 	char	**args;
 	t_list	*arglist;
 	t_list	*new_elem;
-	
+
 	arglist = cmd->args;
 	new_elem = ft_create_elem(path);
 	if (!new_elem)
@@ -122,7 +122,7 @@ void	external(t_command *cmd, char **env, pid_t process)
 		with_path(cmd, env, process);
 	else
 		attach_path(cmd, env, process);
-	if (cmd->out_red)// dit kan niet fd_out != 1 zijn
+	if (cmd->out_red)
 	{
 		if (dup2(stdout_fd, STDOUT_FILENO) < 0)
 		{
