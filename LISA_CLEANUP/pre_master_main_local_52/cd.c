@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:12:48 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 15:18:00 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/15 10:55:51 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,35 @@ static char	*create_new_path(t_command *command,
 // 	free(temp);
 // 	new_env[path] = ft_strjoin(new_env[path], old_path);
 // 	free(old_env[path]);
-// 	free(temp);
+// 	// free(temp);
 // 	return (new_env);
 // }
+
+void	set_oldpath(char **env, char *old_path)
+{
+	int		count;
+	int		len_var;
+	char	*temp;
+	
+
+	temp = ft_strdup("OLDPWD=");
+	len_var = ft_strlen(old_path);
+	count = 0;
+	while (env[count])
+	{
+		if (!ft_strncmp(env[count], "OLDPWD=", 7))
+		{
+			printf("1: %s\n", env[count]);
+			free(env[count]);
+			env[count] = ft_strjoin(temp, old_path);
+			printf("2: %s\n", env[count]);
+			free(temp);
+			break;
+		}
+		count++;
+	}
+
+}
 
 void	cd(t_command *command, char ***env, int count, char *path)
 {
@@ -136,9 +162,9 @@ void	cd(t_command *command, char ***env, int count, char *path)
 	if (cd_no_args(command, *env, path) == -1)
 		return ;
 	path = getcwd(NULL, 0);
-	if (path == NULL)
-		error_handler("getcwd failure", NULL, command);
 	old_path = ft_strdup(path);
+	if (path == NULL)
+		error_handler("getcwd failure\n", NULL, command);
 	path = create_new_path(command, path, 0, 0);
 	if (!path)
 		return ;
@@ -146,9 +172,11 @@ void	cd(t_command *command, char ***env, int count, char *path)
 	if (ft_strncmp(old_path, path, ft_strlen(old_path)) == 0
 		&& ft_strncmp(old_path, path, ft_strlen(path)) == 0)
 		command_not_found(command, command->args->content,
-			"No such file or directory", 1);
+			"No such file or directory\n", 1);
 	if (chdir(path) != 0)
-		command_not_found(command, path, "No such file or directory", 1);
+		command_not_found(command, path, "No such file or directory\n", 1);
+	set_oldpath(*env, old_path);
+	// set_oldpath(*env, old_path);
 	// *env = add_env_to_array(*env, old_path);
 	free (path);
 	free (old_path);

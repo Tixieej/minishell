@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/08 12:03:58 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 13:01:45 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/15 11:01:02 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,35 @@ void			print_cur_struct(t_command *command)
 // 		cur_struct = &(*cur_struct)->next;
 // 	}
 // 	cur_struct = &command;
+// }
+
+
+// static char	**add_env_to_array(char **old_env, char *old_path)
+// {
+// 	char	**new_env;
+// 	int		count;
+// 	int		path;
+// 	char	*temp;
+
+// 	temp = ft_strdup("OLDPWD=");
+// 	count = 0;
+// 	path = 0;
+// 	while (old_env[count])
+// 		count++;
+// 	new_env = malloc(sizeof(char *) * count + 2);
+// 	if (!new_env)
+// 		return (NULL);
+// 	new_env[count + 1] = NULL;
+// 	while (path < count - 1)
+// 	{
+// 		new_env[path] = ft_strdup(old_env[path]);
+// 		free(old_env[path]);
+// 		path++;
+// 	}
+// 	new_env[path] = ft_strdup(temp);
+// 	free(temp);
+// 	new_env[path] = ft_strjoin(new_env[path], old_path);
+// 	free(old_env[path]);
+// 	// free(temp);
+// 	return (new_env);
 // }
