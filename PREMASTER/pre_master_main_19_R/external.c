@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/15 11:45:29 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/03/15 14:45:52 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,32 +31,29 @@ void	ft_exec(char *path, t_command *cmd, char **env, pid_t process)
 	t_list	*arglist;
 	t_list	*new_elem;
 
+	args = NULL;
 	arglist = cmd->args;
 	new_elem = ft_create_elem(path);
 	if (!new_elem)
 		error_handler("malloc failed", NULL, cmd);
 	ft_lstadd_front(&arglist, new_elem);
-	args = list_to_array(&arglist);
-	printf("\tthe process id is now [%d]\n", process);
 	if (process == -1)
 		process = fork();
 	if (process == 0)
 	{
+		args = list_to_array(&arglist);
 		if (execve(path, args, env) == -1)
 		{
-			printf("\thoi execve mislukt\n");
+			command_not_found(cmd, cmd->program, "is a directory", 126);
 			free_array(args);
 			free(new_elem);
-			// error_handler("argument", NULL, cmd); <- invullen
-			exit(1);
+			exit(126);
 		}
 	}
 	else
 	{
 		wait(NULL);
 		free(new_elem);
-		//if (args != NULL)
-		//	free_array(args);
 		// sluit fd's af.
 	}
 }
@@ -98,8 +95,6 @@ static void	attach_path(t_command *cmd, char **env, pid_t process)
 			free_array(paths);
 			ft_exec(path, cmd, env, process);
 			free(path);
-			//	if (paths != NULL)
-			//		free_array(path);
 			return ;
 		}
 		free(path);

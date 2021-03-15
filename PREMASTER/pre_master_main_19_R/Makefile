@@ -6,7 +6,7 @@
 #    By: rde-vrie <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/02/13 10:40:20 by rde-vrie      #+#    #+#                  #
-#    Updated: 2021/03/15 09:23:49 by rde-vrie      ########   odam.nl          #
+#    Updated: 2021/03/15 13:18:33 by rde-vrie      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,11 +41,14 @@ OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 CC = gcc
 INC = minishell.h get_next_line.h
+ifndef DEBUG
+	CFLAGS += -g -fsanitize=address
+endif
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) -L. -lft -o $(NAME) $(OBJ)
+	$(CC) $(CFLAGS) -L. -lft -o $(NAME) $(OBJ)
 
 $(LIBFT):
 	cd libft && make bonus
