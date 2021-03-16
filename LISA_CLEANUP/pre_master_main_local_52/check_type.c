@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 17:53:20 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/15 14:13:58 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/16 15:09:36 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void 	check_type_two(char ***env, t_command *command, pid_t process)
 		 == 0 || ft_strncmp((const char *)cur_struct->args->content,
 		 	(const char *)"$", 1) == 0) // betere comparisson
 		expansions(command, *env);
-	else if (ft_strncmp((const char *)cur_struct->program, "echo", 5) == 0)
+	if (ft_strncmp((const char *)cur_struct->program, "echo", 5) == 0)
 		echo(command, NULL);
 	else if (ft_strncmp((const char *)cur_struct->program, "cd", 3) == 0)
 		cd(command, env, 0, NULL);
