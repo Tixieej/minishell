@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   env_path.c                                         :+:    :+:            */
+/*   array_functions.c                                  :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/01/07 16:29:08 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/15 09:38:49 by rde-vrie      ########   odam.nl         */
+/*   Created: 2021/03/16 11:37:51 by rixt          #+#    #+#                 */
+/*   Updated: 2021/03/16 14:57:14 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**list_to_array(t_list **list)
+void	free_array(char **array)
 {
-	int		count;
-	char	**array;
-	int		i;
-	t_list	*current;
+	int	i;
 
-	if (!(*list) || !((*list)->content))// klopt dit?
-	{
-		array = (char **)malloc(sizeof(char *));
-		array[0] = NULL;
-		return (array);
-	}
-	current = *list;
-	count = 0;
-	while (current)// misschien met list lopen maar dan met de kopie begin;
-	{
-		current = current->next; //
-		count++;
-	}
-	array = (char **)malloc(sizeof(char *) * (count + 1)); //wordt gefreed in ft_exec
 	i = 0;
-	current = *list;
+	while (array[i] != NULL)
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
+static char	**fill_array(char **array, int count, t_list *current)
+{
+	int		i;
+
+	array = (char **)malloc(sizeof(char *) * (count + 1));
+	i = 0;
 	while (i < count)
 	{
 		array[i] = (char *)current->content;
@@ -42,6 +38,31 @@ char	**list_to_array(t_list **list)
 		i++;
 	}
 	array[i] = NULL;
+	return (array);
+}
+
+char	**list_to_array(t_list *list)
+{
+	int		count;
+	char	**array;
+	t_list	*current;
+
+	array = NULL;
+	if (!list || !(list->content))
+	{
+		array = (char **)malloc(sizeof(char *));
+		array[0] = NULL;
+		return (array);
+	}
+	current = list;
+	count = 0;
+	while (current)
+	{
+		current = current->next;
+		count++;
+	}
+	current = list;
+	array = fill_array(array, count, current);
 	return (array);
 }
 

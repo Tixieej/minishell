@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/15 11:02:10 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/03/16 15:09:06 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	parser(t_list **list, char ***env, t_command *command, int error)
 	command->not_found = error;
 	parser_part_two(cur_struct, cur_lst, env, command);
 	cur_lst = *list;
-	// print_cur_struct(command); // weg !!
 	if (command->pipe_check > 0)
 		cur_struct = &command;
 	check_type(env, *cur_struct);

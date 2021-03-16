@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/15 11:17:45 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/03/16 15:03:14 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(int argc, char **argv, char **env)
 {
 	char	**cpy_env;
 
-	(void)argv; //
+	(void)argv;
 	cpy_env = copy_env(env);
 	if (cpy_env == NULL)
 		return (-1);

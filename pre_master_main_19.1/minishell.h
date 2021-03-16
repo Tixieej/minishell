@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/15 11:22:15 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/03/16 15:08:13 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <stdio.h>
 # include <signal.h>
 
-typedef struct	s_command
+typedef struct s_command
 {
 	char				*program;
 	t_list				*args;
@@ -63,10 +63,10 @@ void			ft_list_push_back(t_list **begin_list, void *data);
 /*
 ** parse functions
 */
-int			parser(t_list **list, char ***env, t_command *command, int error);
+int				parser(t_list **list, char ***env, t_command *command, \
+		int error);
 //t_command				*make_command(t_list **list); //
 //void            		non_builtin(t_list *list, char **env);
-char			**list_to_array(t_list **list);
 //void					ft_lstadd_front(t_list **lst, t_list *new);
 int				redirection(t_command *command);
 
@@ -79,16 +79,19 @@ int				in_redirect(t_command *cmd);
 int				out_redirect(t_command *cmd);
 pid_t			pipes(char ***env, t_command *cmd, pid_t process, int count);
 void			external(t_command *cmd, char **env, pid_t process);
-void			free_array(char **array);
+void			with_path(t_command *cmd, char **env, pid_t process);
+void			without_path(t_command *cmd, char **env, pid_t process);
 char			*ft_append_path(char *str);
 void			ft_exec(char *path, t_command *command, char **env,
 					pid_t process);
 
 /*
-** env_path.c
+** array_functions.c
 */
 char			**make_path_array(char **envp);
-int				array_length(char **array); //zie unset.c
+int				array_length(char **array);
+void			free_array(char **array);
+char			**list_to_array(t_list *list);
 
 /*
 ** env_pointers
@@ -118,6 +121,7 @@ void			signal_handler(int sig);
 /*
 ** error
 */
-void			command_not_found(t_command *command, char *message, char *error, int value);
+void			command_not_found(t_command *command, char *message, \
+		char *error, int value);
 
 #endif

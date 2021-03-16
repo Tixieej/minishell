@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/03 11:43:19 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 09:54:26 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/16 15:30:44 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ size_t				ft_strlen(const char *str);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
 int					ft_strjoin_gnl(t_data *data);
+void				end_program(void);
 
 #endif

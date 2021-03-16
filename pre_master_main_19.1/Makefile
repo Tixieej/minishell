@@ -6,7 +6,7 @@
 #    By: rde-vrie <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/02/13 10:40:20 by rde-vrie      #+#    #+#                  #
-#    Updated: 2021/03/15 13:18:33 by rde-vrie      ########   odam.nl          #
+#    Updated: 2021/03/16 15:31:25 by rixt          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,12 @@ LIBFT = libft.a
 SRC = main.c \
 		get_next_line.c \
 		get_next_line_utils.c \
+		gnl_2.c \
 		divide_input.c \
 		parser.c \
 		external.c \
-		env_path.c \
+		external_2.c \
+		array_functions.c \
 		check_type.c \
 		echo.c \
 		cd.c \
@@ -41,9 +43,6 @@ OBJ = $(SRC:.c=.o)
 CFLAGS = -Wall -Werror -Wextra
 CC = gcc
 INC = minishell.h get_next_line.h
-ifndef DEBUG
-	CFLAGS += -g -fsanitize=address
-endif
 
 all: $(NAME)
 
