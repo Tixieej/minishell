@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/03 11:42:44 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/16 15:29:31 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/16 16:07:28 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static int	ft_read(t_data *data, int fd)
 		if (data->temp)
 			return (1);
 		if (data->temp == '\0')
-			end_program(void);
+			end_program();
 		if (!data->temp)
 		{
 			data->temp = (char *)malloc(sizeof(char) * 1);

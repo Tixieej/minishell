@@ -6,9 +6,11 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 15:29:41 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/16 15:29:49 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/16 16:07:59 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 void	end_program(void)
 {

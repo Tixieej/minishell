@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 09:42:10 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/16 16:00:04 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	prompt(void)
 {
-	write(1, "\033[38;5;105mminishell: \e[0m", 27);
+	write(2, "\033[38;5;105mminishell: \e[0m", 27);
 }
 
 static int	create_list_item(t_list **list, char *line,

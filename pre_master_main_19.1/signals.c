@@ -6,7 +6,7 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/04 17:20:58 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/16 15:34:52 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/16 16:14:47 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	signal_handler(int sig)
 	{
 		write(1, "\b\b  \b\b", 6);
 		write(1, "\n", 1);
-		prompt();
 	}
 	if (sig == SIGQUIT)
 		write(1, "\b\b  \b\b", 6);
