@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/25 11:04:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 14:07:42 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/18 11:42:37 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	error_handler(char *error, t_list *list, t_command *command)
 {
-	write(1, "minishell: ", 11);
-	write(1, error, ft_strlen(error));
+	write(2, "minishell: ", 11);
+	write(2, error, ft_strlen(error));
 	if (list)
 	{
 		ft_lstclear(&list, free);
@@ -30,5 +30,9 @@ void	command_not_found(t_command *command,
 			char *message, char *error, int value)
 {
 	command->not_found = value;
-	printf("minishell: %s: %s\n", message, error);
+	write(2, "minishell: ", 11);
+	write(2, message, ft_strlen(message));
+	write(2, ": ", 2);
+	write(2, error, ft_strlen(error));
+	write(2, "\n", 1);
 }

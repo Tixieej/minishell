@@ -6,7 +6,7 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/25 14:05:53 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/09 17:11:13 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/18 11:05:36 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,17 @@ static char	**make_new_env(char **new_env, char *var_name, char ***env)
 	return (new_env);
 }
 
-void	unset(t_command *command, char ***env)
+void	unset_var(t_command *command, char ***env)
 {
 	char	*var_name;
 	char	*env_var;
 	int		count;
 	char	**new_env;
 
-	if (!(command->args))
-		return ;
 	var_name = command->args->content;
 	env_var = check_env(*env, var_name);
 	if (!env_var)
-	{
-		printf("\tkomt niet voor in env\n");
 		return ;
-	}
 	free(env_var);
 	count = array_length(*env);
 	new_env = malloc(sizeof(char *) * (count));
@@ -69,4 +64,33 @@ void	unset(t_command *command, char ***env)
 	new_env = make_new_env(new_env, var_name, env);
 	free_array(*env);
 	*env = new_env;
+}
+
+void	unset(t_command *command, char ***env)
+{
+	char	*tmp;
+	char	*message;
+	t_list	*begin_arg;
+
+	tmp = NULL;
+	message = NULL;
+	if (!(command->args))
+		return ;
+	begin_arg = command->args;
+	while (command->args)
+	{
+		if (ft_isalpha(*(command->args->content)) == 1 || \
+			*(command->args->content) == '_')
+			unset_var(command, env);
+		else
+		{
+			tmp = ft_strjoin("unset: `", command->args->content);
+			message = ft_strjoin(tmp, "'");
+			command_not_found(command, message, "not a valid identifier", 1);
+			free(message);
+			free(tmp);
+		}
+		command->args = command->args->next;
+	}
+	command->args = begin_arg;
 }

@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/16 14:59:09 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/18 11:34:13 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	dup_back(t_command *cmd, int stdout_fd, int stdin_fd)
 	{
 		if (dup2(stdout_fd, STDOUT_FILENO) < 0)
 		{
-			dprintf(2, "Unable to duplicate file descriptor.\n");
+			write(2, "Unable to duplicate file descriptor.\n", 37);
 			exit(9);
 		}
 		close(cmd->fd_out);
@@ -59,7 +59,7 @@ static void	dup_back(t_command *cmd, int stdout_fd, int stdin_fd)
 	{
 		if (dup2(stdin_fd, STDIN_FILENO) < 0)
 		{
-			dprintf(2, "Unable to duplicate file descriptor.\n");
+			write(2, "Unable to duplicate file descriptor.\n", 37);
 			exit(9);
 		}
 		close(cmd->fd_in);

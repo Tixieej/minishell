@@ -6,7 +6,7 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 15:29:41 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/16 16:07:59 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/18 10:06:54 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	end_program(void)
 {
-	write(1, "exit\n", 5);
+	write(2, "exit\n", 5);
 	exit(0);
 }

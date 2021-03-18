@@ -6,7 +6,7 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/09 11:00:21 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/11 14:08:04 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/18 11:32:24 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	exit_func(t_command *cmd)
 	int		argnum;
 
 	num = 0;
-	write(1, "exit\n", 5);
+	write(2, "exit\n", 5);
 	argnum = ft_lstsize(cmd->args);
 	if (argnum != 0)
 	{
@@ -47,7 +47,7 @@ void	exit_func(t_command *cmd)
 		{
 			if (argnum >= 2)
 			{
-				printf("exit: too many arguments\n");
+				write(2, "minishell: exit: too many arguments\n", 36);
 				return ;
 			}
 			num = ft_atoi(cmd->args->content);
