@@ -49,7 +49,6 @@ void    expansions(t_command *command, char **env)
     count = 0;
     cur_struct = command;
     cur_lst = command->args;
-    // printf("")
     if (ft_strncmp((const char *)cur_struct->program, "$?", 3) == 0)
         printf("minishell: %d command not found\n", command->not_found);	
     while (cur_struct->args)
@@ -67,10 +66,8 @@ void    expansions(t_command *command, char **env)
                 {
                     if (ft_strncmp(env[count], temp, len) == 0)
                     {
-                        printf("curlist %s\n", cur_lst->content);
                         free(cur_lst->content);
                         cur_lst->content = ft_strdup(env[count]);
-                        printf("twee %s\n", cur_lst->content);
                         break ;
                     }
                     count++;
