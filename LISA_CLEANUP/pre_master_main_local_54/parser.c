@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/18 09:26:21 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/18 10:14:37 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,37 @@ static void	add_redirection(t_list **cur_lst, t_command **cur_struct)
 	}
 }
 
+static void	expansions(t_list *cur_lst, char **env)
+{
+	int		count;
+	int		len;
+	char	*temp;
+
+	count = 0;
+	temp = NULL;
+	len = ft_strlen(cur_lst->content) - 1;
+	if (cur_lst->content[0] == '$' && cur_lst->content[1] == '?')
+		return ;
+	while (env[count])
+	{
+		if (ft_strncmp(env[count], &cur_lst->content[1], len) == 0)
+		{
+			temp = ft_strdup(&cur_lst->content[1]);
+			free(cur_lst->content);
+			cur_lst->content = ft_strdup(&env[count][len + 1]);
+			free(temp);
+		}
+		count++;
+	}
+}
+
 void	parser_part_two(t_command **cur_struct, t_list *cur_lst,
 			char ***env, t_command *command)
 {
-	cur_lst = cur_lst->next;
 	while (cur_lst)
 	{
+		if (*cur_lst->content == '$')
+			expansions(cur_lst, *env);
 		if (*cur_lst->content == ';')
 		{
 			check_type(env, *cur_struct);
@@ -84,6 +109,7 @@ int	parser(t_list **list, char ***env, t_command *command, int error)
 	cur_struct = &command;
 	ft_struct_push_back(&command, (char *)cur_lst->content);
 	command->not_found = error;
+	cur_lst = cur_lst->next;
 	parser_part_two(cur_struct, cur_lst, env, command);
 	cur_lst = *list;
 	// print_cur_struct(command); // weg !!
