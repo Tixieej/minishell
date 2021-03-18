@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:12:48 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/18 15:06:07 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/18 20:49:50 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	cd(t_command *command, char ***env, int count, char *path)
 	path = getcwd(NULL, 0);
 	old_path = ft_strdup(path);
 	if (path == NULL)
-		error_handler("getcwd failure\n", NULL, command);
+		error_handler("getcwd failure\n", NULL, command, 1);
 	path = create_new_path(command, path, 0, 0);
 	if (!path)
 	{

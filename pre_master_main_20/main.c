@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/18 11:49:41 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/18 15:57:43 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	start_program(char **env, char *line, int error)
 		prompt();
 		result = get_next_line(0, &line);
 		if (result == -1)
-			error_handler("get next line failed", list, NULL);
+			error_handler("get next line failed", list, NULL, 1);
 		if (line[0] == '\0')
 			continue ;
 		divide_input(&list, line, 0, 0);
@@ -68,13 +68,13 @@ int	main(int argc, char **argv, char **env)
 {
 	char	**cpy_env;
 
-	(void)argv; //
+	(void)argv;
 	cpy_env = copy_env(env);
 	if (cpy_env == NULL)
 		return (-1);
 	if (argc != 1)
 	{
-		printf("no arguments needed");
+		write(2, "no arguments needed\n", 20);
 		return (0);
 	}
 	start_program(cpy_env, NULL, 0);

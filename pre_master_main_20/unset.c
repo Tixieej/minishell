@@ -6,7 +6,7 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/25 14:05:53 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/18 13:25:35 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/18 15:13:21 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	**make_new_env(char **new_env, char *var_name, char ***env)
 	return (new_env);
 }
 
-void	unset_var(t_command *command, char ***env)
+static void	unset_var(t_command *command, char ***env)
 {
 	char	*var_name;
 	char	*env_var;

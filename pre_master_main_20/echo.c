@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/21 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 09:42:35 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/18 20:43:16 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ void	echo(t_command *command, char *s)
 	if (!command->args)
 	{
 		if (write(command->fd_out, "\n", 1) < 0)
-			error_handler("write function failed\n", NULL, command);
+			error_handler("write function failed\n", NULL, command, errno);
 		return ;
 	}
 	s = create_string(command, s);
 	if (write(command->fd_out, s, ft_strlen(s)) < 0)
-		error_handler("write function failed\n", NULL, command);
+		error_handler("write function failed\n", NULL, command, errno);
 	free(s);
 }

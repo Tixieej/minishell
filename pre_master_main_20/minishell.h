@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/18 12:01:14 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/18 15:53:47 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <signal.h>
+# include <sys/errno.h>
+
+int errno;
 
 typedef struct s_command
 {
@@ -45,7 +48,7 @@ typedef struct s_command
 void			print_cur_struct(t_command *command);
 
 int				main(int argc, char **argv, char **env);
-void			error_handler(char *error, t_list *list, t_command *cmd);
+void			error_handler(char *error, t_list *list, t_command *command, int value);
 t_command		*ft_create_linked_struct(char *data);
 t_command		*ft_clear_linked_struct(t_command *command);
 t_command		*ft_clear_linked_struct_deep_shadow(t_command *command); //WEG?

@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 14:20:04 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/18 11:52:34 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/18 20:55:25 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ static int	*ft_create_fd_array(t_command *cmd, int *fd_array)
 	fd_array = malloc(sizeof(int) * (times * 2) + 1);
 	fd_array[times * 2] = -1;
 	if (!fd_array)
-		error_handler("malloc failed in pipes", NULL, cmd);
+		error_handler("malloc failed in pipes", NULL, cmd, 1);
 	while (count < times)
 	{
 		if (pipe(fd_array + (count * 2)) < 0)
 		{
 			free(fd_array);
-			error_handler("pipe failed", NULL, cmd);
+			error_handler("pipe failed", NULL, cmd, 1);
 		}
 		count++;
 	}

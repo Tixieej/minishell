@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/18 13:14:02 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/18 19:10:56 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_exec(char *path, t_command *cmd, char **env, pid_t process)
 	arglist = cmd->args;
 	new_elem = ft_create_elem(path);
 	if (!new_elem)
-		error_handler("malloc failed", NULL, cmd);
+		error_handler("malloc failed", NULL, cmd, 12);
 	ft_lstadd_front(&arglist, new_elem);
 	if (process == -1)
 		process = fork();

@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: Invalid date        by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/11 09:50:33 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/18 20:54:47 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	pwd(t_command *command)
 	path = NULL;
 	old_path = getcwd(NULL, 0);
 	if (old_path == NULL)
-		error_handler("pwd failure", NULL, command);
+		error_handler("pwd failure", NULL, command, 1);
 	path = ft_strjoin(old_path, "\n");
 	if (write(STDOUT_FILENO, path, ft_strlen(path)) < 0)
-		error_handler("pwd write error", NULL, command);
+		error_handler("pwd write error", NULL, command, errno);
 	free(old_path);
 	free(path);
 	path = NULL;

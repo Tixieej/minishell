@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/18 11:54:19 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/18 19:06:16 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static int	handle_quotation_marks(t_list **list, char *line,
 		while (!ft_strchr("\'\0", line[start + *len]))
 			(*len)++;
 		if (line[start + *len] != '\'')
-			error_handler("missing quotation marks\n", *list, NULL);
+			command_not_found(NULL, "syntax error", "missing quotation marks", 258);
+			//error_handler("missing quotation marks\n", *list, NULL, 258);
 		start = create_list_item(list, line, len, start);
 		(*len)++;
 	}
@@ -48,7 +49,8 @@ static int	handle_quotation_marks(t_list **list, char *line,
 		while (!ft_strchr("\"\0", line[start + *len]))
 			(*len)++;
 		if (line[start + *len] != '\"')
-			error_handler("missing quotation marks\n", *list, NULL);
+			command_not_found(NULL, "syntax error", "missing quotation marks", 258);
+			//error_handler("missing quotation marks\n", *list, NULL, 258);
 		start = create_list_item(list, line, len, start);
 		(*len)++;
 	}
@@ -69,7 +71,7 @@ void	divide_input(t_list **list, char *line,
 				len++;
 		}
 		if (!ft_strncmp(&line[start + len], ">>>", 3))
-			error_handler("error near unexpected token`>'\n", *list, NULL);
+			command_not_found(NULL, "syntax error near unexpected token `>'\n", NULL, 258);
 		if (ft_strchr("' '<''>''\0'", line[start + len]))
 		{
 			if (len < 1 && line[start + len + 1] == '>')
