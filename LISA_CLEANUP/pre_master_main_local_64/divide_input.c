@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/22 13:43:01 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/22 15:02:46 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,24 +40,24 @@ static int	handle_quotation_marks(t_list **list, char *line,
 	if (line[start + *len] == '\'')
 	{
 		start++;
-		while (!ft_strchr("\'\0", line[start + *len]))
+		while (!ft_strchr("\''\0'", line[start + *len]))
 			(*len)++;
 		if (line[start + *len] != '\'')
 			error_handler("missing quotation marks\n", *list, NULL);
-		start = create_list_item(list, line, len, start);
+		start = create_list_item(list, line, len, start + 1);
 		(*len)++;
 	}
 	else if (line[start + *len] == '\"')
 	{
 		start++;
-		while (!ft_strchr("\"\0", line[start + *len]))
+		while (!ft_strchr("\"'\0'", line[start + *len + 1]))
 			(*len)++;
-		if (line[start + *len] != '\"')
+		if (line[start + *len + 1] != '\"')
 			error_handler("missing quotation marks\n", *list, NULL);
+		start++;
 		start = create_list_item(list, line, len, start);
-		(*len)++;
 	}
-	return (start);
+	return (start + 1);
 }
 
 void	divide_input(t_list **list, char *line,
@@ -67,15 +67,17 @@ void	divide_input(t_list **list, char *line,
 	{
 		while (line[start + len] == ' ' && line[start + len] != '\0')
 			start++;
-		if (!ft_strchr("'<''>'\'\"'\0'';'", line[start + len]))
+		if (!ft_strchr("' ''<''>'\'\"'\0'';'", line[start + len]))
 		{
 			start += len;
-			while (!ft_strchr("';''<''>' \'\"'\0'", line[start + len]))
+			while (!ft_strchr("' '';''<''>' \'\"'\0'", line[start + len]))
 				len++;
 		}
 		if (!ft_strncmp(&line[start + len], ">>>", 3))
 			error_handler("error near unexpected token`>'\n", *list, NULL);
-		if (ft_strchr("';'' '<''>''\0'", line[start + len]))
+		if (ft_strchr("\'\"", line[start + len]))
+			start = handle_quotation_marks(list, line, &len, start);
+		if (ft_strchr("';'' ''<''>''\0'", line[start + len]))
 		{
 			if (len < 1 && line[start + len + 1] == '>')
 				len = 2;
@@ -84,8 +86,6 @@ void	divide_input(t_list **list, char *line,
 			if (len != 0)
 				start = create_list_item(list, line, &len, start);
 		}
-		if (ft_strchr("\'\"", line[start + len]))
-			start = handle_quotation_marks(list, line, &len, start);
 		len++;
 	}
 }
