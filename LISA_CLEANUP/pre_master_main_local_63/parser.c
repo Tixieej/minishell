@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/22 12:21:09 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/22 13:42:40 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,11 @@ void	parser_part_two(t_command **cur_struct, t_list *cur_lst,
 {
 	while (cur_lst)
 	{
-		printf("cur: [%s]\n", cur_lst->content);
 		if (*cur_lst->content == '$')
 			expansions(cur_lst, *env);
-		// prinf*cur_lst->content);
 		if (*cur_lst->content == ';')
 		{
-			printf("Ja");
-			// print_cur_struct(command); // weg !!
+			print_cur_struct(command); // weg !!
 			check_type(env, *cur_struct);
 			command = ft_clear_linked_struct(command);
 			cur_struct = &command;
@@ -111,7 +108,6 @@ int	parser(t_list **list, char ***env, t_command *command, int error)
 
 	cur_lst = *list;
 	cur_struct = &command;
-	printf("cur: [%s]\n", cur_lst->content);
 	ft_struct_push_back(&command, (char *)cur_lst->content);
 	command->not_found = error;
 	cur_lst = cur_lst->next;
