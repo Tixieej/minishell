@@ -59,7 +59,10 @@ void	parser(t_list **list, char **env, t_command	*command)
 	{
 		if (*cur_lst->content == ';')
 		{
+<<<<<<< HEAD
 			// printf("- het is een ;\n");
+=======
+>>>>>>> 3be00f8a812802319fd8cf898d7b5c78ad549cd3
 			check_type(list, env, *cur_struct);
 			cur_lst = cur_lst->next;
 			ft_struct_push_back(&(*cur_struct), (char *)cur_lst->content);
@@ -67,7 +70,10 @@ void	parser(t_list **list, char **env, t_command	*command)
 		}	
 		else if (*cur_lst->content == '|')
 		{
+<<<<<<< HEAD
 			// printf("- het is een |\n");
+=======
+>>>>>>> 3be00f8a812802319fd8cf898d7b5c78ad549cd3
 			(*cur_struct)->pipe_right = 1;
 			cur_lst = cur_lst->next;
 			ft_struct_push_back(&(*cur_struct), (char *)cur_lst->content);
@@ -84,7 +90,10 @@ void	parser(t_list **list, char **env, t_command	*command)
 			}
 			else if (*cur_lst->content == '<')
 			{
+<<<<<<< HEAD
 				printf("JA");
+=======
+>>>>>>> 3be00f8a812802319fd8cf898d7b5c78ad549cd3
 				ft_list_push_back(&((*cur_struct)->in_red), cur_lst->content);
 				cur_lst = cur_lst->next;
 				ft_list_push_back(&((*cur_struct)->in_red), cur_lst->content);

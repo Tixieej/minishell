@@ -6,7 +6,11 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/01/03 11:43:19 by livlamin      #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2021/02/11 09:27:21 by livlamin      ########   odam.nl         */
+=======
+/*   Updated: 2021/02/11 09:35:34 by livlamin      ########   odam.nl         */
+>>>>>>> 3be00f8a812802319fd8cf898d7b5c78ad549cd3
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +22,10 @@
 
 # include <unistd.h>
 # include <stdlib.h>
+<<<<<<< HEAD
 # include "libft/libft.h"
+=======
+>>>>>>> 3be00f8a812802319fd8cf898d7b5c78ad549cd3
 
 typedef	struct		s_data
 {
@@ -33,7 +40,11 @@ int					get_next_line(int fd, char **line);
 size_t				ft_strlen(const char *str);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
+<<<<<<< HEAD
 // char				*ft_strdup(char *line);
+=======
+char				*ft_strdup_gnl(char *line);
+>>>>>>> 3be00f8a812802319fd8cf898d7b5c78ad549cd3
 int					ft_strjoin_gnl(t_data *data);
 
 #endif
