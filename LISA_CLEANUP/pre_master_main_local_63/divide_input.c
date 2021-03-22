@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/22 11:48:54 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/22 12:11:06 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static int	create_list_item(t_list **list, char *line,
 	ft_list_push_back(list, temp);
 	if (line[start + *len] == ';')
 	{
+		// printf("%c\n", line[start + *len]);
 		ft_list_push_back(list, s);
 		start++;
 	}
