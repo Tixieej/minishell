@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/18 11:54:19 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/22 10:51:51 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,13 @@ static int	create_list_item(t_list **list, char *line,
 
 	temp = ft_substr((char const *)line, start, *len);
 	ft_list_push_back(list, temp);
+	if (line[start + *len] == ';')
+	{
+		ft_list_push_back(list, ";");
+		start++;
+	}
 	start += *len;
-	*len = -1;
+	*len = 0;
 	return (start);
 }
 
@@ -62,15 +67,15 @@ void	divide_input(t_list **list, char *line,
 	{
 		while (line[start + len] == ' ' && line[start + len] != '\0')
 			start++;
-		if (!ft_strchr("'<''>'\'\"'\0'", line[start + len]))
+		if (!ft_strchr("'<''>'\'\"'\0'';'", line[start + len]))
 		{
 			start += len;
-			while (!ft_strchr("'<''>' \'\"'\0'", line[start + len]))
+			while (!ft_strchr("';''<''>' \'\"'\0'", line[start + len]))
 				len++;
 		}
 		if (!ft_strncmp(&line[start + len], ">>>", 3))
 			error_handler("error near unexpected token`>'\n", *list, NULL);
-		if (ft_strchr("' '<''>''\0'", line[start + len]))
+		if (ft_strchr("';'' '<''>''\0'", line[start + len]))
 		{
 			if (len < 1 && line[start + len + 1] == '>')
 				len = 2;

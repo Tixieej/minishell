@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/25 11:04:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/18 13:10:48 by rixt          ########   odam.nl         */
+/*   Updated: 2021/03/22 10:52:41 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	error_handler(char *error, t_list *list, t_command *command)
 {
-	write(2, "minishell: ", 11);
-	write(2, error, ft_strlen(error));
+	write(2, "minishell: ", 11); //
+	write(2, error, ft_strlen(error)); //
 	if (list)
 	{
 		ft_lstclear(&list, free);

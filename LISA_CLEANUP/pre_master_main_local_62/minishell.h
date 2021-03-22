@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/18 12:01:14 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/22 10:55:09 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,7 @@ void			ft_list_push_back(t_list **begin_list, void *data);
 ** parse functions
 */
 int				parser(t_list **list, char ***env, t_command *command, \
-		int error);
-//t_command				*make_command(t_list **list); //
-//void            		non_builtin(t_list *list, char **env);
-//void					ft_lstadd_front(t_list **lst, t_list *new);
+					int error);
 int				redirection(t_command *command);
 
 /*
@@ -123,6 +120,6 @@ void			signal_handler(int sig);
 ** error
 */
 void			command_not_found(t_command *command, char *message, \
-		char *error, int value);
+					char *error, int value);
 
 #endif

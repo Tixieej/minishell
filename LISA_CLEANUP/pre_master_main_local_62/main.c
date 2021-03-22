@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/18 11:49:41 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/22 10:54:14 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ static void	start_program(char **env, char *line, int error)
 			continue ;
 		divide_input(&list, line, 0, 0);
 		error = parser(&list, &env, command, error);
-		ft_lstclear(&list, free);
-		list = NULL;
+		// ft_lstclear(&list, free);
+		// list = NULL;
 		free(line);
 		line = NULL;
 	}
@@ -78,5 +78,6 @@ int	main(int argc, char **argv, char **env)
 		return (0);
 	}
 	start_program(cpy_env, NULL, 0);
+	//free env
 	return (0);
 }
