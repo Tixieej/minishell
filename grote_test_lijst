@@ -4,17 +4,35 @@ echo hallo ; echo doei
 echo hallo;echo doei
 echo hallo;
 hallo
+echo hallo ; echo doei ;
+echo ik ; echo word ; echo gek ;
+echo hallo; echo doei;echo hoi ; echo vla ;
+
+===== pwd =====
+pwd ; echo jjjj
+pwd; echo jjjj
+pwd ; echo jjj
 
 ===== aanhalingstekens =====
 echo "    hoi   allemaal     "
 echo " hallo    ' hoe   gaat' het"
 
-===== redirections =====
-echo hallo allemaal
+===== output redirections =====
+echo "hallo     allemaal" > file1
+echo rixt en lisa >> file1
+echo hallo > file1 ; cat -e file1
+cat file1 > file2
+
+===== input redirections =====
 
 ===== pipes (en redirections) =====
 cat Makefile | grep h
 cat Makefile | grep h > file1
 cat file1 | cat -e | cat -e | cat -e
 
-=====  =====
+===== export en env =====
+env
+export HALLO
+export
+export HIHI=haha
+env
