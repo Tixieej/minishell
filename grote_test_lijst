@@ -1,0 +1,20 @@
+===== echo en ; tests =====
+echo hallo; echo doei
+echo hallo ; echo doei
+echo hallo;echo doei
+echo hallo;
+hallo
+
+===== aanhalingstekens =====
+echo "    hoi   allemaal     "
+echo " hallo    ' hoe   gaat' het"
+
+===== redirections =====
+echo hallo allemaal
+
+===== pipes (en redirections) =====
+cat Makefile | grep h
+cat Makefile | grep h > file1
+cat file1 | cat -e | cat -e | cat -e
+
+=====  =====
