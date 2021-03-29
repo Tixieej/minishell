@@ -6,14 +6,16 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/29 13:34:57 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/29 14:14:27 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	add_pipe(t_list **cur_lst, t_command **cur_struct)
+static t_command	**add_pipe(t_list **cur_lst,
+	t_command **cur_struct, t_command *command)
 {
+	command->pipe_check++;
 	(*cur_struct)->pipe_right = 1;
 	(*cur_lst) = (*cur_lst)->next;
 	if (*cur_lst)
@@ -21,7 +23,9 @@ static void	add_pipe(t_list **cur_lst, t_command **cur_struct)
 		ft_struct_push_back(&(*cur_struct), (char *)(*cur_lst)->content);
 		cur_struct = &(*cur_struct)->next;
 		(*cur_struct)->pipe_left = 1;
+		return (cur_struct);
 	}
+	return (&(*cur_struct)->next);
 }
 
 static void	add_redirection(t_list **cur_lst, t_command **cur_struct)
@@ -79,7 +83,6 @@ int	parser_part_two(t_command **cur_struct, t_list *cur_lst,
 			expansions(cur_lst, *env);
 		if (*cur_lst->content == ';')
 		{
-			// print_cur_struct(command); // weg !!
 			check_type(env, *cur_struct);
 			command = ft_clear_linked_struct(command);
 			cur_struct = &command;
@@ -89,11 +92,7 @@ int	parser_part_two(t_command **cur_struct, t_list *cur_lst,
 			ft_struct_push_back(&command, (char *)cur_lst->content);
 		}
 		else if (*cur_lst->content == '|')
-		{
-			command->pipe_check++;
-			add_pipe(&cur_lst, cur_struct);
-			cur_struct = &(*cur_struct)->next;
-		}
+			cur_struct = add_pipe(&cur_lst, cur_struct, command);
 		else if (*cur_lst->content == '>' || *cur_lst->content == '<')
 			add_redirection(&cur_lst, cur_struct);
 		else
@@ -101,7 +100,7 @@ int	parser_part_two(t_command **cur_struct, t_list *cur_lst,
 				ft_strdup((char *)(*cur_lst).content));
 		cur_lst = cur_lst->next;
 	}
-	return(0);
+	return (0);
 }
 
 int	parser(t_list **list, char ***env, t_command *command, int error)
@@ -113,14 +112,14 @@ int	parser(t_list **list, char ***env, t_command *command, int error)
 	check = 0;
 	cur_lst = *list;
 	cur_struct = &command;
-	// while (cur_lst)
-	// {
-	// 	printf("[%s]->", cur_lst->content);
-	// 	cur_lst = cur_lst->next;
-	// }
+	//  while (cur_lst)
+    // {
+    //  printf(“[%s]->“, cur_lst->content);
+    //  cur_lst = cur_lst->next;
+    // }
 	cur_lst = *list;
 	if (!cur_lst)
-		return(error);
+		return (error);
 	ft_struct_push_back(&command, (char *)cur_lst->content);
 	command->not_found = error;
 	cur_lst = cur_lst->next;
@@ -131,7 +130,7 @@ int	parser(t_list **list, char ***env, t_command *command, int error)
 	if (check == 0)
 		check_type(env, *cur_struct);
 	cur_struct = &command;
-	// print_cur_struct(command); // weg !!
+	print_cur_struct(command); // weg !!
 	if (command->not_found != 0)
 		error = command->not_found;
 	if (check == 0)
