@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   divide_input.c                                     :+:    :+:            */
+/*   divide_input_backup.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/29 13:18:15 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/03/29 13:18:48 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// dit is een versie van lisa waarin echo hallo;echo doei niet werkt, maar ze heeft nu op test 23_L gezet waarin dat wel werkt
+// dit was divide_input die jij hebt aangepast zodat echo hallo;echo doei werkt, maar > slaat ie over
 void	prompt(void)
 {
 	write(2, "\033[38;5;105mminishell: \e[0m", 27);
 }
+
 static int	create_list_item(t_list **list, char *line,
 								size_t *len, unsigned int start)
 {
 	char	*temp;
 
 	temp = ft_substr((char const *)line, start, *len);
-	//printf("%s\n", temp);
 	ft_list_push_back(list, temp);
-	//printf("start 1: %d\n", start);
-	//printf("len: %zu\n", *len);
 	if (line[start + *len] == ';')
 	{
 		ft_list_push_back(list, ft_strdup(";"));
@@ -33,7 +31,6 @@ static int	create_list_item(t_list **list, char *line,
 	}
 	start += *len;
 	*len = 0;
-	//printf("start 2: %d\n", start);
 	return (start);
 }
 
@@ -43,24 +40,24 @@ static int	handle_quotation_marks(t_list **list, char *line,
 	if (line[start + *len] == '\'')
 	{
 		start++;
-		while (!ft_strchr("\''\0'", line[start + *len]))
+		while (!ft_strchr("\'\0", line[start + *len])) // "\''\0'"
 			(*len)++;
 		if (line[start + *len] != '\'')
 			error_handler("missing quotation marks\n", *list, NULL);
-		start = create_list_item(list, line, len, start + 1);
+		start = create_list_item(list, line, len, start); //+1
 		(*len)++;
 	}
 	else if (line[start + *len] == '\"')
 	{
 		start++;
-		while (!ft_strchr("\"'\0'", line[start + *len + 1]))
+		while (!ft_strchr("\"\0", line[start + *len])) // "\"'\0'" // *len + 1
 			(*len)++;
-		if (line[start + *len + 1] != '\"')
-			error_handler("missing quotation marks\n", *list, NULL);
-		start++;
+		if (line[start + *len] != '\"') // *len + 1
+			error_handler("missing quotation marks\n", *list, NULL);// hieronder start++
 		start = create_list_item(list, line, len, start);
+		(*len)++;// deze niet
 	}
-	return (start + 1);
+	return (start);
 }
 
 void	divide_input(t_list **list, char *line,
@@ -68,31 +65,28 @@ void	divide_input(t_list **list, char *line,
 {
 	while (line[start + len] != '\0')
 	{
-		while (line[start + len] == ' ')// && line[start + len] != '\0')
+		while (line[start + len] == ' ' && line[start + len] != '\0')
 			start++;
-		if (!ft_strchr("' ''<''>'\'\"'\0'';'", line[start + len]))
+		if (!ft_strchr("'<''>'\'\"'\0'';'", line[start + len]))
 		{
 			start += len;
-			while (!ft_strchr("' '';''<''>' \'\"'\0'", line[start + len]))
+			while (!ft_strchr("';''<''>' \'\"'\0'", line[start + len]))
 				len++;
 		}
 		if (!ft_strncmp(&line[start + len], ">>>", 3))
 			error_handler("error near unexpected token`>'\n", *list, NULL);
-		if (ft_strchr("\'\"", line[start + len]) && line[start + len] != '\0')
-			start = handle_quotation_marks(list, line, &len, start);
-		if (ft_strchr("';'' ''<''>''\0'", line[start + len]))
+		if (ft_strchr("';'' '<''>''\0'", line[start + len]))
 		{
-			if (line[start + len] == '>' && line[start + len + 1] == '>') // len < 1 && 
-			{
-				start++;
+			if (len < 1 && line[start + len + 1] == '>')
 				len = 2;
-			}
 			if (line[start + len] == '>' || line[start + len] == '<')
-				start++;	
+				len = 1;
 			if (len != 0)
 				start = create_list_item(list, line, &len, start);
-			//printf("char: %c\n", line[start + len]);
 		}
+		write(2, "\t\thierna\n", 9);
+		if (ft_strchr("\'\"", line[start + len]))
+			start = handle_quotation_marks(list, line, &len, start);
 		len++;
 	}
 }

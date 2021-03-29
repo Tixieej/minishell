@@ -6,7 +6,7 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/16 11:34:08 by rixt          #+#    #+#                 */
-/*   Updated: 2021/03/22 11:43:28 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/29 13:10:28 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	attach_path(t_command *cmd, char **env, char **paths, pid_t process)
 	struct stat	buffer;
 
 	i = 0;
+	//write(2, "\t\tattach\n", 9);
 	while (paths[i])
 	{
 		semi_path = ft_strjoin(paths[i], "/");
@@ -46,6 +47,7 @@ static void	attach_path(t_command *cmd, char **env, char **paths, pid_t process)
 		free(path);
 		i++;
 	}
+	//write(2, "\t\thiero?\n", 9);
 	if (stat(path, &buffer) != 0)
 		command_not_found(cmd, cmd->program, "command not found", 127);
 }

@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/22 13:42:40 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/29 13:04:11 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,18 @@ void	parser_part_two(t_command **cur_struct, t_list *cur_lst,
 			expansions(cur_lst, *env);
 		if (*cur_lst->content == ';')
 		{
-			print_cur_struct(command); // weg !!
-			check_type(env, *cur_struct);
-			command = ft_clear_linked_struct(command);
-			cur_struct = &command;
-			cur_lst = cur_lst->next;
-			ft_struct_push_back(&command, (char *)cur_lst->content);
+			//print_cur_struct(*cur_struct); // weg !!
+			check_type(env, *cur_struct);//je hebt hier de command voor de ; verwerkt en uitgevoerd
+			//print_cur_struct(*cur_struct); // deze is nog hetzelfde als voor check_type
+			//write(2, "\t\tterug\n", 8);
+			command = ft_clear_linked_struct(command); // hier haal je het command leeg?
+			cur_struct = &command; // dus hier is cur struct ook leeg????
+			cur_lst = cur_lst->next; //hier is cur_list == NULL
+			//write(2, "\t\tniks\n", 7);
+			if (cur_lst == NULL)
+				break ;
+			ft_struct_push_back(&command, (char *)cur_lst->content);// hier gaat het mis, want cur_lst->content bestaat niet
+			//write(2, "\t\thoi\n", 6);
 		}
 		else if (*cur_lst->content == '|')
 		{
@@ -112,12 +118,15 @@ int	parser(t_list **list, char ***env, t_command *command, int error)
 	command->not_found = error;
 	cur_lst = cur_lst->next;
 	parser_part_two(cur_struct, cur_lst, env, command);
+	//write(2, "\t\tna2\n", 6);
+	//printf("\tcmd: [%s] - - arg0: [%s]\n", command->program, command->args->content);
 	cur_lst = *list;
 	if (command->pipe_check > 0)
 		cur_struct = &command;
-	check_type(env, *cur_struct);
+	//write(2, "\t\tparse1\n", 9);
+	check_type(env, *cur_struct);// nu gaat ie hier in met struct= ?
 	cur_struct = &command;
-	print_cur_struct(command); // weg !!
+	//print_cur_struct(command); // weg !!
 	if (command->not_found != 0)
 		error = command->not_found;
 	command = ft_clear_linked_struct(command);

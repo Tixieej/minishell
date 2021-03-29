@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 17:53:20 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/22 11:39:25 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/29 13:07:33 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void 	check_type_two(char ***env, t_command *command, pid_t process)
 		exit_func(command);
 	else
 		external(command, *env, process);
+	//write(2, "\t\tcheck2\n", 9);
 }
 
 void	check_type(char ***env, t_command *command)
@@ -50,4 +51,5 @@ void	check_type(char ***env, t_command *command)
 		process = pipes(env, cur_struct, 0, 0);
 	else
 		check_type_two(env, command, process);
+	//write(2, "\t\tcheck1\n", 9);
 }
