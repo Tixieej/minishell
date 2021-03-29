@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/22 11:30:13 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/29 13:07:36 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ static void	start_program(char **env, char *line, int error)
 		if (line[0] == '\0')
 			continue ;
 		divide_input(&list, line, 0, 0);
-		while ((*begin))// loop om te lezen wat er gebeurt, later weghalen
-		{
-			printf("list item: [%s]\n", (char*)((*begin)->content));
-			// printf("begin adress: %p\n", begin);
-			begin = &(*begin)->next;
-		}
+		// while ((*begin))// loop om te lezen wat er gebeurt, later weghalen
+		// {
+		// 	printf("list item: [%s]\n", (char*)((*begin)->content));
+		// 	// printf("begin adress: %p\n", begin);
+		// 	begin = &(*begin)->next;
+		// }
 		begin = &list;
 		error = parser(&list, &env, command, error);
 		if (list)

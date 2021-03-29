@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/22 15:02:46 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/29 13:11:04 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ static int	create_list_item(t_list **list, char *line,
 	temp = ft_substr((char const *)line, start, *len);
 	ft_list_push_back(list, temp);
 	if (line[start + *len] == ';')
-	{
 		ft_list_push_back(list, ft_strdup(";"));
-		start++;
-	}
 	start += *len;
 	*len = 0;
 	return (start);
@@ -65,7 +62,7 @@ void	divide_input(t_list **list, char *line,
 {
 	while (line[start + len] != '\0')
 	{
-		while (line[start + len] == ' ' && line[start + len] != '\0')
+		while (line[start + len] == ' ')// && line[start + len] != '\0')
 			start++;
 		if (!ft_strchr("' ''<''>'\'\"'\0'';'", line[start + len]))
 		{
@@ -75,14 +72,17 @@ void	divide_input(t_list **list, char *line,
 		}
 		if (!ft_strncmp(&line[start + len], ">>>", 3))
 			error_handler("error near unexpected token`>'\n", *list, NULL);
-		if (ft_strchr("\'\"", line[start + len]))
+		if (ft_strchr("\'\"", line[start + len]) && line[start + len] != '\0')
 			start = handle_quotation_marks(list, line, &len, start);
 		if (ft_strchr("';'' ''<''>''\0'", line[start + len]))
 		{
-			if (len < 1 && line[start + len + 1] == '>')
+			if (line[start + len] == '>' && line[start + len + 1] == '>') // len < 1 && 
+			{
+				start++;
 				len = 2;
+			}
 			if (line[start + len] == '>' || line[start + len] == '<')
-				len = 1;
+				start++;	
 			if (len != 0)
 				start = create_list_item(list, line, &len, start);
 		}
