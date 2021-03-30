@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/29 14:14:27 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/30 10:12:17 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	parser_part_two(t_command **cur_struct, t_list *cur_lst,
 			expansions(cur_lst, *env);
 		if (*cur_lst->content == ';')
 		{
+			print_cur_struct(command); // weg !!
 			check_type(env, *cur_struct);
 			command = ft_clear_linked_struct(command);
 			cur_struct = &command;
