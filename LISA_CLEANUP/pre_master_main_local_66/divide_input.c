@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/30 10:17:24 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/30 10:58:35 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static int	create_list_item(t_list **list, char *line,
 
 	temp = ft_substr((char const *)line, start, *len);
 	ft_list_push_back(list, temp);
+	if (line[start + *len] == ';')
+		ft_list_push_back(list, ft_strdup(";"));
 	if (line[start + *len] != '\0')
 		start += *len;
 	else

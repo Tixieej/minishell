@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/30 10:12:17 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/30 10:58:47 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,13 @@ int	parser_part_two(t_command **cur_struct, t_list *cur_lst,
 			expansions(cur_lst, *env);
 		if (*cur_lst->content == ';')
 		{
-			print_cur_struct(command); // weg !!
+			// print_cur_struct(command); // weg !!
 			check_type(env, *cur_struct);
 			command = ft_clear_linked_struct(command);
 			cur_struct = &command;
-			cur_lst = cur_lst->next;
-			if (!cur_lst)
+			if (cur_lst->next)
+				cur_lst = cur_lst->next;
+			else
 				return (-1);
 			ft_struct_push_back(&command, (char *)cur_lst->content);
 		}
@@ -113,12 +114,12 @@ int	parser(t_list **list, char ***env, t_command *command, int error)
 	check = 0;
 	cur_lst = *list;
 	cur_struct = &command;
-	//  while (cur_lst)
+	// while (cur_lst)
     // {
-    //  printf(“[%s]->“, cur_lst->content);
+    //  printf("[%s]->", cur_lst->content);
     //  cur_lst = cur_lst->next;
     // }
-	cur_lst = *list;
+	// cur_lst = *list;
 	if (!cur_lst)
 		return (error);
 	ft_struct_push_back(&command, (char *)cur_lst->content);
@@ -131,7 +132,8 @@ int	parser(t_list **list, char ***env, t_command *command, int error)
 	if (check == 0)
 		check_type(env, *cur_struct);
 	cur_struct = &command;
-	print_cur_struct(command); // weg !!
+	// if (check == 0) //
+	// 	print_cur_struct(command); // weg !!
 	if (command->not_found != 0)
 		error = command->not_found;
 	if (check == 0)
