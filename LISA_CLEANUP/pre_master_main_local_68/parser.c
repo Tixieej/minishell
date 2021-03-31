@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/30 11:42:03 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/31 14:49:44 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	parser_part_two(t_command **cur_struct, t_list *cur_lst,
 	{
 		if (*cur_lst->content == '$')
 			expansions(cur_lst, *env);
-		if (*cur_lst->content == ';')
+		if (cur_lst->content[0] == ';' && cur_lst->content[1] != ';')
 		{
 			// print_cur_struct(command); // weg !!
 			check_type(env, *cur_struct);
