@@ -6,15 +6,40 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/30 14:02:14 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/31 10:28:16 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	prompt(void)
+static char *trim_quotation_marks(char *temp)
 {
-	write(2, "\033[38;5;105mminishell: \e[0m", 27);
+	char	*temp_tr;
+	char	*type;
+	int		i;
+	int		len;
+	
+	len = ft_strlen(temp);
+	i = 0;
+	temp_tr = NULL;
+	type = NULL;
+	while (temp[i] != '\0')
+	{
+		if (temp[i] == '\"' || temp[i] == '\'')
+		{
+			if (i > 1)
+				type = ft_substr(temp, 0, i);
+			temp_tr = ft_substr(temp, i + 1, len - (i + 1));
+			if (type)
+				temp = ft_strjoin(type, temp_tr);
+			else
+				temp = ft_strdup(temp_tr);
+			free(temp_tr);
+			return (temp);
+		}
+		i++;
+	}
+	return (temp);
 }
 
 static int	create_list_item(t_list **list, char *line,
@@ -23,6 +48,7 @@ static int	create_list_item(t_list **list, char *line,
 	char	*temp;
 
 	temp = ft_substr((char const *)line, start, *len);
+	temp = trim_quotation_marks(temp);
 	ft_list_push_back(list, temp);
 	if (line[start + *len] == ';')
 		ft_list_push_back(list, ft_strdup(";"));
@@ -31,7 +57,6 @@ static int	create_list_item(t_list **list, char *line,
 	else
 		start += *len - 1;
 	*len = 0;
-	printf("temp %s\n", temp);
 	return (start);
 }
 
@@ -40,13 +65,11 @@ static int	handle_quotation_marks(t_list **list, char *line,
 {
 	if (line[start + *len] == '\'')
 	{
-		if (*len == 1)
-			start++;
-		while (line[start + *len + 1] != '\'' && line[start + *len + 1] != '\0')
+		(*len)++;	
+		while (line[start + *len] != '\'' && line[start + *len] != '\0')
 			(*len)++;
-		if (line[start + *len + 1] != '\'')
+		if (line[start + *len] != '\'')
 			error_handler("missing quotation marks\n", *list, NULL);
-		start++;
 		start = create_list_item(list, line, len, start);
 	}
 	else if (line[start + *len] == '\"')
@@ -54,11 +77,8 @@ static int	handle_quotation_marks(t_list **list, char *line,
 		(*len)++;	
 		while (line[start + *len] != '\"' && line[start + *len] != '\0')
 			(*len)++;
-		printf("%zu\n", *len);
-		printf("%c\n", line[start + *len + 1]);
 		if (line[start + *len] != '\"')
 			error_handler("missing quotation marks\n", *list, NULL);
-		(*len)++;
 		start = create_list_item(list, line, len, start);
 	}
 	start += *len;
