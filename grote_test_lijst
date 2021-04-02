@@ -1,38 +1,38 @@
 ===== echo en ; tests =====
-echo hallo; echo doei
-echo hallo ; echo doei
-echo hallo;echo doei
+echo hallo; echo doei  V
+echo hallo ; echo doei V
+echo hallo;echo doei V
 echo hallo;
-hallo
-echo hallo ; echo doei ;
-echo ik ; echo word ; echo gek ;
-echo hallo; echo doei;echo hoi ; echo vla ;
+hallo V
+echo hallo ; echo doei ; V
+echo ik ; echo word ; echo gek ; V
+echo hallo; echo doei;echo hoi ; echo vla ; V
 
 ===== pwd =====
-pwd ; echo jjjj
-pwd; echo jjjj
-pwd ; echo jjj
+pwd ; echo jjjj V 
+pwd; echo jjjj V
+pwd ; echo jjj V
 
 ===== aanhalingstekens =====
-echo "    hoi   allemaal     "
-echo " hallo    ' hoe   gaat' het"
+echo "    hoi   allemaal     " V
+echo " hallo    ' hoe   gaat' het" V
 
 ===== output redirections =====
-echo "hallo     allemaal" > file1
-echo rixt en lisa >> file1
-echo hallo > file1 ; cat -e file1
-cat file1 > file2
+echo "hallo     allemaal" > file1 V
+echo rixt en lisa >> file1 V
+echo hallo > file1 ; cat -e file1 V
+cat file1 > file2 V
 
 ===== input redirections =====
 
 ===== pipes (en redirections) =====
-cat Makefile | grep h
+cat Makefile | grep h V
 cat Makefile | grep h > file1
-cat file1 | cat -e | cat -e | cat -e
+cat file1 | cat -e | cat -e | cat -e V
 
 ===== export en env =====
-env
-export HALLO
-export
-export HIHI=haha
-env
+env V
+export HALLO V (? klopt het dat er niets moet gebeuren?) 
+export (check rixt?)
+export HIHI=haha (check rixt?)
+env V
