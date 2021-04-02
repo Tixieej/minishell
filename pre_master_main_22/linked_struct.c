@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/03/18 11:49:04 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/03/29 13:07:26 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,11 @@ t_command	*ft_create_linked_struct(char *data)
 void	ft_struct_push_back(t_command **begin_list, char *data)
 {
 	t_command	*temp;
-
+	//write(2, "push\n", 5);
 	temp = *begin_list;
 	if (*begin_list)
 	{
+		//write(2, "niet\n", 5);
 		while (temp->next != NULL)
 		{
 			temp = temp->next;
@@ -78,4 +79,5 @@ void	ft_struct_push_back(t_command **begin_list, char *data)
 	}
 	else
 		*begin_list = ft_create_linked_struct(data);
+	//write(2, "back\n", 6);
 }

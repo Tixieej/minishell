@@ -6,7 +6,7 @@
 /*   By: rde-vrie <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/01 14:03:48 by rde-vrie      #+#    #+#                 */
-/*   Updated: 2021/03/11 17:55:38 by rixt          ########   odam.nl         */
+/*   Updated: 2021/04/02 10:08:48 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,11 @@ void	export_func(t_command *command, char ***env)
 			*(command->args->content) == '_')
 			add_var(command->args->content, env);
 		else
-			printf("minishell: export: `%s': not a valid identifier\n", \
+		{
+			write(2, "minishell: export: `", 20);
+			write(2, command->args->content, ft_strlen(command->args->content));
+			write(2, "': not a valid identifier\n", 26);
+		//	printf("minishell: export: `%s': not a valid identifier\n", \
 			command->args->content);
 		command->args = command->args->next;
 	}
