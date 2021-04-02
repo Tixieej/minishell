@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/02 10:20:31 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/02 14:23:30 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	*trim_quotation_marks(char *temp, char *type, int len, int i)
 		{
 			if (i > 1)
 				type = ft_substr(temp, 0, i);
-			temp_tr = ft_substr(temp, i + 1, len - (i + 1));
+			temp_tr = ft_substr(temp, i + 1, len - 2);
 			free(temp);
 			if (type)
 				temp = ft_strjoin(type, temp_tr);
@@ -45,6 +45,7 @@ static int	create_list_item(t_list **list, char *line,
 	char	*temp;
 
 	temp = ft_substr((char const *)line, start, *len);
+	// if (temp[0] == '\'' && temp[1] == '$')
 	temp = trim_quotation_marks(temp, NULL, 0, 0);
 	ft_list_push_back(list, temp);
 	// if (line[start + *len] == ';')
@@ -62,20 +63,22 @@ static int	handle_quotation_marks(t_list **list, char *line,
 {
 	if (line[start + *len] == '\'')
 	{
-		(*len)++;
+		start++;
 		while (line[start + *len] != '\'' && line[start + *len] != '\0')
 			(*len)++;
 		if (line[start + *len] != '\'')
 			error_handler("missing quotation marks\n", *list, NULL, 1);
+		(*len)++;
 		start = create_list_item(list, line, len, start);
 	}
 	else if (line[start + *len] == '\"')
 	{
-		(*len)++;
+		start++;
 		while (line[start + *len] != '\"' && line[start + *len] != '\0')
 			(*len)++;
 		if (line[start + *len] != '\"')
 			error_handler("missing quotation marks\n", *list, NULL, 1);
+		(*len)++;
 		start = create_list_item(list, line, len, start);
 	}
 	start += *len;
