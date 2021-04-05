@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/04/05 14:25:38 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/04/05 16:03:50 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ void	external(t_command *cmd, char **env, pid_t process)
 	if (cmd->fd_in < 0 || cmd->fd_out < 0)
 		return ;
 	write(2, "\t=== external ===\n", ft_strlen("\t=== external ===\n"));
-	print_cur_struct(cmd);
+	//print_cur_struct(cmd);
 	if (ft_strchr(cmd->program, '/') != 0)
 		with_path(cmd, env, process);
 	else
 		without_path(cmd, env, process);
 	dup_back(cmd);
 	write(2, "\t=== na dup_back ===\n", ft_strlen("\t=== na dup_back ===\n"));
-	print_cur_struct(cmd);
+	//print_cur_struct(cmd);
 }

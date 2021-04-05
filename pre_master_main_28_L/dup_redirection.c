@@ -6,7 +6,7 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/11 12:01:23 by rixt          #+#    #+#                 */
-/*   Updated: 2021/04/05 14:35:15 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/04/05 15:57:38 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int	out_redirect(t_command *cmd)
 		dprintf(2, "\tSTDOUT = %i\n", STDOUT_FILENO);
 		stdout_fd = dup(STDOUT_FILENO);//dit is de backup van stdout. hoef je niks mee te doen, behalve terugduppen aan het eind
 		dprintf(2, "\tstdout_fd = %i\n", stdout_fd);
-		write(2, "wtf\n", 4);
-		if (stdout_fd < 0 || dup2(cmd->fd_out, STDOUT_FILENO) < 0)
+		if (stdout_fd < 0 || dup2(cmd->fd_out, STDOUT_FILENO) < 0)//file1 heeft nu fd 1
 		{
 			close(cmd->fd_out);
 			command_not_found(cmd, cmd->program, "Bad file descriptor", 9);
@@ -31,7 +30,7 @@ int	out_redirect(t_command *cmd)
 		}
 		close(cmd->fd_out);
 	}
-	return (stdout_fd);
+	return (stdout_fd);// return backup van stdout
 }
 
 int	in_redirect(t_command *cmd)

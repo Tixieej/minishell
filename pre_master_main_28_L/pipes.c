@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 14:20:04 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/05 13:36:38 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/04/05 16:33:56 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,16 +96,17 @@ pid_t	pipes(char ***env, t_command *cmd, pid_t process, int count)
 	fd_array = ft_create_fd_array(cur_cmd, fd_array);
 	while (cur_cmd)
 	{	
-		process = fork();
+		process = fork();//fork 
 		if (process == 0)
 		{
 			link_fd_array(cur_cmd, fd_array, count);
-			check_type_two(env, cur_cmd, process);
+			check_type_two(env, cur_cmd, process); // ga naar external in je child process
 			exit(0);
 		}
 		if (process == -1)
 			printf("minishell: fork: error");
-		cur_cmd = cur_cmd->next;
+		cur_cmd = cur_cmd->next;//nu ga je naar de command na de pipe, dus dan fork je nog 
+		//een keer en stuur je de 2e cmd naar check_type_two
 		count += 2;
 	}
 	close_fd_array(fd_array);
