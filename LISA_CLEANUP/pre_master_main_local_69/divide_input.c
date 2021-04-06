@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/02 14:23:30 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/06 10:18:51 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,15 @@ static int	create_list_item(t_list **list, char *line,
 	char	*temp;
 
 	temp = ft_substr((char const *)line, start, *len);
-	// if (temp[0] == '\'' && temp[1] == '$')
-	temp = trim_quotation_marks(temp, NULL, 0, 0);
-	ft_list_push_back(list, temp);
-	// if (line[start + *len] == ';')
-	// 	ft_list_push_back(list, ft_strdup(";"));
+	if (temp[0] == '\'' && temp[1] == '$')
+		ft_list_push_back(list, temp);
+	else
+	{
+		temp = trim_quotation_marks(temp, NULL, 0, 0);
+		ft_list_push_back(list, temp);
+	}
+	if (line[start + *len] == ';')
+		ft_list_push_back(list, ft_strdup(";"));
 	if (line[start + *len] != '\0')
 		start += *len;
 	else

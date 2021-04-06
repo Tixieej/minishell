@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/02 13:29:32 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/06 10:25:00 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,13 @@ static void	expansions(t_list *cur_lst, char **env, size_t len)
 	if (cur_lst->content[0] == '$' && cur_lst->content[1] == '?')
 		return ;
 	if (cur_lst->content[0] == '\'')
-		return;
+	{
+		temp = ft_substr(cur_lst->content, 1, (ft_strlen(cur_lst->content) - 2));
+		free(cur_lst->content);
+		cur_lst->content = ft_strdup(temp);
+		free(temp);
+		return ;
+	}
 	if (check_exp(cur_lst, env, &len, 0) == 0)
 	{
 		if (len < ft_strlen(cur_lst->content))
@@ -103,7 +109,7 @@ int	parser_part_two(t_command **cur_struct, t_list *cur_lst,
 {
 	while (cur_lst)
 	{
-		if (*cur_lst->content == '$')
+		if (*cur_lst->content == '$' || *cur_lst->content == '\'' )
 			expansions(cur_lst, *env, 0);
 		if (cur_lst->content[0] == ';' && cur_lst->content[1] != ';')
 		{
@@ -138,12 +144,12 @@ int	parser(t_list **list, char ***env, t_command *command, int error)
 	check = 0;
 	cur_lst = *list;
 	cur_struct = &command;
-	// while (cur_lst)
-    // {
-    //  printf("[%s]->", cur_lst->content);
-    //  cur_lst = cur_lst->next;
-    // }
-	// cur_lst = *list;
+	while (cur_lst)
+    {
+     printf("[%s]->", cur_lst->content);
+     cur_lst = cur_lst->next;
+    }
+	cur_lst = *list;
 	if (!cur_lst)
 		return (error);
 	ft_struct_push_back(&command, (char *)cur_lst->content);
@@ -156,8 +162,8 @@ int	parser(t_list **list, char ***env, t_command *command, int error)
 	if (check == 0)
 		check_type(env, *cur_struct);
 	cur_struct = &command;
-	// if (check == 0) //
-	// 	print_cur_struct(command); // weg !!
+	if (check == 0) //
+		print_cur_struct(command); // weg !!
 	if (command->not_found != 0)
 		error = command->not_found;
 	if (check == 0)
