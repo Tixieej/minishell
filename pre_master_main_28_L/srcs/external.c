@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/04/05 16:03:50 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/04/06 16:43:46 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,43 +48,33 @@ static void	dup_back(t_command *cmd)
 {
 	if (cmd->out_red)
 	{
-		dprintf(2, "\t\t fuck \n");
-		if (dup2(cmd->stdout_backup, STDOUT_FILENO) < 0)
+		if (dup2(cmd->fd_out, STDOUT_FILENO) < 0)
 		{
 			write(2, "Unable to duplicate file descriptor.\n", 37);
 			exit(9);
 		}
-		close(cmd->stdout_backup);
+		close(cmd->fd_out);
 	}
 	if (cmd->in_red)
 	{
-
-		if (dup2(cmd->stdin_backup, STDIN_FILENO) < 0)
+		if (dup2(cmd->fd_in, STDIN_FILENO) < 0)
 		{
 			write(2, "Unable to duplicate file descriptor.\n", 37);
 			exit(9);
 		}
-		close(cmd->stdin_backup);
+		close(cmd->fd_in);
 	}
 }
 
 void	external(t_command *cmd, char **env, pid_t process)
 {
-	cmd->stdout_backup = out_redirect(cmd);// hier veranderd fd_out, maar dit is niet hoe het hoort volgens mij rixt, want
-	// jij gebruikt het hier volgens mij als backup voor de redirection, maar het moet de fd zijn van de file, maar dat is toch ... hmmm
-	// op zich is dat ook niet verkeerd, jawel. ik dacht dat dup2 anders werkte. dat je ze wisselde, maar dat is niet zo.
-	// je opent file1, fd_in wordt de fd daarvan, dan dup2 je stdin, dat word een andere fd, bijv 5,
-	// die moet je ergens anders opslaan. dan gaat het misschien wel goed.
-	cmd->stdin_backup = in_redirect(cmd);
+	cmd->fd_out = out_redirect(cmd);
+	cmd->fd_in = in_redirect(cmd);
 	if (cmd->fd_in < 0 || cmd->fd_out < 0)
 		return ;
-	write(2, "\t=== external ===\n", ft_strlen("\t=== external ===\n"));
-	//print_cur_struct(cmd);
 	if (ft_strchr(cmd->program, '/') != 0)
 		with_path(cmd, env, process);
 	else
 		without_path(cmd, env, process);
 	dup_back(cmd);
-	write(2, "\t=== na dup_back ===\n", ft_strlen("\t=== na dup_back ===\n"));
-	//print_cur_struct(cmd);
 }

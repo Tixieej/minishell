@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/03 13:16:00 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/05 14:16:10 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/04/06 14:57:33 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ int	in_red(t_command *command, t_list *begin)
 			(*cur_struct)->in_red = (*cur_struct)->in_red->next;
 			if ((*cur_struct)->in_red)
 				command->fd_in = open((const char *)
-						(*cur_struct)->in_red->content, O_RDONLY, 0644); 
-			//hier wordt file1 geopnd en krijgt fd 4 toegewezen
+						(*cur_struct)->in_red->content, O_RDONLY, 0644);
 		}
 		if (command->fd_in < 0)
 		{
@@ -90,14 +89,18 @@ int	out_red(t_command *command)
 
 int	redirection(t_command *command)
 {
-	t_command	**cur_struct;
+	t_command	*cur_struct;
 
-	cur_struct = &command;
+	cur_struct = command;
 	command->fd_in = STDIN_FILENO;
 	command->fd_out = STDOUT_FILENO;
-	if (in_red(command, NULL) == -1)
-		return (-1);
-	if (out_red(command) == -1)
-		return (-1);
+	while (cur_struct)
+	{
+		if (in_red(cur_struct, NULL) == -1)
+			return (-1);
+		if (out_red(cur_struct) == -1)
+			return (-1);
+		cur_struct = cur_struct->next;
+	}
 	return (0);
 }
