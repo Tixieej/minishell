@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/06 10:18:51 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/06 15:25:02 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	handle_quotation_marks(t_list **list, char *line,
 		while (line[start + *len] != '\'' && line[start + *len] != '\0')
 			(*len)++;
 		if (line[start + *len] != '\'')
-			error_handler("missing quotation marks\n", *list, NULL, 1);
+			error_handler("missing quotation marks\n", *list, NULL, 2);
 		(*len)++;
 		start = create_list_item(list, line, len, start);
 	}
@@ -81,7 +81,7 @@ static int	handle_quotation_marks(t_list **list, char *line,
 		while (line[start + *len] != '\"' && line[start + *len] != '\0')
 			(*len)++;
 		if (line[start + *len] != '\"')
-			error_handler("missing quotation marks\n", *list, NULL, 1);
+			error_handler("missing quotation marks\n", *list, NULL, 2);
 		(*len)++;
 		start = create_list_item(list, line, len, start);
 	}

@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/02 10:39:01 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/06 11:23:29 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static void	start_program(char **env, char *line, int error)
 		// 	// printf("begin adress: %p\n", begin);
 		// 	begin = &(*begin)->next;
 		// }
-		begin = &list;
+		// begin = &list;
 		error = parser(&list, &env, command, error);
 		if (list)
 		{

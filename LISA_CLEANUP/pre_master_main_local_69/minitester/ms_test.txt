@@ -1,3 +1,5 @@
+hallo
+echo hallo
 echo hallo; echo doei
 echo hallo ; echo doei
 echo hallo;echo doei
