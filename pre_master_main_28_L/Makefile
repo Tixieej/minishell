@@ -6,7 +6,7 @@
 #    By: rde-vrie <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/02/13 10:40:20 by rde-vrie      #+#    #+#                  #
-#    Updated: 2021/03/16 15:31:25 by rixt          ########   odam.nl          #
+#    Updated: 2021/04/06 09:43:11 by rixt          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,11 +37,11 @@ SRC = main.c \
 		signals.c \
 		check_env.c \
 		REMOVE_HULPFUNCTIE.c \
-		env.c
-		
-OBJ = $(SRC:.c=.o)
+		env.c		
+OBJ = $(addprefix objs/, $(SRC:.c=.o))
 CFLAGS = -Wall -Werror -Wextra
 INC = minishell.h get_next_line.h
+
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
@@ -54,9 +54,9 @@ $(LIBFT):
 test: $(NAME)
 	./$(NAME)
 
-%.o: %.c $(INC)
-	$(shell mkdir -p $(dir $@))
-	$(CC) $(CFLAGS) -c $< -o $@
+objs/%.o: srcs/%.c $(INC)
+	mkdir -p objs
+	$(CC) $(CFLAGS) -Ilibft -I. -c $< -o $@
 
 clean:
 	$(RM) $(OBJ)
