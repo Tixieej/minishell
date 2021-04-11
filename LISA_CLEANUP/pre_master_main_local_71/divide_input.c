@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/06 15:25:02 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/11 18:30:05 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static char	*trim_quotation_marks(char *temp, char *type, int len, int i)
 
 	temp_tr = NULL;
 	len = ft_strlen(temp);
+	printf("temp: %s\n", temp);
 	while (temp[i] != '\0')
 	{
 		if (temp[i] == '\"' || temp[i] == '\'')
@@ -44,6 +45,7 @@ static int	create_list_item(t_list **list, char *line,
 {
 	char	*temp;
 
+	temp = NULL;
 	temp = ft_substr((char const *)line, start, *len);
 	if (temp[0] == '\'' && temp[1] == '$')
 		ft_list_push_back(list, temp);
@@ -52,8 +54,6 @@ static int	create_list_item(t_list **list, char *line,
 		temp = trim_quotation_marks(temp, NULL, 0, 0);
 		ft_list_push_back(list, temp);
 	}
-	if (line[start + *len] == ';')
-		ft_list_push_back(list, ft_strdup(";"));
 	if (line[start + *len] != '\0')
 		start += *len;
 	else
@@ -67,7 +67,7 @@ static int	handle_quotation_marks(t_list **list, char *line,
 {
 	if (line[start + *len] == '\'')
 	{
-		start++;
+		(*len)++;
 		while (line[start + *len] != '\'' && line[start + *len] != '\0')
 			(*len)++;
 		if (line[start + *len] != '\'')
@@ -77,7 +77,7 @@ static int	handle_quotation_marks(t_list **list, char *line,
 	}
 	else if (line[start + *len] == '\"')
 	{
-		start++;
+		(*len)++;
 		while (line[start + *len] != '\"' && line[start + *len] != '\0')
 			(*len)++;
 		if (line[start + *len] != '\"')
@@ -108,10 +108,10 @@ void	divide_input(t_list **list, char *line,
 	{
 		while (line[start + len] == ' ')
 			start++;
-		if (!ft_strchr("' ''<''>'\'\"'\0'';'", line[start + len]))
+		if (!ft_strchr("';'' ''<''>'\'\"'\0'", line[start + len]))
 		{
 			start += len;
-			while (!ft_strchr("' '';''<''>' \'\"'\0'", line[start + len]))
+			while (!ft_strchr("';'' ''<''>' \'\"'\0'", line[start + len]))
 				len++;
 		}
 		if (!ft_strncmp(&line[start + len], ">>>", 3))
@@ -125,6 +125,8 @@ void	divide_input(t_list **list, char *line,
 			if (len != 0)
 				start = create_list_item(list, line, &len, start);
 		}
-		len++;
+		if (line[start + len] == ';')
+			ft_list_push_back(list, ft_strdup(";"));
+		start++;
 	}
 }
