@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/12 09:19:37 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/12 09:39:58 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*trim_quotation_marks(char *temp, char *type, int len, int i)
 
 	temp_tr = NULL;
 	len = ft_strlen(temp);
-	printf("temp: %s\n", temp);
+	printf("\ttemp: %s\n", temp);
 	while (temp[i] != '\0')
 	{
 		if (temp[i] == '\"' || temp[i] == '\'')

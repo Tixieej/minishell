@@ -6,7 +6,7 @@
 /*   By: rdvrie <marvin@codam.nl>                     +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by rixt          #+#    #+#                 */
-/*   Updated: 2021/04/02 10:40:05 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/12 09:51:13 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static void	dup_back(t_command *cmd)
 	}
 	if (cmd->in_red)
 	{
-
 		if (dup2(cmd->fd_in, STDIN_FILENO) < 0)
 		{
 			write(2, "Unable to duplicate file descriptor.\n", 37);
@@ -78,5 +77,4 @@ void	external(t_command *cmd, char **env, pid_t process)
 	else
 		without_path(cmd, env, process);
 	dup_back(cmd);
-	
 }
