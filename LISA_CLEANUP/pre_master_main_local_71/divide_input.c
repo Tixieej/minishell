@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/12 09:19:37 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/12 10:04:18 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,27 @@
 static char	*trim_quotation_marks(char *temp, char *type, int len, int i)
 {
 	char	*temp_tr;
+	// int		temp_len;
 
 	temp_tr = NULL;
-	len = ft_strlen(temp);
+	// temp_len = 0;
+	// len = ft_strlen(temp);
+	while (!ft_strchr("';'' ''<''>'\'\"'\0'", temp[len]))
+			(len)++;
 	printf("temp: %s\n", temp);
+	printf("eerste char: %c\n", temp[i]);
 	while (temp[i] != '\0')
 	{
 		if (temp[i] == '\"' || temp[i] == '\'')
 		{
 			if (i > 1)
+			{
 				type = ft_substr(temp, 0, i);
-			temp_tr = ft_substr(temp, i + 1, len - 1);
+				len -= i;
+			}
+			printf("type: %s\n", type);
+			temp_tr = ft_substr(temp, i + 1, len - 2);
+			printf("temp_tr: %s\n", temp_tr);
 			free(temp);
 			if (type)
 				temp = ft_strjoin(type, temp_tr);
@@ -33,7 +43,8 @@ static char	*trim_quotation_marks(char *temp, char *type, int len, int i)
 				temp = ft_strdup(temp_tr);
 			free(temp_tr);
 			free(type);
-			return (temp);
+			// len += i;
+			// return (temp);
 		}
 		i++;
 	}
@@ -73,6 +84,8 @@ static int	handle_quotation_marks(t_list **list, char *line,
 		if (line[start + *len] != '\'')
 			error_handler("missing quotation marks\n", *list, NULL, 2);
 		(*len)++;
+		while (!ft_strchr("';'' ''<''>'\'\"'\0'", line[start + *len]))
+			(*len)++;
 		start = create_list_item(list, line, len, start);
 	}
 	else if (line[start + *len] == '\"')
@@ -83,6 +96,8 @@ static int	handle_quotation_marks(t_list **list, char *line,
 		if (line[start + *len] != '\"')
 			error_handler("missing quotation marks\n", *list, NULL, 2);
 		(*len)++;
+		while (!ft_strchr("';'' ''<''>'\'\"'\0'", line[start + *len]))
+			(*len)++;
 		start = create_list_item(list, line, len, start);
 	}
 	start += *len;
@@ -118,6 +133,7 @@ void	divide_input(t_list **list, char *line,
 			error_handler("error near unexpected token`>'\n", *list, NULL, 258);
 		if (ft_strchr("\'\"", line[start + len]) && line[start + len] != '\0')
 			start = handle_quotation_marks(list, line, &len, start);
+		// printf("char %c\n", line[start + len]);
 		if (ft_strchr("';'' ''<''>''\0'", line[start + len]) && len > 0)
 		{
 			if (line[start + len] == '>' || line[start + len] == '<')
