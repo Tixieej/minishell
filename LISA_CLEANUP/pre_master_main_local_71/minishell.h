@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/02 10:32:11 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/12 11:27:59 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void			divide_input(t_list **list, char *line, size_t len,
 					unsigned int start);
 t_list			*ft_create_elem(void *data);
 void			ft_list_push_back(t_list **begin_list, void *data);
+char			*trim_singl_quotation_marks(char *temp, char *type, int len, int i);
+char			*trim_double_quotation_marks(char *temp, char *type, int len, int i);
 
 /*
 ** parse functions

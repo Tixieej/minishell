@@ -6,43 +6,11 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/12 10:59:33 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/12 11:28:46 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static char	*trim_quotation_marks(char *temp, char *type, int len, int i)
-{
-	char	*temp_tr;
-
-	temp_tr = NULL;
-	while (!ft_strchr("';'' ''<''>'\'\"'\0'", temp[len]))
-			(len)++;
-	while (temp[i] != '\0')
-	{
-		if (temp[i] == '\"' || temp[i] == '\'')
-		{
-			if (i > 1)
-			{
-				type = ft_substr(temp, 0, i);
-				len -= i;
-			}
-
-			temp_tr = ft_substr(temp, i + 1, len - 2);
-
-			free(temp);
-			if (type)
-				temp = ft_strjoin(type, temp_tr);
-			else
-				temp = ft_strdup(temp_tr);
-			free(temp_tr);
-			free(type);
-		}
-		i++;
-	}
-	return (temp);
-}
 
 static int	create_list_item(t_list **list, char *line,
 								size_t *len, unsigned int start)
@@ -55,7 +23,7 @@ static int	create_list_item(t_list **list, char *line,
 		ft_list_push_back(list, temp);
 	else
 	{
-		temp = trim_quotation_marks(temp, NULL, 0, 0);
+		temp = trim_singl_quotation_marks(temp, NULL, 0, 0);
 		ft_list_push_back(list, temp);
 	}
 	if (line[start + *len] != '\0')
