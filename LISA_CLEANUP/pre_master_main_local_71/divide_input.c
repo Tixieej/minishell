@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/11 18:30:05 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/12 09:19:37 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static char	*trim_quotation_marks(char *temp, char *type, int len, int i)
 		{
 			if (i > 1)
 				type = ft_substr(temp, 0, i);
-			temp_tr = ft_substr(temp, i + 1, len - 2);
+			temp_tr = ft_substr(temp, i + 1, len - 1);
 			free(temp);
 			if (type)
 				temp = ft_strjoin(type, temp_tr);
