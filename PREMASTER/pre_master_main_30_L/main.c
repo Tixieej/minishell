@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/12 09:55:30 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/04/12 18:27:06 by rde-vrie      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static void	start_program(char **env, char *line, int error)
 			begin = &(*begin)->next;
 		}
 		begin = &list;
+		//syntax_error(list);
 		error = parser(&list, &env, command, error);
 		if (list)
 		{
