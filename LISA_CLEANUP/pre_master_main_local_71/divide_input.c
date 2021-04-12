@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/12 10:04:18 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/12 10:59:33 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,10 @@
 static char	*trim_quotation_marks(char *temp, char *type, int len, int i)
 {
 	char	*temp_tr;
-	// int		temp_len;
 
 	temp_tr = NULL;
-	// temp_len = 0;
-	// len = ft_strlen(temp);
 	while (!ft_strchr("';'' ''<''>'\'\"'\0'", temp[len]))
 			(len)++;
-	printf("temp: %s\n", temp);
-	printf("eerste char: %c\n", temp[i]);
 	while (temp[i] != '\0')
 	{
 		if (temp[i] == '\"' || temp[i] == '\'')
@@ -33,9 +28,9 @@ static char	*trim_quotation_marks(char *temp, char *type, int len, int i)
 				type = ft_substr(temp, 0, i);
 				len -= i;
 			}
-			printf("type: %s\n", type);
+
 			temp_tr = ft_substr(temp, i + 1, len - 2);
-			printf("temp_tr: %s\n", temp_tr);
+
 			free(temp);
 			if (type)
 				temp = ft_strjoin(type, temp_tr);
@@ -43,8 +38,6 @@ static char	*trim_quotation_marks(char *temp, char *type, int len, int i)
 				temp = ft_strdup(temp_tr);
 			free(temp_tr);
 			free(type);
-			// len += i;
-			// return (temp);
 		}
 		i++;
 	}
@@ -113,7 +106,7 @@ static void	prep_redirection(char *line, unsigned int *start, size_t *len)
 		*len = 2;
 	}
 	if (line[*start + *len] == '>' || line[*start + *len] == '<')
-		(*start)++;
+		(*len)++;
 }
 
 void	divide_input(t_list **list, char *line,
@@ -133,8 +126,7 @@ void	divide_input(t_list **list, char *line,
 			error_handler("error near unexpected token`>'\n", *list, NULL, 258);
 		if (ft_strchr("\'\"", line[start + len]) && line[start + len] != '\0')
 			start = handle_quotation_marks(list, line, &len, start);
-		// printf("char %c\n", line[start + len]);
-		if (ft_strchr("';'' ''<''>''\0'", line[start + len]) && len > 0)
+		if (ft_strchr("'<''>'';'' ''\0'", line[start + len]))
 		{
 			if (line[start + len] == '>' || line[start + len] == '<')
 				prep_redirection(line, &start, &len);
