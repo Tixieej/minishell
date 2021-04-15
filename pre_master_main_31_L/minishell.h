@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/12 15:07:21 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/13 12:22:09 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,5 +131,6 @@ void			signal_handler(int sig);
 */
 void			command_not_found(t_command *command, char *message, \
 					char *error, int value);
+int			syntax_error(t_list *list);
 
 #endif
