@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/12 17:14:11 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/15 13:46:11 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,18 @@ static void	start_program(t_base *base, char *line, int error)
 		// 	begin = &(*begin)->next;
 		// }
 		// begin = &base->list;
+		if (syntax_error(base->list) == -1)
+		{
+			if (base->list)// dit is hetzelfde stukje code als een paar regels hieronder, 
+			//dit kan een aparte functie worden die je twee keer aanroept
+			{
+				ft_lstclear(&base->list, free); //weg?
+				base->list = NULL; //weg?
+			}
+			free(line);
+			line = NULL;
+			continue ;
+		}
 		error = parser(&base->list, &base->env, command, error);
 		if (base->list)
 		{
