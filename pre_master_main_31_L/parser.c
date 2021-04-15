@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/11 18:22:33 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/15 15:09:54 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,8 @@ int	parser(t_list **list, char ***env, t_command *command, int error)
 		print_cur_struct(command); // weg !!
 	if (command->not_found != 0)
 		error = command->not_found;
+	printf("\tparser check 2 voor abort\n");
 	if (check == 0)
-		command = ft_clear_linked_struct(command);
+		command = ft_clear_linked_struct(command);//dit veroorzaakt abort maar weghalen is leaks
 	return (error);
 }
