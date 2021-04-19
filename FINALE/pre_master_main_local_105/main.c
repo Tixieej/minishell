@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/19 15:12:06 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/19 16:10:24 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ static void	start_program(t_base *base, char *line, int error)
 		if (line[0] == '\0')
 			continue ;
 		divide_input(base, line, 0, 0);
-		while (*begin) //loop om te lezen wat er gebeurt, later weghalen
-		{
-			printf("\tbase->list item: [%s]\n", (char*)((*begin)->content));
-			// printf("begin adress: %p\n", begin);
-			begin = &(*begin)->next;
-		}
-		begin = &base->list;
+		// while (*begin) //loop om te lezen wat er gebeurt, later weghalen
+		// {
+		// 	printf("\tbase->list item: [%s]\n", (char*)((*begin)->content));
+		// 	// printf("begin adress: %p\n", begin);
+		// 	begin = &(*begin)->next;
+		// }
+		// begin = &base->list;
 		error = parser(&base->list, &base->env, command, error);
 		if (base->list)
 		{

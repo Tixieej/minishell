@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/19 15:39:49 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/19 16:39:59 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static int	create_list_item(t_base *base, char *line,
 
 	temp = NULL;
 	temp = ft_substr((char const *)line, start, *len);
+	printf("temp: %s\n", temp);
 	temp = trim_quotation_marks(base, temp, NULL, 0);
 		ft_list_push_back(&base->list, temp);
 	if (line[start + *len] != '\0')
@@ -112,17 +113,17 @@ void	divide_input(t_base *base, char *line,
 	{
 		while (line[start + len] == ' ')
 			start++;
-		if (!ft_strchr("';'' ''<''>'\'\"'\0'", line[start + len]))
+		if (!ft_strchr("'|'';'' ''<''>'\'\"'\0'", line[start + len]))
 		{
 			start += len;
-			while (!ft_strchr("';'' ''<''>' \'\"'\0'", line[start + len]))
+			while (!ft_strchr("'|'';'' ''<''>' \'\"'\0'", line[start + len]))
 				len++;
 		}
 		if (!ft_strncmp(&line[start + len], ">>>", 3))
 			error_handler("error near unexpected token`>'\n", base->list, NULL, 258);
 		if (ft_strchr("\'\"", line[start + len]) && line[start + len] != '\0')
 			start = handle_quotation_marks(base, line, &len, start);
-		if (ft_strchr("'<''>'';'' ''\0'", line[start + len]))
+		if (ft_strchr("'|''<''>'';'' ''\0'", line[start + len]))
 		{
 			if (len != 0)
 				start = create_list_item(base, line, &len, start);
@@ -131,6 +132,8 @@ void	divide_input(t_base *base, char *line,
 			handle_redirection(base, line, &len, &start);
 		if (line[start + len] == ';')
 			ft_list_push_back(&base->list, ft_strdup(";"));
+		if (line[start + len] == '|')
+			ft_list_push_back(&base->list, ft_strdup("|"));
 		start++;
 	}
 }
