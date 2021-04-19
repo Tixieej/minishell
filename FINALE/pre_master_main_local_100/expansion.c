@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/19 13:11:32 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/19 13:12:06 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/19 13:26:43 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,15 @@ static char	*enter_expansion(char *str, int *start, int *len, char *env)
 	free(str);
 	if (str_end)
 		str = ft_strjoin(temp, str_end);
-	else	
+	else
 		str = ft_strdup(temp);
 	free(temp);
 	free(str_end);
 	free(str_start);
 	return (str);
 }
+
+
 
 char	*check_exp_within_dq(t_base *base, char *str, int start, int count)
 {
@@ -59,16 +61,17 @@ char	*check_exp_within_dq(t_base *base, char *str, int start, int count)
 		{
 			start += len + 1;
 			len = 0;
-			while (str[start + len] != '\0' && str[start + len] != '$' && str[start + len] != '\"')
+			while (str[start + len] != '\0' && str[start + len] != '$'
+				&& str[start + len] != '\"')
 				len++;
 			while (base->env[count])
 			{
-				if (ft_strncmp(base->env[count], &str[start], len) == 0 && base->env[count][len] == '=')
+				if (ft_strncmp(base->env[count], &str[start], len) == 0
+					&& base->env[count][len] == '=')
 				{
-					printf("env: %c\n", base->env[count][len]);
 					str = enter_expansion(str, &start, &len, base->env[count]);
 					count = 0;
-					break;
+					break ;
 				}
 				count++;
 			}
