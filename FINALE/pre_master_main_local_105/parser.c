@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/19 16:35:15 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/19 17:11:49 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,12 +122,12 @@ int	parser(t_list **list, char ***env, t_command *command, int error)
 	check = 0;
 	cur_lst = *list;
 	cur_struct = &command;
-	while (cur_lst)
-    {
-     printf("[%s]->", cur_lst->content);
-     cur_lst = cur_lst->next;
-    }
-	cur_lst = *list;
+	// while (cur_lst)
+    // {
+    //  printf("[%s]->", cur_lst->content);
+    //  cur_lst = cur_lst->next;
+    // }
+	// cur_lst = *list;
 	if (!cur_lst)
 		return (error);
 	ft_struct_push_back(&command, (char *)cur_lst->content);
@@ -140,8 +140,8 @@ int	parser(t_list **list, char ***env, t_command *command, int error)
 	if (command)
 		check_type(env, *cur_struct);
 	cur_struct = &command;
-	if (command) //
-		print_cur_struct(command); // weg !!
+	// if (command) //
+	// 	print_cur_struct(command); // weg !!
 	if (command->not_found != 0)
 		error = command->not_found;
 	if (command)

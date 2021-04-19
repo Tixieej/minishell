@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/19 13:11:32 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/19 14:05:22 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/19 17:00:06 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ char	*enter_expansion(char *str, int *start, int *len, char *env)
 	exp = ft_strdup(&env[*len + 1]);
 	if (str[*start + *len] == '$')
 		str_end = ft_strdup(&str[*start + *len]);
-	str_start = ft_substr(str, 1, *start - 2);
+	if (str[0] == '\"')
+		str_start = ft_substr(str, 1, *start - 2);
+	else
+		str_start = ft_substr(str, 0, *start - 1);
 	temp = ft_strjoin(str_start, exp);
 	*start += ft_strlen(exp) - 3;
 	*len = 0;
