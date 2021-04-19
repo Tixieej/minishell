@@ -6,13 +6,11 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/19 15:26:41 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/19 15:39:49 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 static char	*trim_quotation_marks(t_base *base, char *temp, char *type, int len)
 {
