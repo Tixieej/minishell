@@ -6,43 +6,11 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/19 17:11:49 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/19 17:32:23 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// static 	char	*expansions(char *str, char **env, int count, int start)
-// {
-// 	int len;
-
-// 	len = 0;
-// 	while (str[start + len] != '\0')
-// 	{
-// 		if (str[start + len] == '$')
-// 		{
-// 			start += len + 1;
-// 			len = 0;
-// 			while (str[start + len] != '\0' && str[start + len] != '$')
-// 				len++;
-// 			while (env[count])
-// 			{
-// 				if (ft_strncmp(env[count], &str[start], len) == 0
-// 					&& env[count][len] == '=')
-// 				{
-// 					str = enter_expansion(str, &start, &len, env[count]);
-// 					count = 0;
-// 					break ;
-// 				}
-// 				count++;
-// 			}
-// 		}
-// 		len++;
-// 	}
-	
-
-// 	return (str);
-// }
 
 static t_command	**add_pipe(t_list **cur_lst,
 	t_command **cur_struct, t_command *command)
