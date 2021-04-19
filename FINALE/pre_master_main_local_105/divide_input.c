@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/19 13:43:11 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/19 15:26:41 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,15 +96,15 @@ static int	handle_quotation_marks(t_base *base, char *line,
 	return (start);
 }
 
-static void	prep_redirection(char *line, unsigned int *start, size_t *len)
+static void	handle_redirection(t_base *base, char *line, size_t *len, unsigned int *start)
 {
 	if (line[*start + *len] == '>' && line[*start + *len + 1] == '>')
-	{
-		(*start)++;
-		*len = 2;
-	}
-	if (line[*start + *len] == '>' || line[*start + *len] == '<')
-		(*len)++;
+		{
+			ft_list_push_back(&base->list, ft_strdup(">>"));
+			*start += 1;
+		}
+	else if (line[*start + *len] == '>' || line[*start + *len] == '<')
+			ft_list_push_back(&base->list, ft_strdup(">"));
 }
 
 void	divide_input(t_base *base, char *line,
@@ -126,11 +126,11 @@ void	divide_input(t_base *base, char *line,
 			start = handle_quotation_marks(base, line, &len, start);
 		if (ft_strchr("'<''>'';'' ''\0'", line[start + len]))
 		{
-			if (line[start + len] == '>' || line[start + len] == '<')
-				prep_redirection(line, &start, &len);
 			if (len != 0)
 				start = create_list_item(base, line, &len, start);
 		}
+		if (line[start + len] == '>')
+			handle_redirection(base, line, &len, &start);
 		if (line[start + len] == ';')
 			ft_list_push_back(&base->list, ft_strdup(";"));
 		start++;
