@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/19 13:11:32 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/19 17:38:11 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/19 17:44:12 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*check_exp_within_dq(char **env, char *str, int start, int count)
 
 	check = 0;
 	len = 0;
-	while (str[start + len] != '\0')
+	while (str[start + len] != '\0' && str[start + len] != '\'')
 	{
 		if (str[start + len] == '$')
 		{
