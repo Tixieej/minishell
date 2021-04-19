@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/12 15:07:21 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/19 13:12:25 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void			divide_input(t_base *base, char *line,
 							size_t len, unsigned int start);
 t_list			*ft_create_elem(void *data);
 void			ft_list_push_back(t_list **begin_list, void *data);
+char			*check_exp_within_dq(t_base *base, char *str, int start, int count);
 
 /*
 ** parse functions

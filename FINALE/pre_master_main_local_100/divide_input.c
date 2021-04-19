@@ -6,142 +6,13 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/19 10:42:08 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/19 13:12:28 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// char	*check_exp_within_dq(t_base *base, char *str, char *exp, int count)
-// {
-// 	size_t	start;
-// 	size_t	len;
-// 	char	*str_left;
-// 	char	*temp;
-// 	int		check;
 
-// 	check = 0;
-// 	start = 1;
-// 	len = 0;
-// 	str_left = NULL;
-// 	temp = NULL;
-// 	while (str[start + len] != '\0')
-// 	{
-// 		if (str[start + len] == '$')
-// 		{
-// 			start += len + 1;
-// 			len = 0;
-// 			while (str[start + len] != '\0' && str[start + len] != '$' && str[start + len] != '\"')
-// 				len++;
-// 			while (base->env[count])
-// 			{
-// 				if (ft_strncmp(base->env[count], &str[start], len) == 0)
-// 				{
-// 					check = 1;
-// 					if (str[start + len] != '\0' && str[start + len] != '\"')
-// 						str_left = ft_strdup(&str[start + len]);
-// 					exp = ft_strdup(&base->env[count][len + 1]);
-// 					temp = ft_substr(str, 1, start - 2);
-// 					free(str); //
-// 					str = ft_strjoin(temp, exp);
-// 					free(temp); //
-// 					if (str_left)
-// 					{
-// 						temp = ft_strjoin(str, str_left);
-// 						start = ft_strlen(str) - 1;
-// 						free(str);
-// 						str = ft_strdup(temp);
-// 						free(temp);
-// 					}
-// 					else
-// 						start = start + len + ft_strlen(exp);
-// 					// if (exp)
-// 					// 	free(exp); //
-// 					len = 0;
-// 					if (str_left)
-// 						free(str_left); //
-// 					count = 0;
-// 					break;
-// 				}
-// 				count++;
-// 			}
-// 		}
-// 		len++;
-// 	}
-// 	if (check == 0)
-// 	{
-// 		free(str);
-// 		str = ft_strdup("");
-// 	}
-// 	return (str);
-// }
-
-static char	*enter_expansion(char *str, int *start, int *len, char *env)
-{
-	char	*str_end;
-	char	*str_start;
-	char	*exp;
-	char	*temp;
-
-	temp = NULL;
-	str_end = NULL;
-	exp = ft_strdup(&env[*len + 1]);
-	printf("exp %s\n", exp);
-	if (str[*start + *len] == '$')
-		str_end = ft_strdup(&str[*start + *len]);
-	str_start = ft_substr(str, 1, *start - 2);
-	printf("start %s\n", str_start);
-	temp = ft_strjoin(str_start, exp);
-	*len += ft_strlen(exp);
-	free(str);
-	if (str_end)
-	{
-		str = ft_strjoin(temp, str_end);
-		*len += ft_strlen(str_end);
-	}
-	else	
-		str = ft_strdup(temp);
-	free(temp);
-	free(str_end);
-	free(str_start);
-	return (str);
-}
-
-static char	*check_exp_within_dq(t_base *base, char *str, int start, int count)
-{
-	int	len;
-	int	check;
-
-	len = 0;
-	check = 0;
-	while (str[start + len] != '\0')
-	{
-		if (str[start + len] == '$')
-		{
-			start += len + 1;
-			len = 0;
-			while (str[start + len] != '\0' && str[start + len] != '$' && str[start + len] != '\"')
-				len++;
-			while (base->env[count])
-			{
-				if (ft_strncmp(base->env[count], &str[start], len) == 0)
-				{
-					check = 1;
-					str = enter_expansion(str, &start, &len, base->env[count]);
-					count = 0;
-					printf("str %s\n", str);
-					printf("len: %d\n", len);
-					printf("start: %d\n", start);
-					printf("char: %d\n", str[start + len]);
-					break;
-				}
-				count++;
-			}
-		}
-		len++;
-	}
-	return(str);
-}
 
 static char	*trim_quotation_marks(t_base *base, char *temp, char *type, int len)
 {
@@ -162,7 +33,6 @@ static char	*trim_quotation_marks(t_base *base, char *temp, char *type, int len)
 				len -= start;
 			}
 			temp_tr = ft_substr(temp, start, len - 2);
-			// printf("temp_tr: %s\n", temp_tr);
 			temp_tr = check_exp_within_dq(base, temp_tr, 0, 0);
 			free(temp);
 			if (type)
@@ -184,13 +54,8 @@ static int	create_list_item(t_base *base, char *line,
 
 	temp = NULL;
 	temp = ft_substr((char const *)line, start, *len);
-	if (temp[0] == '\'' && temp[1] == '$')
+	temp = trim_quotation_marks(base, temp, NULL, 0);
 		ft_list_push_back(&base->list, temp);
-	else
-	{
-		temp = trim_quotation_marks(base, temp, NULL, 0);
-		ft_list_push_back(&base->list, temp);
-	}
 	if (line[start + *len] != '\0')
 		start += *len;
 	else

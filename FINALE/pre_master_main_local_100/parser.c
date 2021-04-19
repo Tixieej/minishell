@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/11 18:22:33 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/19 13:10:44 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,67 +50,11 @@ static void	add_redirection(t_list **cur_lst, t_command **cur_struct)
 	}
 }
 
-static int	check_exp(t_list  *cur_lst, char **env, size_t *len, int count)
-{
-	int		check;
-	char	*temp;
-
-	check = 0;
-	temp = 0;
-	while (cur_lst->content[*len] != '\0' && cur_lst->content[*len] != ' ')
-		(*len)++;
-	while (env[count])
-	{
-		if (ft_strncmp(env[count], &cur_lst->content[1], *len - 1) == 0)
-		{
-			check = 1;
-			temp = ft_strdup(&cur_lst->content[*len]);
-			free(cur_lst->content);
-			if (*len < ft_strlen(cur_lst->content))
-				cur_lst->content = ft_strjoin(&env[count][*len], temp);
-			else
-				cur_lst->content = ft_strdup(&env[count][*len]);
-			free(temp);
-		}
-		count++;
-	}
-	return (check);
-}
-
-static void	expansions(t_list *cur_lst, char **env, size_t len)
-{
-	char	*temp;
-
-	temp = NULL;
-	if (cur_lst->content[0] == '$' && cur_lst->content[1] == '?')
-		return ;
-	if (cur_lst->content[0] == '\'')
-	{
-		temp = ft_substr(cur_lst->content, 1, (ft_strlen(cur_lst->content) - 2));
-		free(cur_lst->content);
-		cur_lst->content = ft_strdup(temp);
-		free(temp);
-		return ;
-	}
-	if (check_exp(cur_lst, env, &len, 0) == 0)
-	{
-		if (len < ft_strlen(cur_lst->content))
-			temp = ft_strdup(&cur_lst->content[len]);
-		else
-			temp = ft_strdup("\0");
-		free(cur_lst->content);
-		cur_lst->content = ft_strdup(temp);
-		free(temp);
-	}	
-}
-
 int	parser_part_two(t_command **cur_struct, t_list *cur_lst,
 			char ***env, t_command *command)
 {
 	while (cur_lst)
 	{
-		if (*cur_lst->content == '$' || *cur_lst->content == '\'' )
-			expansions(cur_lst, *env, 0);
 		if (cur_lst->content[0] == ';' && cur_lst->content[1] != ';')
 		{
 			// print_cur_struct(command); // weg !!
