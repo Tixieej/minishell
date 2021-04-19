@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/12 17:13:26 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/16 11:41:52 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,42 +16,60 @@ char	*check_exp_within_dq(t_base *base, char *str, char *exp, int count)
 {
 	size_t	start;
 	size_t	len;
+	char	*str_left;
+	char	*temp;
 
-	// len = ft_strlen(str);
-	(void)base;
 	start = 1;
 	len = 0;
-	count = 0;
-	exp = NULL;
-	// while (str[start + len] != '\0')
-	// {
-	// 	if (str[start + len] == '$')
-	// 	{
-	// 		while (str[start + len] != '\0' && str[start + len] != '$')
-	// 			len++;
-	// 		while (base->env[count])
-	// 		{
-	// 			printf("base: %s\n", base->env[count]);
-	// 			printf("str: %s\n", &str[len + 2]);
-	// 			printf("len %zu\n", ft_strlen(&str[len + 3]);
-	// 			if (ft_strncmp(base->env[count], &str[len + 2], ft_strlen(&str[len + 2]) - 1) == 1)
-	// 			{
-	// 				printf("ja");
-	// 				// check = 1;
-	// 				// exp = ft_strdup(base->env[len]);
-	// 				// free(str);
-	// 				// if (temp_len < ft_strlen(str))
-	// 				// 	str = ft_strjoin(exp, str);
-	// 				// else
-	// 				// 	str = ft_strdup(exp);
-	// 			}
-	// 			count++;
-	// 		}
-	// 		count = 0;
-	// 	}
-	// 	len++;
-	// }
-	// printf("exp: %s\n", exp);
+	str_left = NULL;
+	temp = NULL;
+	while (str[start + len] != '\0')
+	{
+		if (str[start + len] == '$')
+		{
+			start += len + 1;
+			len = 0;
+			while (str[start + len] != '\0' && str[start + len] != '$' && str[start + len] != '\"')
+				len++;
+			while (base->env[count])
+			{
+				if (ft_strncmp(base->env[count], &str[start], len) == 0)
+				{
+					if (str[start + len] != '\0' && str[start + len] != '\"')
+						str_left = ft_strdup(&str[start + len]);
+					printf("str_left: %s\n", str_left);
+					exp = ft_strdup(&base->env[count][len + 1]);
+					temp = ft_substr(str, 1, start - 2);
+					printf("temp: %s\n", temp);
+					free(str);
+					printf("exp: %s\n", exp);
+					str = ft_strjoin(temp, exp);
+					printf("str 1: %s\n", str);
+					free(temp);
+					if (str_left)
+					{
+						temp = ft_strjoin(str, str_left);
+						free(temp);
+						free(str);
+						str = ft_strdup(temp);
+					}
+					start = start + len + ft_strlen(exp);
+					len = 0;
+					free(exp);
+					if (str_left)
+						free(str_left);
+					count = 0;
+					break;
+				}
+				count++;
+			}
+			
+		}
+		len++;
+	}
+	printf("result str: %s\n", str);
+	// if (len > 0)
+	// 	strjoin
 	return (str);
 }
 static char	*trim_quotation_marks(t_base *base, char *temp, char *type, int len)
