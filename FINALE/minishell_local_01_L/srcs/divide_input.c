@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/20 13:23:42 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/20 13:31:48 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void	divide_input(t_base *base, char *line,
 		}
 		if (line[start + len] == '>')
 			handle_redirection(base, line, &len, &start);
-		if (line[start + len] == ';' || line[start + len] == '|')
+		if ((line[start + len] == ';' && line[start + len + 1] != ';')|| line[start + len] == '|')
 			ft_list_push_back(&base->list, ft_substr(line, start + len, 1));
 		start++;
 	}
