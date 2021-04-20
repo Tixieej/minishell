@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/20 12:16:34 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/20 13:40:47 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ int	parser(t_list **list, char ***env, t_command *command, int error)
 {
 	t_list		*cur_lst;
 	t_command	**cur_struct;
-	int			check;
+	// int			check;
 
-	check = 0;
+	// check = 0;
 	cur_lst = *list;
 	cur_struct = &command;
 	// while (cur_lst)
@@ -103,16 +103,34 @@ int	parser(t_list **list, char ***env, t_command *command, int error)
 	cur_lst = cur_lst->next;
 	command = parser_part_two(cur_struct, cur_lst, env, command);
 	cur_lst = *list;
-	if (command->pipe_check > 0)
-		cur_struct = &command;
 	if (command)
+	{
+		if (command->pipe_check > 0)
+			cur_struct = &command;
 		check_type(env, *cur_struct);
-	cur_struct = &command;
-	// if (command) //
-	// 	print_cur_struct(command); // weg !!
-	if (command->not_found != 0)
-		error = command->not_found;
-	if (command)
+		cur_struct = &command;
+		if (command->not_found != 0)
+			error = command->not_found;
 		command = ft_clear_linked_struct(command);
+	}
 	return (error);
 }
+
+
+
+// hieronder oude code en niet norm maar voor checks straks wel fijn
+	// if (command)
+	// 	if (command->pipe_check > 0)
+	// 		cur_struct = &command;
+	// if (command)
+	// 	check_type(env, *cur_struct);
+	// if (command)
+	// 	cur_struct = &command;
+	// // if (command) //
+	// // 	print_cur_struct(command); // weg !!
+	// if (command)
+	// 	if (command->not_found != 0)
+	// 		error = command->not_found;
+	// if (command)
+	// 	command = ft_clear_linked_struct(command);
+	// return (error);
