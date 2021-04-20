@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 17:53:20 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/19 14:11:51 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/20 09:52:41 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,8 @@ void	check_type(char ***env, t_command *command)
 		process = pipes(env, cur_struct, 0, 0);
 	else
 		check_type_two(env, cur_struct, process);
+	if (command->out_red)
+		close(command->fd_out);
+	if (command->in_red)
+		close(command->fd_in);
 }
