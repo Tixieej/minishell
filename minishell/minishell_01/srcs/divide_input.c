@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/19 16:47:32 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/04/20 12:13:27 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,18 @@ static int	create_list_item(t_base *base, char *line,
 								size_t *len, unsigned int start)
 {
 	char	*temp;
+	int		check;
 
 	temp = NULL;
+	check = 0;
+	
 	temp = ft_substr((char const *)line, start, *len);
+	if (temp[0] == '\'')
+		check = 1;
 	temp = trim_quotation_marks(base, temp, NULL, 0);
-		ft_list_push_back(&base->list, temp);
+	if (check != 1)
+		temp = check_exp_within_dq(base->env, temp, 0, 0);
+	ft_list_push_back(&base->list, temp);
 	if (line[start + *len] != '\0')
 		start += *len;
 	else
@@ -105,8 +112,8 @@ static void	handle_redirection(t_base *base, char *line, size_t *len, unsigned i
 			ft_list_push_back(&base->list, ft_strdup(">"));
 }
 
-void    divide_input(t_base *base, char *line,
-                            size_t len, unsigned int start)
+void	divide_input(t_base *base, char *line,
+							size_t len, unsigned int start)
 {
 	while (line[start + len] != '\0')
 	{
@@ -129,10 +136,8 @@ void    divide_input(t_base *base, char *line,
 		}
 		if (line[start + len] == '>')
 			handle_redirection(base, line, &len, &start);
-		if (line[start + len] == ';')
-			ft_list_push_back(&base->list, ft_strdup(";"));
-		if (line[start + len] == '|')
-			ft_list_push_back(&base->list, ft_strdup("|"));
+		if (line[start + len] == ';' || line[start + len] == '|')
+			ft_list_push_back(&base->list, ft_substr(line, start + len, 1));
 		start++;
 	}
 }

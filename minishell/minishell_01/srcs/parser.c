@@ -6,43 +6,11 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/19 14:19:37 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/20 12:16:34 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static 	char	*expansions(char *str, char **env, int count, int start)
-{
-	int len;
-
-	len = 0;
-	while (str[start + len] != '\0')
-	{
-		if (str[start + len] == '$')
-		{
-			start += len + 1;
-			len = 0;
-			while (str[start + len] != '\0' && str[start + len] != '$')
-				len++;
-			while (env[count])
-			{
-				if (ft_strncmp(env[count], &str[start], len) == 0
-					&& env[count][len] == '=')
-				{
-					str = enter_expansion(str, &start, &len, env[count]);
-					count = 0;
-					break ;
-				}
-				count++;
-			}
-		}
-		len++;
-	}
-	
-
-	return (str);
-}
 
 static t_command	**add_pipe(t_list **cur_lst,
 	t_command **cur_struct, t_command *command)
@@ -87,8 +55,8 @@ t_command *parser_part_two(t_command **cur_struct, t_list *cur_lst,
 {
 	while (cur_lst)
 	{
-		if (cur_lst->content[0] == '$')
-			cur_lst->content = expansions(cur_lst->content, *env, 0, 0);
+		// if (cur_lst->content[0] == '$')
+		// 	cur_lst->content = expansions(cur_lst->content, *env, 0, 0);
 		if (cur_lst->content[0] == ';' && cur_lst->content[1] != ';')
 		{
 			// print_cur_struct(command); // weg !!
@@ -140,8 +108,8 @@ int	parser(t_list **list, char ***env, t_command *command, int error)
 	if (command)
 		check_type(env, *cur_struct);
 	cur_struct = &command;
-	if (command) //
-		print_cur_struct(command); // weg !!
+	// if (command) //
+	// 	print_cur_struct(command); // weg !!
 	if (command->not_found != 0)
 		error = command->not_found;
 	if (command)

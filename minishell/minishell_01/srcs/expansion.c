@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/19 13:11:32 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/19 14:05:22 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/20 12:14:32 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,20 @@ static char	*trim_dq(char	*str)
 	return (temp);
 }
 
+static char	*remove_expansion(char *str, int start, int len)
+{
+	char	*str_end;
+	char	*str_start;
+
+	str_start = ft_substr(str, 0, start - 1);
+	str_end = ft_strdup(&str[start + 1 + len]);
+	free(str);
+	str = ft_strjoin(str_start, str_end);
+	free(str_start);
+	free(str_end);
+	return (str);
+}
+
 char	*enter_expansion(char *str, int *start, int *len, char *env)
 {
 	char	*str_end;
@@ -30,21 +44,29 @@ char	*enter_expansion(char *str, int *start, int *len, char *env)
 
 	temp = NULL;
 	str_end = NULL;
-	exp = ft_strdup(&env[*len + 1]);
-	if (str[*start + *len] == '$')
-		str_end = ft_strdup(&str[*start + *len]);
-	str_start = ft_substr(str, 1, *start - 2);
-	temp = ft_strjoin(str_start, exp);
-	*start += ft_strlen(exp) - 3;
-	*len = 0;
-	free(str);
-	if (str_end)
-		str = ft_strjoin(temp, str_end);
+	if (env == NULL)
+		str = remove_expansion(str, *start, *len);
 	else
-		str = ft_strdup(temp);
-	free(temp);
-	free(str_end);
-	free(str_start);
+	{
+		exp = ft_strdup(&env[*len + 1]);
+		if (str[*start + *len] == '$')
+			str_end = ft_strdup(&str[*start + *len]);
+		if (str[0] == '\"')
+			str_start = ft_substr(str, 1, *start - 2);
+		else
+			str_start = ft_substr(str, 0, *start - 1);
+		temp = ft_strjoin(str_start, exp);
+		*start += ft_strlen(exp) - 3;
+		*len = 0;
+		free(str);
+		if (str_end)
+			str = ft_strjoin(temp, str_end);
+		else
+			str = ft_strdup(temp);
+		free(temp);
+		free(str_end);
+		free(str_start);
+	}
 	return (str);
 }
 
@@ -53,9 +75,11 @@ char	*enter_expansion(char *str, int *start, int *len, char *env)
 char	*check_exp_within_dq(char **env, char *str, int start, int count)
 {
 	int	len;
+	int	check;
 
+	check = 0;
 	len = 0;
-	while (str[start + len] != '\0')
+	while (str[start + len] != '\0' && str[start + len] != '\'')
 	{
 		if (str[start + len] == '$')
 		{
@@ -69,12 +93,15 @@ char	*check_exp_within_dq(char **env, char *str, int start, int count)
 				if (ft_strncmp(env[count], &str[start], len) == 0
 					&& env[count][len] == '=')
 				{
+					check = 1;
 					str = enter_expansion(str, &start, &len, env[count]);
 					count = 0;
 					break ;
 				}
 				count++;
 			}
+			if (check != 1)
+				str = enter_expansion(str, &start, &len, NULL);
 		}
 		len++;
 	}
