@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/20 12:13:27 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/20 13:26:09 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	divide_input(t_base *base, char *line,
 		}
 		if (!ft_strncmp(&line[start + len], ">>>", 3))
 			error_handler("error near unexpected token`>'\n", base->list, NULL, 258);
-		if (ft_strchr("\'\"", line[start + len]) && line[start + len] != '\0')
+		if (ft_strchr("\'\"'$'", line[start + len]) && line[start + len] != '\0')
 			start = handle_quotation_marks(base, line, &len, start);
 		if (ft_strchr("'|''<''>'';'' ''\0'", line[start + len]))
 		{
