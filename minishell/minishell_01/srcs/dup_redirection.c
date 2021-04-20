@@ -6,7 +6,7 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/11 12:01:23 by rixt          #+#    #+#                 */
-/*   Updated: 2021/04/19 15:57:32 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/04/20 17:14:37 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	out_redirect(t_command *cmd)
 {
 	int	stdout_fd;
-	
+
 	stdout_fd = STDOUT_FILENO;
 	if (cmd->fd_out != 1)
 	{

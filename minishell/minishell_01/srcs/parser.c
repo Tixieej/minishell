@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/20 13:40:47 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/20 17:03:12 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	add_redirection(t_list **cur_lst, t_command **cur_struct)
 	}
 }
 
-t_command *parser_part_two(t_command **cur_struct, t_list *cur_lst,
+t_command	*parser_part_two(t_command **cur_struct, t_list *cur_lst,
 			char ***env, t_command *command)
 {
 	while (cur_lst)
@@ -59,7 +59,6 @@ t_command *parser_part_two(t_command **cur_struct, t_list *cur_lst,
 		// 	cur_lst->content = expansions(cur_lst->content, *env, 0, 0);
 		if (cur_lst->content[0] == ';' && cur_lst->content[1] != ';')
 		{
-			// print_cur_struct(command); // weg !!
 			check_type(env, *cur_struct);
 			command = ft_clear_linked_struct(command);
 			cur_struct = &command;
@@ -85,9 +84,7 @@ int	parser(t_list **list, char ***env, t_command *command, int error)
 {
 	t_list		*cur_lst;
 	t_command	**cur_struct;
-	// int			check;
 
-	// check = 0;
 	cur_lst = *list;
 	cur_struct = &command;
 	// while (cur_lst)

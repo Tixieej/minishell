@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/20 13:26:09 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/20 17:12:28 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*trim_quotation_marks(t_base *base, char *temp, char *type, int len)
 	temp_tr = NULL;
 	start = 0;
 	while (!ft_strchr("';'' ''<''>'\'\"'\0'", temp[len]))
-			(len)++;
+		(len)++;
 	while (temp[start] != '\0')
 	{
 		if (temp[start] == '\"' || temp[start] == '\'')
@@ -46,21 +46,21 @@ static char	*trim_quotation_marks(t_base *base, char *temp, char *type, int len)
 }
 
 static int	create_list_item(t_base *base, char *line,
-								size_t *len, unsigned int start)
+	size_t *len, unsigned int start)
 {
 	char	*temp;
 	int		check;
 
 	temp = NULL;
 	check = 0;
-	
 	temp = ft_substr((char const *)line, start, *len);
-	if (temp[0] == '\'')
+	if (temp[0] == '\'' || temp[1] == '\0')
 		check = 1;
 	temp = trim_quotation_marks(base, temp, NULL, 0);
-	if (check != 1)
+	if (check != 1 && temp[0] != '$' && temp[1] != '?')
 		temp = check_exp_within_dq(base->env, temp, 0, 0);
-	ft_list_push_back(&base->list, temp);
+	if (temp)
+		ft_list_push_back(&base->list, temp);
 	if (line[start + *len] != '\0')
 		start += *len;
 	else
@@ -101,15 +101,16 @@ static int	handle_quotation_marks(t_base *base, char *line,
 	return (start);
 }
 
-static void	handle_redirection(t_base *base, char *line, size_t *len, unsigned int *start)
+static void	handle_redirection(t_base *base, char *line, size_t *len,
+	unsigned int *start)
 {
 	if (line[*start + *len] == '>' && line[*start + *len + 1] == '>')
-		{
-			ft_list_push_back(&base->list, ft_strdup(">>"));
-			*start += 1;
-		}
+	{
+		ft_list_push_back(&base->list, ft_strdup(">>"));
+		*start += 1;
+	}
 	else if (line[*start + *len] == '>' || line[*start + *len] == '<')
-			ft_list_push_back(&base->list, ft_strdup(">"));
+		ft_list_push_back(&base->list, ft_strdup(">"));
 }
 
 void	divide_input(t_base *base, char *line,

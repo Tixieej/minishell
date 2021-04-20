@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/19 13:11:32 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/20 12:14:32 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/20 17:15:30 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ char	*enter_expansion(char *str, int *start, int *len, char *env)
 	}
 	return (str);
 }
-
-
 
 char	*check_exp_within_dq(char **env, char *str, int start, int count)
 {
