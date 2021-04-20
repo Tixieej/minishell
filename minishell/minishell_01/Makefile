@@ -6,13 +6,14 @@
 #    By: rde-vrie <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/02/13 10:40:20 by rde-vrie      #+#    #+#                  #
-#    Updated: 2021/04/19 15:47:23 by rde-vrie      ########   odam.nl          #
+#    Updated: 2021/04/20 17:10:23 by rixt          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 LIBFT = libft.a
 SRC = main.c \
+		clear_the_list.c \
 		get_next_line.c \
 		get_next_line_utils.c \
 		gnl_2.c \

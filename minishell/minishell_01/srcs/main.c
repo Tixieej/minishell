@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/19 15:26:37 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/04/20 17:13:20 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ void	prompt(void)
 
 int	copy_env(t_base *base, char **env)
 {
-	// char	**copy;
 	int		count;
 	int		path;
 
 	path = 0;
 	count = 0;
-	// copy = NULL;
 	while (env[count])
 		count++;
 	base->env = malloc(sizeof(char *) * count + 1);
@@ -43,11 +41,10 @@ int	copy_env(t_base *base, char **env)
 static void	start_program(t_base *base, char *line, int error)
 {
 	t_command	*command;
-	// t_list		*list;
 	int			result;
-	t_list		**begin; //
+	t_list		**begin;
 
-	begin = &base->list; //
+	begin = &base->list;
 	command = NULL;
 	base->list = NULL;
 	result = 1;
@@ -71,29 +68,20 @@ static void	start_program(t_base *base, char *line, int error)
 		// begin = &base->list;
 		if (syntax_error(base->list) == -1)
 		{
-			if (base->list)// dit is hetzelfde stukje code als een paar regels hieronder, 
-			//dit kan een aparte functie worden die je twee keer aanroept
-			{
-				ft_lstclear(&base->list, free); //weg?
-				base->list = NULL; //weg?
-			}
+			clear_the_list(base);
 			free(line);
 			line = NULL;
 			continue ;
 		}
 		error = parser(&base->list, &base->env, command, error);
-		if (base->list)
-		{
-			ft_lstclear(&base->list, free); //weg?
-			base->list = NULL; //weg?
-		}
+		clear_the_list(base);
 		free(line);
 		line = NULL;
 	}
 	exit(0);
 }
 
-static t_base *ft_create_base_struct(char **env)
+static t_base	*ft_create_base_struct(char **env)
 {
 	t_base	*base;
 
@@ -113,7 +101,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_base	*base;
 
-	(void)argv; //
+	(void)argv;
 	base = ft_create_base_struct(env);
 	if (!base)
 		return (-1);

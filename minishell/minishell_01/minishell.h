@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/19 15:27:58 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/04/20 17:11:01 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_command		*ft_clear_linked_struct(t_command *command);
 t_command		*ft_clear_linked_struct_deep_shadow(t_command *command); //WEG?
 void			ft_struct_push_back(t_command **begin_list, char *data);
 void			prompt(void);
+void			clear_the_list(t_base *base);
 
 /*
 ** tokenize functions?
