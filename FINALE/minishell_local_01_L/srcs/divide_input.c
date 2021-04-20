@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/20 13:31:48 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/20 15:54:18 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,23 @@ static char	*trim_quotation_marks(t_base *base, char *temp, char *type, int len)
 	return (temp);
 }
 
+static int	check_dollar_q(char *str, int check)
+{
+	int len;
+
+	len = 0;
+	while (str[len] != '\0')
+	{
+		if (str[len] == '$' && str[len + 1] == '?')
+		{
+			check++;
+			len +=2;
+		}
+		len++;
+	}
+	return (check);
+}
+
 static int	create_list_item(t_base *base, char *line,
 								size_t *len, unsigned int start)
 {
@@ -53,14 +70,15 @@ static int	create_list_item(t_base *base, char *line,
 
 	temp = NULL;
 	check = 0;
-	
 	temp = ft_substr((char const *)line, start, *len);
-	if (temp[0] == '\'')
+	if (temp[0] == '\'' || temp[1] == '\0')
 		check = 1;
 	temp = trim_quotation_marks(base, temp, NULL, 0);
+	check = check_dollar_q(temp, check);
 	if (check != 1)
 		temp = check_exp_within_dq(base->env, temp, 0, 0);
-	ft_list_push_back(&base->list, temp);
+	if (temp)
+		ft_list_push_back(&base->list, temp);
 	if (line[start + *len] != '\0')
 		start += *len;
 	else
@@ -96,8 +114,8 @@ static int	handle_quotation_marks(t_base *base, char *line,
 			(*len)++;
 		start = create_list_item(base, line, len, start);
 	}
-	start += *len;
-	*len = 0;
+	// start += *len;
+	// *len = 0;
 	return (start);
 }
 

@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/21 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/08 11:13:18 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/20 17:00:29 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,52 @@ static char	*create_string(t_command *command, char *s)
 	return (s);
 }
 
+
+void	check_dol_val(t_command *command, char *end, char *start, int len)
+{
+	t_list	*cur_args;
+	char	*mid;
+	(void)end;
+
+	mid = NULL;
+	cur_args = command->args;
+	while (cur_args)
+	{
+		len = 0;
+		while (cur_args->content[len] != '\0')
+		{
+			if (cur_args->content[len] == '$' && cur_args->content[len + 1] == '?')
+			{
+				if (len > 0)
+					start = ft_substr(cur_args->content, 0, len);
+				end = ft_strdup(&cur_args->content[len + 2]);
+				free(cur_args->content);
+				if (start)
+				{
+					mid = ft_strjoin(start, ft_itoa(command->not_found));
+					cur_args->content = ft_strjoin(mid, end);
+				}		
+				else
+					cur_args->content = ft_strjoin(start, end);
+
+				// if (mid)
+					// len += ft_strlen(ft_itoa(command->not_found) - 1);
+				// else
+				printf("%d\n", len);
+				free(start);
+				free(mid);
+				free(end);	
+			}
+			len++;
+		}
+		cur_args = cur_args->next;
+	}
+	cur_args = command->args;
+}
+
 void	echo(t_command *command, char *s)
 {
+	check_dol_val(command, NULL, NULL, 0);
 	if (!command->args)
 	{
 		if (write(command->fd_out, "\n", 1) < 0)
