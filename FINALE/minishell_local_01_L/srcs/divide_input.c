@@ -6,61 +6,61 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/20 15:54:18 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/21 10:26:16 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*trim_quotation_marks(t_base *base, char *temp, char *type, int len)
-{
-	char	*temp_tr;
-	int		start;
+// static char	*trim_quotation_marks(t_base *base, char *temp, char *type, int len)
+// {
+// 	char	*temp_tr;
+// 	int		start;
 
-	temp_tr = NULL;
-	start = 0;
-	while (!ft_strchr("';'' ''<''>'\'\"'\0'", temp[len]))
-			(len)++;
-	while (temp[start] != '\0')
-	{
-		if (temp[start] == '\"' || temp[start] == '\'')
-		{
-			if (start > 1)
-			{
-				type = ft_substr(temp, 0, start);
-				len -= start;
-			}
-			temp_tr = ft_substr(temp, start, len - 2);
-			temp_tr = check_exp_within_dq(base->env, temp_tr, 0, 0);
-			free(temp);
-			if (type)
-				temp = ft_strjoin(type, temp_tr);
-			else
-				temp = ft_strdup(temp_tr);
-			free(temp_tr);
-			free(type);
-		}
-		start++;
-	}
-	return (temp);
-}
+// 	temp_tr = NULL;
+// 	start = 0;
+// 	while (!ft_strchr("';'' ''<''>'\'\"'\0'", temp[len]))
+// 			(len)++;
+// 	while (temp[start] != '\0')
+// 	{
+// 		if (temp[start] == '\"' || temp[start] == '\'')
+// 		{
+// 			if (start > 1)
+// 			{
+// 				type = ft_substr(temp, 0, start);
+// 				len -= start;
+// 			}
+// 			temp_tr = ft_substr(temp, start, len - 2);
+// 			temp_tr = check_exp_within_dq(base->env, temp_tr, 0, 0);
+// 			free(temp);
+// 			if (type)
+// 				temp = ft_strjoin(type, temp_tr);
+// 			else
+// 				temp = ft_strdup(temp_tr);
+// 			free(temp_tr);
+// 			free(type);
+// 		}
+// 		start++;
+// 	}
+// 	return (temp);
+// }
 
-static int	check_dollar_q(char *str, int check)
-{
-	int len;
+// static int	check_dollar_q(char *str, int check)
+// {
+// 	int len;
 
-	len = 0;
-	while (str[len] != '\0')
-	{
-		if (str[len] == '$' && str[len + 1] == '?')
-		{
-			check++;
-			len +=2;
-		}
-		len++;
-	}
-	return (check);
-}
+// 	len = 0;
+// 	while (str[len] != '\0')
+// 	{
+// 		if (str[len] == '$' && str[len + 1] == '?')
+// 		{
+// 			check++;
+// 			len +=2;
+// 		}
+// 		len++;
+// 	}
+// 	return (check);
+// }
 
 static int	create_list_item(t_base *base, char *line,
 								size_t *len, unsigned int start)
@@ -71,12 +71,13 @@ static int	create_list_item(t_base *base, char *line,
 	temp = NULL;
 	check = 0;
 	temp = ft_substr((char const *)line, start, *len);
+	printf("temp: %s\n", temp);
 	if (temp[0] == '\'' || temp[1] == '\0')
 		check = 1;
-	temp = trim_quotation_marks(base, temp, NULL, 0);
-	check = check_dollar_q(temp, check);
-	if (check != 1)
-		temp = check_exp_within_dq(base->env, temp, 0, 0);
+	// temp = trim_quotation_marks(base, temp, NULL, 0);
+	// check = check_dollar_q(temp, check);
+	// if (check != 1)
+	// 	temp = check_exp_within_dq(base->env, temp, 0, 0);
 	if (temp)
 		ft_list_push_back(&base->list, temp);
 	if (line[start + *len] != '\0')
