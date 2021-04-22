@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/19 15:27:58 by rde-vrie      ########   odam.nl         */
+/*   Updated: 2021/04/22 13:45:30 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void			divide_input(t_base *base, char *line,
 t_list			*ft_create_elem(void *data);
 void			ft_list_push_back(t_list **begin_list, void *data);
 char			*check_exp_within_dq(char **env, char *str, int start, int count);
-char			*enter_expansion(char *str, int *start, int *len, char *env);
+// char			*enter_expansion(char *str, int *start, int *len, char *env);
 
 /*
 ** parse functions
