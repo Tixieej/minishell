@@ -6,7 +6,7 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/25 14:05:53 by rixt          #+#    #+#                 */
-/*   Updated: 2021/04/22 15:39:50 by rixt          ########   odam.nl         */
+/*   Updated: 2021/04/22 16:41:41 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,6 @@ void	unset(t_command *command, char ***env)
 	if (!(command->args))
 		return ;
 	begin_arg = command->args;
-	int i = 0;
-	while ((*env)[i])
-	{
-		printf("\t[%s]\n", (*env)[i]);
-		i++;
-	}
 	while (command->args)
 	{
 		if (valid_check(command->args->content) == 1)
