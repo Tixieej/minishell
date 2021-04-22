@@ -6,7 +6,7 @@
 /*   By: rixt <marvin@codam.nl>                       +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/02/25 14:05:53 by rixt          #+#    #+#                 */
-/*   Updated: 2021/04/22 12:11:22 by rixt          ########   odam.nl         */
+/*   Updated: 2021/04/22 15:39:50 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,13 @@ static char	*check_env_export(char **env, char *var)
 	while (env[count])
 	{
 		cur_env = ft_split(env[count], '=');
-		if (ft_strlen(env[count]) > max_len)
-			max_len = ft_strlen(cur_env[0]);
-		if (!ft_strncmp(env[count], var, max_len + 1))
+		if (max_len != ft_strlen(cur_env[0]))
+		{
+			free_array(cur_env);
+			count++;
+			continue ;
+		}
+		if (!ft_strncmp(env[count], var, max_len))
 		{
 			free_array(cur_env);
 			return (ft_strdup(&env[count][max_len]));
@@ -84,12 +88,12 @@ static int	valid_check(char *s)
 {
 	int	i;
 
-	if (!(ft_isalpha(*(s)) == 1 || *s == '_'))
+	if (ft_isalpha(*(s)) != 1 && !(*s == '_'))
 		return (-1);
 	i = 1;
 	while (s[i])
 	{
-		if (ft_isalnum(s[i]) != 1 || *s == '_')
+		if (ft_isalnum(s[i]) != 1 && (*s != '_'))
 			return (-1);
 		i++;
 	}
@@ -107,6 +111,12 @@ void	unset(t_command *command, char ***env)
 	if (!(command->args))
 		return ;
 	begin_arg = command->args;
+	int i = 0;
+	while ((*env)[i])
+	{
+		printf("\t[%s]\n", (*env)[i]);
+		i++;
+	}
 	while (command->args)
 	{
 		if (valid_check(command->args->content) == 1)
