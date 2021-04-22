@@ -6,41 +6,91 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/21 14:01:27 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/21 18:35:14 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		expansion(t_base *base, char *temp, int start, int *len)
-{
-	int count;
+// char	*enter_expansion(char *str, int *start, int *len, char *env)
+// {
+// 	char	*str_end;
+// 	char	*str_start;
+// 	char	*exp;
+// 	char	*temp;
 
+// 	temp = NULL;
+// 	str_end = NULL;
+// 	if (env == NULL)
+// 		str = remove_expansion(str, *start, *len);
+// 	else
+// 	{
+// 		exp = ft_strdup(&env[*len + 1]);
+// 		if (str[*start + *len] == '$')
+// 			str_end = ft_strdup(&str[*start + *len]);
+// 		if (str[0] == '\"')
+// 			str_start = ft_substr(str, 1, *start - 2);
+// 		else
+// 			str_start = ft_substr(str, 0, *start - 1);
+// 		temp = ft_strjoin(str_start, exp);
+// 		*start += ft_strlen(exp) - 3;
+// 		*len = 0;
+// 		free(str);
+// 		if (str_end)
+// 			str = ft_strjoin(temp, str_end);
+// 		else
+// 			str = ft_strdup(temp);
+// 		free(temp);
+// 		free(str_end);
+// 		free(str_start);
+// 	}
+// 	return (str);
+// }
+
+static char	*expansion(t_base *base, char *temp, int *start, size_t *len)
+{
+	int		count;
+	char	*str_start;
+	char	*str;
+
+	str_start = ft_strdup("");
 	count = 0;
+	str = NULL;
+	if (*start > 0)
+		str_start = ft_substr(temp, 0, *start);
 	while (base->env[count])
 	{
-		if (ft_strncmp(base->env[count], &temp[start], *len) == 0
+		if (ft_strncmp(base->env[count], &temp[*start], *len) == 0
 				&& base->env[count][*len] == '=')
 		{
-			printf("ja");
-			// str = enter_expansion(str, &start, &*len, base->env[count]);
+			temp = ft_strdup(&base->env[count][*len + 1]);
 			count = 0;
 			break ;
 		}
 		count++;
 	}
-	start += *len;
+	printf("str start %s\n", str_start);
+	printf("str temp %s\n", temp);
+	str = ft_strjoin(str_start, temp);
+	free(temp);
+	free(str_start);
+	// *start += ft_strlen(temp);
 	*len = 0;
-	return (start);
+
+	return (str);
 }
 
-
-
-static char	*check_expansion(t_base *base, char *temp, int len)
+static char	*check_expansion(t_base *base, char *temp, size_t len)
 {
-	int start;
+	int		start;
+	char	*str_end;
+	size_t	str_len;
+	char	*str;
 
+	str = NULL;	
+	str_len = ft_strlen(temp);
 	start = 0;
+	str_end = ft_strdup("");
 	while (temp[start + len] != '\0')
 	{
 		// if (temp[len] == '\"')
@@ -49,11 +99,17 @@ static char	*check_expansion(t_base *base, char *temp, int len)
 		// 	len = trim_quotation_marks(temp, len);
 		if (temp[start + len] == '$')
 		{
-			while (temp[start + len] != '\0' || temp[len] != '$' || temp[len] != '\'' || temp[len] != '\"')
+			start++;
+			while (temp[start + len] != '\0' && temp[start + len] != '$' && temp[start + len] != '\'' && temp[start + len] != '\"')
 				len++;
-			temp = expansion(base, temp, start, &len);
+			if (str_len > len)
+				str_end = ft_strdup(&temp[start + len]);
+			str = ft_strjoin(expansion(base, temp, &start, &len), str_end);
+			free(temp);
+			temp = ft_strdup(str);
+			free(str);
 		}
-			
+		len++;
 	}
 	return (temp);
 }
@@ -85,8 +141,8 @@ static int	create_list_item(t_base *base, char *line,
 	check = 0;
 	temp = ft_substr((char const *)line, start, *len);
 	check_missing_q(temp, 0, 0);
-	temp = check_expansion(base, temp, len);
-	printf("temp: %s\n", temp);
+	temp = check_expansion(base, temp, 0);
+	// printf("temp: %s\n", temp);
 	if (temp)
 		ft_list_push_back(&base->list, temp);
 	if (line[start + *len] != '\0')
