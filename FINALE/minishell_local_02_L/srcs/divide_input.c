@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/21 18:35:14 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/22 09:01:12 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,16 @@ static void	check_missing_q(char *temp, int	check_solo, int check_double)
 	while (temp[len] != '\0')
 	{
 		if (temp[len] == '\'')
-			check_solo++;
+		{
+			while (temp[len] != '\0')
+			{
+				if (temp[len] == '\'');
+				check_solo++;
+			}
+
+		}
+			
+			
 		if (temp[len] == '\"')
 			check_double++;
 		len++;
