@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/28 17:53:20 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/22 18:34:23 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/22 19:22:47 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void 	check_type_two(char ***env, t_command *command, pid_t process)
 	t_command	*cur_struct;
 
 	cur_struct = command;
-	print_cur_struct(command); // weg !!
 	if (ft_strncmp((const char *)cur_struct->program, "$?", 5) == 0)
 		printf("minishell: %d command not found\n", command->not_found);
 	else if (ft_strncmp((const char *)cur_struct->program, "echo", 5) == 0)

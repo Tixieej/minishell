@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/12/01 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/22 19:11:23 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/22 19:20:59 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static t_command	**add_pipe(t_list **cur_lst,
 		(*cur_struct)->pipe_left = 1;
 		return (cur_struct);
 	}
+	if (!(*cur_struct)->next)
+		error_handler("syntax error near unexpected token `newline'\n", *cur_lst, *cur_struct, 258);
 	return (&(*cur_struct)->next);
 }
 
