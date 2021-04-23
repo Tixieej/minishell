@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 15:56:32 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/23 13:16:08 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/23 13:58:08 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ static void	set_start_len(char *str_start, char *loose,
 	unsigned int *start, char type)
 {
 	if (type == '\'')
-		*start = ft_strlen(str_start) + ft_strlen(loose);
+		*start = ft_strlen(str_start) + ft_strlen(loose) - 1;
 	if (type == '\"')
 		*start = ft_strlen(str_start);
-	if (*start > 0)
-		(*start)--;
 }
 
 static char	*create_str(char *str, char *str_temp, char *str_end)
@@ -51,7 +49,7 @@ static char	*trim_quotation_marks(char type, char *str,
 	str_start = NULL;
 	str_temp = NULL;
 	str_end = NULL;
-	while (!ft_strchr("type'\0'", str[*start + *len]))
+	while (!ft_strchr("type", str[*start + *len]))
 		(*len)++;
 	loose = ft_substr(str, *start + 1, *len - 2);
 	if (*start > 1)
@@ -69,27 +67,35 @@ static char	*trim_quotation_marks(char type, char *str,
 	return (str);
 }
 
+// char	*prep_dol()
+
 char	*check_expansion(t_base *base, char *temp,
 	size_t len, unsigned int start)
 {
-	while (temp[start + len] != '\0')
+	int minus;
+
+	minus = 0;
+	while (temp[start + len + minus] != '\0')
 	{
-		if (temp[start + len] == '\"')
+		
+		if (temp[start + len + minus] == '\"')
 		{
 			len++;
 			temp = trim_quotation_marks('\"', temp, &start, &len);
 			len = 0;
+			minus = 0;
 		}
-		if (temp[start + len] == '\'')
+		if (temp[start + len + minus] == '\'')
 		{
 			len++;
 			temp = trim_quotation_marks('\'', temp, &start, &len);
 			len = 0;
-		}	
-		if (temp[start + len] == '$' || temp[start + len - 1] == '$')
+			minus = 0;
+		}
+		if (temp[start + len + minus] == '$')
 		{
-			if (temp[start + len - 1] == '$')
-				start--;
+			if (minus == -1)
+				start -= 1;
 			if (ft_strchr("'?'' ''\0'", temp[start + len + 1]))
 				len++;
 			else
@@ -98,6 +104,9 @@ char	*check_expansion(t_base *base, char *temp,
 				break;
 			if (temp[start + len + 1] == '\0')
 				break;
+			minus = 0;
+			if (start == 0)
+				minus = -1;
 		}
 		start++;
 	}
