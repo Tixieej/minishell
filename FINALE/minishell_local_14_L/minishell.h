@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/22 18:26:51 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/23 13:00:45 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ void			clear_the_list(t_base *base);
 ** tokenize functions?
 */
 // void			divide_input(t_list **list, char *line, size_t len,
-// 					unsigned int start);
+// 					int start);
 void			divide_input(t_base *base, char *line,
 							size_t len, unsigned int start);
 t_list			*ft_create_elem(void *data);
 void			ft_list_push_back(t_list **begin_list, void *data);
-char			*check_exp_within_dq(char **env, char *str, int start, int count);
+char			*check_exp_within_dq(char **env, char *str, int start, unsigned int count);
 char			*check_expansion(t_base *base, char *temp, size_t len, unsigned int start);
 char			*expansion(t_base *base, char *temp, unsigned int *start, size_t *len);
 

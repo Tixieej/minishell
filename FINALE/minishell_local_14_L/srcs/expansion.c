@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 15:56:32 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/22 22:05:43 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/23 13:16:08 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ static char	*trim_quotation_marks(char type, char *str,
 	str_end = NULL;
 	while (!ft_strchr("type'\0'", str[*start + *len]))
 		(*len)++;
-	loose = ft_substr(str, *start + 1, *len - 1);
+	loose = ft_substr(str, *start + 1, *len - 2);
 	if (*start > 1)
 		str_start = ft_substr(str, 0, (size_t)(*start));
 	else
 		str_start = ft_strdup("");
-	if (*start + *len < ft_strlen(str) - 1)
-		str_end = ft_strdup(&str[*start + *len]);
+	if (*start + ft_strlen(loose) < ft_strlen(str) - 2)
+		str_end = ft_substr(str, *start + ft_strlen(loose) + 1, ft_strlen(str) - 2);
 	else
 		str_end = ft_strdup("");
 	str_temp = ft_strjoin(str_start, loose);
@@ -86,12 +86,18 @@ char	*check_expansion(t_base *base, char *temp,
 			temp = trim_quotation_marks('\'', temp, &start, &len);
 			len = 0;
 		}	
-		if (temp[start + len] == '$')
+		if (temp[start + len] == '$' || temp[start + len - 1] == '$')
 		{
+			if (temp[start + len - 1] == '$')
+				start--;
 			if (ft_strchr("'?'' ''\0'", temp[start + len + 1]))
 				len++;
 			else
 				temp = expansion(base, temp, &start, &len);
+			if (temp[0] == '\0')
+				break;
+			if (temp[start + len + 1] == '\0')
+				break;
 		}
 		start++;
 	}

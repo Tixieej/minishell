@@ -6,14 +6,14 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/12 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/22 21:25:46 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/23 13:00:00 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int	create_list_item(t_base *base, char *line,
-	size_t *len, unsigned int start)
+	size_t *len, int start)
 {
 	char	*temp;
 	int		check;
@@ -22,8 +22,10 @@ static int	create_list_item(t_base *base, char *line,
 	check = 0;
 	temp = ft_substr((char const *)line, start, *len);
 	temp = check_expansion(base, temp, 0, 0);
-	if (temp)
+	if (temp[0] != '\0')
 		ft_list_push_back(&base->list, temp);
+	else
+		free(temp);
 	if (line[start + *len] != '\0')
 		start += *len;
 	else
