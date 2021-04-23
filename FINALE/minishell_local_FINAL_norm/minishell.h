@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/23 20:39:14 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/23 22:04:46 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <signal.h>
-# include <errno.h> //?
+// # include <errno.h> //?
 
 typedef struct s_command
 {
@@ -46,11 +46,6 @@ typedef struct s_base
 	t_list			*list;
 	struct s_base	*next;
 }					t_base;
-
-/*
-** HULPFUNCTIE WEG!
-*/
-void			print_cur_struct(t_command *command);
 
 int				main(int argc, char **argv, char **env);
 void			error_handler(char *error, t_list *list,
