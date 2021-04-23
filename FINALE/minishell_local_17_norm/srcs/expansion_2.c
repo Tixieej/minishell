@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 17:54:55 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/23 20:21:52 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/23 21:57:31 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	set_start_len(char *str_start, char *loose,
 	if (loose[len] != '$' && type == '\"')
 		*start = ft_strlen(str_start) + ft_strlen(loose) - 1;
 	if (loose[len] == '$' && type == '\"')
-		*start += len;
+		*start = len;
 	if (type == '\'')
 		*start = ft_strlen(str_start) + ft_strlen(loose) - 1;
 }
