@@ -6,7 +6,7 @@
 #    By: rde-vrie <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/02/13 10:40:20 by rde-vrie      #+#    #+#                  #
-#    Updated: 2021/04/23 20:39:45 by livlamin      ########   odam.nl          #
+#    Updated: 2021/04/23 22:45:07 by rixt          ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,7 @@ SRC = main.c \
 		env.c \
 		syntax.c \
 		expansion_2.c \
-		prep_redirection.c \
-		REMOVE_HULPFUNCTIE.c
+		prep_redirection.c
 OBJ = $(addprefix objs/, $(SRC:.c=.o))
 CFLAGS = -Wall -Werror -Wextra
 INC = minishell.h get_next_line.h
