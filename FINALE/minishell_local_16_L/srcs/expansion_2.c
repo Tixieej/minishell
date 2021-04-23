@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 17:54:55 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/23 13:38:10 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/23 14:38:47 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,11 @@ char	*expansion(t_base *base, char *temp,
 	if (*len > 0)
 		*len = 0;
 	(*start)++;
-	while (!ft_strchr("'$''\'''\"''\0'", temp[*start + *len]))
+	if (ft_isalnum((int)temp[*start + *len] == 1) || temp[*start + *len] == '@')
 		(*len)++;
+	else
+		while (!ft_strchr("'$''%''\'''\"'-''\0'", temp[*start + *len]))
+			(*len)++;
 	while (base->env[count])
 	{
 		if (ft_strncmp(base->env[count], &temp[*start], *len) == 0

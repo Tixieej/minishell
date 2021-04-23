@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 15:56:32 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/23 13:58:08 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/23 15:22:56 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,19 @@ static void	set_start_len(char *str_start, char *loose,
 
 static char	*create_str(char *str, char *str_temp, char *str_end)
 {
+	size_t len;
+
+	len = 0;
 	free(str);
 	str = ft_strjoin(str_temp, str_end);
+	len = ft_strlen(str) - 1;
+	if (str[len] == '\'' || str[len] == '\"')
+	{
+		free(str_temp);
+		str_temp = ft_substr(str, 0, len);
+		free(str);
+		str = ft_strdup(str_temp);
+	}
 	return (str);
 }
 
@@ -51,7 +62,8 @@ static char	*trim_quotation_marks(char type, char *str,
 	str_end = NULL;
 	while (!ft_strchr("type", str[*start + *len]))
 		(*len)++;
-	loose = ft_substr(str, *start + 1, *len - 2);
+	(*len)++;
+		loose = ft_substr(str, *start + 1, *len);
 	if (*start > 1)
 		str_start = ft_substr(str, 0, (size_t)(*start));
 	else
@@ -77,25 +89,23 @@ char	*check_expansion(t_base *base, char *temp,
 	minus = 0;
 	while (temp[start + len + minus] != '\0')
 	{
-		
+		if (minus == -1)
+			start--;
+		minus = 0;
 		if (temp[start + len + minus] == '\"')
 		{
 			len++;
 			temp = trim_quotation_marks('\"', temp, &start, &len);
 			len = 0;
-			minus = 0;
 		}
 		if (temp[start + len + minus] == '\'')
 		{
 			len++;
 			temp = trim_quotation_marks('\'', temp, &start, &len);
 			len = 0;
-			minus = 0;
 		}
 		if (temp[start + len + minus] == '$')
 		{
-			if (minus == -1)
-				start -= 1;
 			if (ft_strchr("'?'' ''\0'", temp[start + len + 1]))
 				len++;
 			else
@@ -104,8 +114,7 @@ char	*check_expansion(t_base *base, char *temp,
 				break;
 			if (temp[start + len + 1] == '\0')
 				break;
-			minus = 0;
-			if (start == 0)
+			if (start == 0 || ft_strchr("'$''\'''\"'", temp[start + len]))
 				minus = -1;
 		}
 		start++;
