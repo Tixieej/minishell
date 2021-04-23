@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/23 20:23:01 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/23 20:39:14 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void			set_start_len(char *str_start, char *loose, unsigned int *start,
 */
 int				parser(t_list **list, char ***env, t_command *command, \
 					int error);
+void			prep_in_red(t_list **cur_lst, t_command **cur_struct);
+void			prep_out_red(t_list **cur_lst, t_command **cur_struct);
 int				redirection(t_command *command);
 
 /*

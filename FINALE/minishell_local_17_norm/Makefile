@@ -6,7 +6,7 @@
 #    By: rde-vrie <marvin@codam.nl>                   +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/02/13 10:40:20 by rde-vrie      #+#    #+#                  #
-#    Updated: 2021/04/22 17:56:18 by livlamin      ########   odam.nl          #
+#    Updated: 2021/04/23 20:39:45 by livlamin      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRC = main.c \
 		env.c \
 		syntax.c \
 		expansion_2.c \
+		prep_redirection.c \
 		REMOVE_HULPFUNCTIE.c
 OBJ = $(addprefix objs/, $(SRC:.c=.o))
 CFLAGS = -Wall -Werror -Wextra
