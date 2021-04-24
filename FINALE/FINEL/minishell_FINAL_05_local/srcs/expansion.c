@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 15:56:32 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/24 17:15:51 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/24 17:34:54 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,10 @@ static char	*trim_quotation_marks(char type, char *str,
 	*len = 0;
 	while (loose[i + *len] != '\0' && type == '\"' && str_end[0] != '\0')
 		(*len)++;
-	if (*len > 0 && str_start[0] != '\0')
-	{
-		*start = ft_strlen(str_start);
-		// (*start)++;
+	if (loose[i + *len] == '\0' && type == '\"' && str_end[0] != '\0')
 		(*len)--;
-	}
-		
+	if (*len > 0 && str_start[0] != '\0')
+		*start = ft_strlen(str_start);	
 	free_all(str_start, str_end, str_temp, loose);
 	return (str);
 }
