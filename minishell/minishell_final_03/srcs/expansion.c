@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 15:56:32 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/24 12:36:35 by rixt          ########   odam.nl         */
+/*   Updated: 2021/04/24 13:26:16 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,10 @@ static char	*check_loose_dol(t_base *base, char *loose)
 	int				len;
 	char			*dol;
 	char			*temp;
-	t_exp			exp_values;
-	//char			*pre_dol;
+	t_exp			expval;
 
-	set_exp_values(&exp_values);
+	set_exp_values(&expval);
 	len = 0;
-	//pre_dol = NULL;
 	dol = NULL;
 	temp = NULL;
 	(void)base;
@@ -30,8 +28,8 @@ static char	*check_loose_dol(t_base *base, char *loose)
 		len++;
 	if (loose[len] == '$')
 	{
-		exp_values.pre_dol = ft_strdup(&loose[len]);
-		dol = expansion(base, exp_values.pre_dol, &(exp_values.start), &(exp_values.len));
+		expval.pre_dol = ft_strdup(&loose[len]);
+		dol = expansion(base, expval.pre_dol, &(expval.start), &(expval.len));
 	}
 	if (dol)
 	{

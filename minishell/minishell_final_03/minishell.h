@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/24 12:35:17 by rixt          ########   odam.nl         */
+/*   Updated: 2021/04/24 13:24:38 by rixt          ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ typedef struct s_exp
 {
 	unsigned int	start;
 	size_t			len;
-//	char			*temp;
-//	t_exp			exp_values;
 	char			*pre_dol;
 }					t_exp;
 
