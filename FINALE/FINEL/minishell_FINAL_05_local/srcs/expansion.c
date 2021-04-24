@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 15:56:32 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/24 17:34:54 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/24 17:40:25 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static char	*trim_quotation_marks(char type, char *str,
 		(*len)++;
 	if (loose[i + *len] == '\0' && type == '\"' && str_end[0] != '\0')
 		(*len)--;
-	if (*len > 0 && str_start[0] != '\0')
+	if (*len > 0 && str_start[0] != '\0' && type == '\"')
 		*start = ft_strlen(str_start);	
 	free_all(str_start, str_end, str_temp, loose);
 	return (str);
@@ -71,10 +71,6 @@ static char	*prep_trim_quotation_marks(char type, char *temp,
 		return (temp);
 	}
 	temp = trim_quotation_marks(type, temp, start, len);
-	// *len = 0;
-
-	printf("len: %zu\n", *len);
-	printf("start: %u\n", *start);
 	return (temp);
 }
 
@@ -85,10 +81,6 @@ static char	*prep_expansion(t_base *base, char *temp,
 		(*len)++;
 	else
 	{
-		// if (*len > 0)
-		// 	*start += *len;
-		// if (*len > 0)
-		// 	*len = 0;
 		(*start)++;
 		temp = expansion(base, temp, start, len);
 	}
