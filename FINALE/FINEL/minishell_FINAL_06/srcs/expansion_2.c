@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 17:54:55 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/24 17:35:33 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/24 22:32:46 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ static char	*enter_expansion(char *str, unsigned int *start,
 	if (*start > 1)
 		(*start)--;
 	free_all(str_start, str_end, str_temp, env);
+	printf("str1: %s\n", str);
+	printf("len: %zu\n", *len);
+	printf("start: %u\n", *start);
 	return (str);
 }
 

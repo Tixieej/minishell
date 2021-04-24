@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 15:56:32 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/24 20:08:32 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/24 22:37:43 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,23 @@ static char	*trim_quotation_marks(char type, char *str,
 	while (loose[i] != '\0' && loose[i] != '$' && type == '\"' && str_end[0] != '\0')
 		i++;
 	*len = 0;
-	if (loose[i] != '\0')
-		*len = 0;
+	// if (loose[i] != '\0')
+	// 	*len = 0;
 	while (loose[i + *len + 1] != '\0' && type == '\"' && str_end[0] != '\0')
 		(*len)++;
-	if (loose[i + *len] == '\0' && type == '\"' && str_end[0] != '\0')
-		*len = 0;
+	// if (loose[i + *len] == '\0' && type == '\"' && str_end[0] != '\0')
+	// 	(*len)--;
 	
 		// (*len)--;
 	// else 
 	// 	(*len) = 0;
 	if (*len > 0 && str_start[0] != '\0' && type == '\"')
-		*start = ft_strlen(str_start);	
+		*start += ft_strlen(str_start);	
+	
 	free_all(str_start, str_end, str_temp, loose);
 	printf("str %s\n", str);
+	printf("len: %zu\n", *len);
+	printf("start: %u\n", *start);
 	return (str);
 }
 
@@ -108,7 +111,7 @@ char	*check_expansion(t_base *base, char *temp,
 		minus = 0;
 		if (temp[start + len + minus] == '\"')
 			temp = prep_trim_quotation_marks('\"', temp, &len, &start);
-		if (temp[start + len + minus] == '\'')
+		if (temp[start + len +  minus] == '\'')
 			temp = prep_trim_quotation_marks('\'', temp, &len, &start);
 		if (temp[start + minus] == '$')
 		{
