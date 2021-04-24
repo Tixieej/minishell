@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 17:54:55 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/23 22:18:38 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/24 08:18:38 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,20 @@ char	*expansion(t_base *base, char *temp,
 
 	count = 0;
 	expansion = ft_strdup("");
-	if (ft_isalnum((int)temp[*start + *len] == 1) || temp[*start + *len] == '@')
-		(*len)++;
-	else
-		while (!ft_strchr("'$''%''\'''\"'-''\0'", temp[*start + *len]))
+	printf("len: %zu\n", *len);
+	printf("start: %u\n", *start);
+	if (*len == 0)
+	{
+		if (ft_isalnum((int)temp[*start + *len] == 1) || temp[*start + *len] == '@')
 			(*len)++;
+		else
+			while (!ft_strchr("'$''%''\'''\"'-''\0'", temp[*start + *len]))
+				(*len)++;	
+		printf("len: %zu\n", *len);
+		printf("start: %u\n", *start);
+	}
+	printf("len: %zu\n", *len);
+	printf("start: %u\n", *start);
 	while (base->env[count])
 	{
 		if (ft_strncmp(base->env[count], &temp[*start], *len) == 0

@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 15:56:32 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/23 22:18:50 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/24 08:26:46 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,25 @@ static char	*create_str(char *str, char *str_temp, char *str_end)
 	return (str);
 }
 
+void	loose_dol(char *str, unsigned int *start, size_t *len, int max)
+{
+	printf("loose %s\n", str);
+	// printf("char: %c\n", str[*start + *len]);
+	printf("start: %d\n", *start);
+	*len = 0;
+	while (str[*start] != '\0' && str[*start] != '$')
+		(*start)++;
+	while (str[*start + *len] != '\0' && max > 1)
+	{
+		(*len)++;
+		max--;
+	}
+	
+	// (*len)--;
+	printf("start: %d\n", *start);
+	
+}
+
 static char	*trim_quotation_marks(char type, char *str,
 	unsigned int *start, size_t *len)
 {
@@ -26,12 +45,16 @@ static char	*trim_quotation_marks(char type, char *str,
 	char	*str_end;
 	char	*str_temp;
 	char	*loose;
+	size_t	max;
 
+	printf("start %u\n", *start);
+	printf("len: %zu\n", *len);
 	loose = NULL;
 	str_start = NULL;
 	str_temp = NULL;
 	str_end = NULL;
 	loose = ft_substr(str, *start, *len);
+	max = ft_strlen(loose);
 	if (*start > 1)
 		str_start = ft_substr(str, 0, (size_t)(*start) - 1);
 	else
@@ -44,6 +67,11 @@ static char	*trim_quotation_marks(char type, char *str,
 	str_temp = ft_strjoin(str_start, loose);
 	str = create_str(str, str_temp, str_end);
 	set_start_len(str_start, loose, start, type);
+	
+	if (loose[*start] == '$')
+		loose_dol(str, start, len, max);
+	*len = 0;
+	printf("len %zu\n", *len);
 	free_all(str_start, str_end, str_temp, loose);
 	return (str);
 }
@@ -61,7 +89,6 @@ static char	*prep_trim_quotation_marks(char type, char *temp,
 		return (temp);
 	}
 	temp = trim_quotation_marks(type, temp, start, len);
-	*len = 0;
 	return (temp);
 }
 
@@ -97,8 +124,11 @@ char	*check_expansion(t_base *base, char *temp,
 			temp = prep_trim_quotation_marks('\"', temp, &len, &start);
 		if (temp[start + len + minus] == '\'')
 			temp = prep_trim_quotation_marks('\'', temp, &len, &start);
-		if (temp[start + len + minus] == '$')
+		
+		if (temp[start + minus] == '$')
 		{
+			printf("main: %c\n", temp[start + len + minus]);
+			// exit(0);
 			temp = prep_expansion(base, temp, &len, &start);
 			if (temp == NULL)
 				break ;
