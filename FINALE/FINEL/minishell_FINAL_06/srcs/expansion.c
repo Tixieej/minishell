@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 15:56:32 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/24 22:37:43 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/24 22:43:51 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static char	*trim_quotation_marks(char type, char *str,
 	str_temp = NULL;
 	str_end = NULL;
 	loose = ft_substr(str, *start, *len);
-	printf("loose: %s\n", loose);
+	// printf("loose: %s\n", loose);
 	if (*start > 1)
 		str_start = ft_substr(str, 0, (size_t)(*start) - 1);
 	else
@@ -49,8 +49,8 @@ static char	*trim_quotation_marks(char type, char *str,
 	while (loose[i] != '\0' && loose[i] != '$' && type == '\"' && str_end[0] != '\0')
 		i++;
 	*len = 0;
-	// if (loose[i] != '\0')
-	// 	*len = 0;
+	if (loose[i] != '\0')
+		*len = 0;
 	while (loose[i + *len + 1] != '\0' && type == '\"' && str_end[0] != '\0')
 		(*len)++;
 	// if (loose[i + *len] == '\0' && type == '\"' && str_end[0] != '\0')
@@ -63,9 +63,9 @@ static char	*trim_quotation_marks(char type, char *str,
 		*start += ft_strlen(str_start);	
 	
 	free_all(str_start, str_end, str_temp, loose);
-	printf("str %s\n", str);
-	printf("len: %zu\n", *len);
-	printf("start: %u\n", *start);
+	// printf("str %s\n", str);
+	// printf("len: %zu\n", *len);
+	// printf("start: %u\n", *start);
 	return (str);
 }
 
