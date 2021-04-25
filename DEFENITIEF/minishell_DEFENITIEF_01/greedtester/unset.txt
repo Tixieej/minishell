@@ -1,3 +1,0 @@
-unset a ; env ; unset test ; unset test1 ; env
-unset PATH
-unset po1 1op 2 po2; echo $? $po1 $po2
