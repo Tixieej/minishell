@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 17:54:55 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/25 09:58:09 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/25 10:06:44 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,18 @@ static char	*enter_expansion(char *str, unsigned int *start,
 	if (*start > 1)
 		(*start)--;
 	free_all(str_start, str_end, str_temp, env);
-	// printf("str1: %s\n", str);
-	// printf("len: %zu\n", *len);
-	// printf("start: %u\n", *start);
 	return (str);
+}
+
+static void	set_len(char *temp, unsigned int *start, size_t *len)
+{
+	if (ft_strchr("'0''1''2''3''4''5''6''7''8''9'", temp[*start + *len]))
+		(*len)++;
+	else
+		while (!ft_strchr("'\"''$''@''%''#''*''\'''-''\0'", temp[*start + *len]))
+			(*len)++;
+	if (temp[*start + *len] == '@')
+		(*len)++;
 }
 
 char	*expansion(t_base *base, char *temp,
@@ -77,21 +85,8 @@ char	*expansion(t_base *base, char *temp,
 
 	count = 0;
 	expansion = ft_strdup("");
-	// printf("temp %s\n", temp);
-	// printf("len: %zu\n", *len);
-	// printf("char: %c\n", temp[*start + *len]);
-	// printf("result %d\n", ft_isalnum((int)temp[*start + *len]));
 	if (*len == 0)
-	{
-		if (ft_strchr("'0''1''2''3''4''5''6''7''8''9'", temp[*start + *len]))
-			(*len)++;
-		else
-			while (!ft_strchr("'\"''$''@''%''#''*''\'''-''\0'", temp[*start + *len]))
-				(*len)++;
-		if (temp[*start + *len] == '@')
-			(*len)++;
-	}
-	// printf("len: %zu\n", *len);
+		set_len(temp, start, len);
 	while (base->env[count])
 	{
 		if (ft_strncmp(base->env[count], &temp[*start], *len) == 0
