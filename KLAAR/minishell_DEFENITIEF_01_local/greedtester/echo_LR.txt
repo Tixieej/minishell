@@ -1,0 +1,138 @@
+echo ';;'
+echo ";;;"
+echo | cd .. | pwd
+echo DOET HET NIET > test1 | cat test1
+echo hallo >x1 >x2 >x3 | echo hoi
+echo $1 234
+echo $POEP hallo
+echo "hallo$"
+echo $2$4
+echo $
+echo $?
+echo $?
+echo $?
+echo"
+echo
+echo $TEST
+echo $PWD ; echo $HOME ; echo "$PWD" ; echo '$PWD' ; echo "$HOME"
+echo > ilovewords.txt count me ; wc ilovewords.txt
+echo 'how are you'
+echo '$PWD'
+echo > "hardesttest.txt"
+echo adding stuff >> working.txt
+echo more stuff >> working.txt
+echo > working.txt
+echo dit > test1 gaat > test2 goed > test3
+echo dit > test1 gaat > test2 goed > test3 > test4
+echo > doethet ; echo hoi >> doethet "of niet" ; echo clear > "doethet" ; echo test > working.txt ; echo > newfile.txt hardertest
+echo hallo daar | echo hoi maran
+echo
+echo hallo daar
+"echo" hallo daar
+echo "hallo daar"
+echo hallo daar | echo hoi maran
+echo hallo daar ; echo hoi maran
+echo hallo >file1 >file2
+echo hallo >file1 >file2 maran
+echo hallo >file1 >file2 >>file3 maran siemons
+echo hallo <file1 >file2
+echo $USER""
+echo $USER"
+echo $USER_
+echo $
+echo 123$USER----
+echo 123$USER----$
+echo abc$USERdef
+echo abc$USER123
+echo abc$POEPdef
+echo $USER "$USER" '$USER'
+echo $POEP
+echo $POEP $MEERPOEP
+echo hallo $POEP
+echo $POEP hallo
+echojhdfjhjdkh
+echo | poep
+echo | cd .. | pwd
+echo
+echo
+echo hoi
+echo 'hallo$USER'
+echo '$USER'
+echo "hallo"maran"
+echo hallo""
+echo "hoi$USERmaran"
+echo "$USER"
+cat working.txt | grep stuff | echo tim
+ls filedoesnotexist | grep notme | echo "TEST"
+echo "hallo$"
+echo '$USER'$USER
+echo 'poep''poep2'"maran"'ellende'END
+echo 'poep2'"maran"'ellende'
+echo 123"hallo$"456
+echo $1234
+echo $_1234
+echo hallo
+echo hallo | echo hoi
+echo hallo ; echo hoi
+echo hallo >x1 >x2 >x3 | echo hoi					
+echo hallo >x1 >x2 >x3 ; echo hoi				
+echo hallo | echo poep >x1 >x2						
+echo hallo ; echo poep >x1 >x2						
+echo hallo | echo hoi | cat
+echo hallo | echo hoi > y1 >y2 | cat -e
+echo hoi > y1 >y2 ; cat -e
+echo hallo | echo hoi > y1 >y2 ; cat -e
+echo $USERhallo
+echo $2$*
+echo $hallo"poep"
+echo $222
+echo hallo$USER***$USER$2$
+echo $a5aap
+echo $_poep
+echo "$####jgklj"
+echo hallo$"USER"
+echo hallo$"POEP"
+echo hallo$'USER'
+echo $halllo###
+echo $USER9582309582529
+echo $
+echo $USER
+echo $USER'	
+echo 123$USER----
+echo 123$USER----$		
+echo abc$USERdef
+echo abc$USER123
+echo abc$POEPdef
+echo $%%%%jlkjtwejt				
+echo %%$
+echo $####jgklj$USER
+echo $@@@lkgj
+echo $"USERhallo"
+echo "$2$*"
+echo "$222"
+echo "hallo$USER***$USER$2$"
+echo "$_poep"
+echo "$a5aap"
+echo "$halllo###"
+echo "$USER9582309582529"
+echo "$"						
+echo hallo"$"abc				
+echo hallo"$POEP"abc
+echo hallo"$USER"abc
+echo "$USER"
+echo "$USER'"	
+echo "$USER_"
+echo "abc$USERdef"
+echo "abc$USER123"
+echo "abc$POEPdef"
+echo "$%%%%jlkjtwejt"
+echo "%%$"
+echo "$@@@lkgj"
+echo $"hallo"
+echo $hallo
+echo $hallo"poep"			
+echo $"etet"
+echo "$53535"
+echo -n -n -n $potato$orange; unset 
+orange potato; echo $potato$orange
+echo -nn -nnnnnnn -n -nnnn -nnnh
