@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 15:56:32 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/24 22:43:51 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/25 09:36:31 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static char	*trim_quotation_marks(char type, char *str,
 	str_temp = NULL;
 	str_end = NULL;
 	loose = ft_substr(str, *start, *len);
-	// printf("loose: %s\n", loose);
 	if (*start > 1)
 		str_start = ft_substr(str, 0, (size_t)(*start) - 1);
 	else
@@ -49,19 +48,12 @@ static char	*trim_quotation_marks(char type, char *str,
 	while (loose[i] != '\0' && loose[i] != '$' && type == '\"' && str_end[0] != '\0')
 		i++;
 	*len = 0;
-	if (loose[i] != '\0')
-		*len = 0;
-	while (loose[i + *len + 1] != '\0' && type == '\"' && str_end[0] != '\0')
+	while ( loose[i + *len] != '$' && loose[i + *len + 1] != '\0' && type == '\"' && str_end[0] != '\0' && str_end[0] == '\'')
 		(*len)++;
-	// if (loose[i + *len] == '\0' && type == '\"' && str_end[0] != '\0')
-	// 	(*len)--;
-	
-		// (*len)--;
-	// else 
-	// 	(*len) = 0;
+	while (loose[i + *len + 1] != '\0' && type == '\"' && str_end[0] != '\0' && str_end[0] != '\'' && str_end[0] != '\"')
+		(*len)++;
 	if (*len > 0 && str_start[0] != '\0' && type == '\"')
-		*start += ft_strlen(str_start);	
-	
+		*start += ft_strlen(str_start);
 	free_all(str_start, str_end, str_temp, loose);
 	// printf("str %s\n", str);
 	// printf("len: %zu\n", *len);
@@ -75,7 +67,7 @@ static char	*prep_trim_quotation_marks(char type, char *temp,
 	(*start)++;
 	while (!ft_strchr(&type, temp[*start + *len]))
 		(*len)++;
-	if (*len == 0)
+	if (*len == 0 && *start == 1)
 	{
 		free(temp);
 		temp = ft_strdup("");
@@ -109,17 +101,28 @@ char	*check_expansion(t_base *base, char *temp,
 		if (minus == -1)
 			start--;
 		minus = 0;
+		// printf("temp: %s\n", temp);
+		// printf("temp char %c\n", temp[start + len]);
 		if (temp[start + len + minus] == '\"')
 			temp = prep_trim_quotation_marks('\"', temp, &len, &start);
 		if (temp[start + len +  minus] == '\'')
 			temp = prep_trim_quotation_marks('\'', temp, &len, &start);
 		if (temp[start + minus] == '$')
 		{
+			// printf("temp char %c\n", temp[start + len]);
 			temp = prep_expansion(base, temp, &len, &start);
+			// printf("strat: %u\n", start);
+			// printf("len: %zu\n", len);	
+			// printf("temp: %s\n", temp);
+			
 			if (temp == NULL)
 				break ;
-			if (start == 0 || ft_strchr("'$''\'''\"'", temp[start + len]))
+			if (start == 0 || ft_strchr("\"''\'''$'", temp[start + len]))
 				minus = -1;
+			start += len;
+			len = 0;
+			// printf("tempchar:  %c\n", temp[start + len]);
+		
 		}
 		start++;
 	}
