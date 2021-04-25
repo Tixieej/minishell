@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/25 10:18:45 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/25 10:33:01 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void			free_all(char *str_start, char *str_end, char *str_temp,
 					char *loose);
 void			set_start_len(char *str_start, char *loose, unsigned int *start,
 					char type);
+char			*prep_trim_quotation_marks(t_base *base, char *temp,
+					size_t *len, unsigned int *start);
 
 /*
 ** parse functions

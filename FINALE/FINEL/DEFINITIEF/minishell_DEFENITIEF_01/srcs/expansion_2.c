@@ -6,36 +6,11 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 17:54:55 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/25 10:06:44 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/25 10:33:02 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	free_all(char *str_start, char *str_end,
-	char *str_temp, char *loose)
-{
-	free(str_start);
-	free(str_end);
-	free(str_temp);
-	free(loose);
-}
-
-void	set_start_len(char *str_start, char *loose,
-	unsigned int *start, char type)
-{
-	int	len;
-
-	len = 0;
-	while (loose[len] != '\0' && loose[len] != '$' && type == '\"')
-		len++;
-	if (loose[len] != '$' && type == '\"')
-		*start = ft_strlen(str_start) + ft_strlen(loose) - 1;
-	if (loose[len] == '$' && type == '\"')
-		*start = len;
-	if (type == '\'')
-		*start = ft_strlen(str_start) + ft_strlen(loose) - 1;
-}
 
 static char	*enter_expansion(char *str, unsigned int *start,
 	size_t *len, char *env)

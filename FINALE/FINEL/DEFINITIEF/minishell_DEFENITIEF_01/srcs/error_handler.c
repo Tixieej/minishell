@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/01/25 11:04:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/22 17:58:53 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/25 10:27:02 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,13 @@ void	command_not_found(t_command *command,
 	write(2, ": ", 2);
 	write(2, error, ft_strlen(error));
 	write(2, "\n", 1);
+}
+
+void	free_all(char *str_start, char *str_end,
+	char *str_temp, char *loose)
+{
+	free(str_start);
+	free(str_end);
+	free(str_temp);
+	free(loose);
 }
