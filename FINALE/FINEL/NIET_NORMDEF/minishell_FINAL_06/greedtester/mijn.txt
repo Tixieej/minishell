@@ -1,0 +1,16 @@
+echo ';;'
+echo ";;;"
+echo 'hallo'
+echo "boe;;;"
+echo ''dubbbel''
+echo '++'
+echo '--'
+echo ';hoi'
+echo ';;hoi'
+echo ';;;hoi'
+echo 'dit;dat'
+ECHO ';;'
+ECHO ";;;"
+ECHO 'hallo'
+ECHO "boe;;;"
+ECHO ''dubbel''
