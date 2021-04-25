@@ -6,7 +6,7 @@
 /*   By: livlamin <livlamin@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/23 14:00:54 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/25 10:19:52 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,9 @@ static t_base	*ft_create_base_struct(char **env)
 		if (copy_env(base, env) == 0)
 			return (NULL);
 		base->list = NULL;
+		base->str_start = NULL;
+		base->str_end = NULL;
+		base->str_temp = NULL;
 	}
 	return (base);
 }

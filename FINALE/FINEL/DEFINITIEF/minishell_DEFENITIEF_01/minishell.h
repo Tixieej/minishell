@@ -6,7 +6,7 @@
 /*   By: livlamin <marvin@codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 10:25:42 by livlamin      #+#    #+#                 */
-/*   Updated: 2021/04/23 22:04:46 by livlamin      ########   odam.nl         */
+/*   Updated: 2021/04/25 10:18:45 by livlamin      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@ typedef struct s_command
 
 typedef struct s_base
 {
+	char			type;
+	char			*str_start;
+	char			*str_end;
+	char			*str_temp;
 	char			**env;
 	t_list			*list;
 	struct s_base	*next;
